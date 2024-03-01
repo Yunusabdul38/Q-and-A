@@ -5,7 +5,13 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily:{
+        tekur:["Tektur","sans-serif"],
+        "lexendDeca":["Lexend Deca", "sans-serif"],
+        NatoSans:["Noto Sans", "sans-serif"]
+      }
+    },
   },
   plugins: [],
 }
