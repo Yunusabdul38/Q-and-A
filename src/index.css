@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  background-color: rgba(238, 236, 236, 0.199);
+  font-family: "Open Sans", sans-serif;
+  font-weight: 300;
+}
+
+form {
+  gap: 7px;
+  padding: 1.5rem;
+}
+/* input {
+  border-bottom: 2px solid black;
+  width: 100%;
+  outline: none;
+  background-color: inherit;
+} */
+.input-box input:focus ~ label,
+.input-box input:valid ~ label {
+  bottom: 49px;
+  font-size: 1rem;
+  padding-left: 4px;
+  transition: 75ms linear;
+  background-color: inherit;
+}
