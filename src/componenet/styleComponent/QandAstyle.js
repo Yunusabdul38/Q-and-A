@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const QuestionNum = styled.div`
-  background-color: #37003c;
+   background: linear-gradient(138deg, #ff2882, #963cff);
   width: fit-content;
   margin: 0 auto;
   color: #fff;
@@ -10,10 +10,11 @@ const QuestionNum = styled.div`
   border-radius: 50px;
 `;
 const StyleApp = styled.div`
+  font-family: "Lexend Deca", sans-serif;
   display: grid;
   grid-gap: 10px;
   color: #37003c;
-  background-color: #ffff;
+  /* background-color: #ffff; */
   padding: 15px;
   text-align: center;
   width: 80%;
@@ -25,6 +26,7 @@ const StyleApp = styled.div`
 `;
 const H1 = styled.h1`
   font-weight: 400;
+  color: white;
   font-size: 1.4rem;
 
   @media (min-width: 768px) {
@@ -41,12 +43,13 @@ const Questions = styled.div`
   }
 `;
 const Wrapper = styled.div`
-  border: 1px solid grey;
+  border: 1px solid #ecf4d6;
   padding: 4px;
+  cursor: pointer;
   border-radius: 5px;
 `;
 const QuesDiv = styled.div`
-  border: #8a7c9b 1px solid;
+  border: #ecf4d6 2px solid;
   border-radius: 5px;
   display: grid;
   grid-template-columns: auto auto;
@@ -58,8 +61,9 @@ const QuesDiv = styled.div`
   gap: 10px;
 
   &:hover {
-    border: #87ceeb 1px solid;
-    transition: all ease 1s;
+    border: #87ceeb 2px solid;
+    transition: all linear 250ms;
+    background-color: #1d267d;
   }
   &:hover div {
     transition: all ease 1s;
@@ -73,17 +77,20 @@ const QuesOption = styled.div`
   padding: 5px 20px;
   font-size: 2.4rem;
   border-radius: 5px;
+  text-transform: uppercase;
 `;
 const QuesH2 = styled.h2`
   font-weight: 400;
+  color: #ecf4d6;
 `;
 const QuestionWrapper = styled.div`
-  background-color: #963cff;
+  background-color: #1d267d;
   height: 200px;
-  display: grid;
+  display: flex;
   align-items: center;
+  flex-direction: column;
   justify-content: center;
-  border-radius: 200px/200px 0 0 0;
+  border-radius: 10px;
 `;
 const Icon = styled.span`
   width: 50px;
@@ -94,44 +101,4 @@ const Icon = styled.span`
   font-weight: 500;
   background-color: #fff;
 `;
-
-export default function QandA() {
-  return (
-    <StyleApp>
-      <QuestionNum>question 1 of 10</QuestionNum>
-      <QuestionWrapper>
-        <Icon>?</Icon>
-        <H1>
-          who was the first player of the week in 2022/23, scoring the most
-          points in gameweek 1
-        </H1>
-      </QuestionWrapper>
-      <Questions>
-        <Wrapper>
-          <QuesDiv>
-            <QuesOption>A</QuesOption>
-            <QuesH2>Dejan kulusevski</QuesH2>
-          </QuesDiv>
-        </Wrapper>
-        <Wrapper>
-          <QuesDiv>
-            <QuesOption>A</QuesOption>
-            <QuesH2>Dejan kulusevski</QuesH2>
-          </QuesDiv>
-        </Wrapper>
-        <Wrapper>
-          <QuesDiv>
-            <QuesOption>A</QuesOption>
-            <QuesH2>Dejan kulusevski</QuesH2>
-          </QuesDiv>
-        </Wrapper>
-        <Wrapper>
-          <QuesDiv>
-            <QuesOption>A</QuesOption>
-            <QuesH2>Dejan kulusevski</QuesH2>
-          </QuesDiv>
-        </Wrapper>
-      </Questions>
-    </StyleApp>
-  );
-}
+export {H1,Icon,QuesDiv,QuesH2,QuesOption,QuestionNum,QuestionWrapper,Questions,StyleApp,Wrapper}

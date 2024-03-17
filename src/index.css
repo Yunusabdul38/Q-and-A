@@ -8,11 +8,15 @@
   box-sizing: border-box;
 }
 body {
-  background-color: rgba(238, 236, 236, 0.199);
+  background-color: rgba(236, 237, 238, 0.199);
   font-family: "Open Sans", sans-serif;
   font-weight: 300;
 }
-
+.active {
+  background-color: rgb(133, 144, 145);
+  color: whitesmoke;
+  padding: 5px;
+}
 form {
   gap: 7px;
   padding: 1.5rem;
