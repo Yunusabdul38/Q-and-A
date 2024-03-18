@@ -6,6 +6,7 @@ import Input from "./input";
 import Button from "../Ui/Button";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import { setLocalstorage } from "../services/locatStorage";
+import Spinner from "../Ui/Spinner";
 
 const logUser = {
   email: "test@gmail.com",
@@ -13,21 +14,22 @@ const logUser = {
 };
 
 export default function Authentication() {
+  const [isLoading, setisLoading] = useState(true);
   const nvigate = useNavigate();
   const data = useLoaderData();
-  const parsedata = JSON.parse(data)
+  const parsedata = JSON.parse(data);
   const [login, setlogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const {
     register,
     reset,
     handleSubmit,
-    formState: { isLoading, errors },
+    formState: { isLoading: formLoading, errors },
   } = useForm();
   //console.log(JSON.parse(data)?.email);
-  useEffect(()=>{
+  useEffect(() => {
     if (parsedata?.email) return nvigate("/dashbord/home");
-  },[parsedata,nvigate])
+  }, [parsedata, nvigate]);
   function loginHandler() {
     if (login) return;
     setlogin(true);
@@ -47,6 +49,7 @@ export default function Authentication() {
     nvigate("/dashbord/home");
     reset();
   };
+  if (isLoading) return <Spinner />;
 
   return (
     <div className="bg-blue-900 h-screen flex justify-center items-center">
@@ -141,7 +144,7 @@ export default function Authentication() {
                 forget password?
               </a>
             )}
-            <Button disabled={isLoading}>
+            <Button disabled={formLoading}>
               {login ? "login" : "Get started"}
             </Button>
           </form>
