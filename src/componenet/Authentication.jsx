@@ -28,7 +28,10 @@ export default function Authentication() {
   } = useForm();
   //console.log(JSON.parse(data)?.email);
   useEffect(() => {
-    if (parsedata?.email) return nvigate("/dashbord/home");
+    if (parsedata?.email) {
+      nvigate("/dashbord/home");
+    }
+    setisLoading(false);
   }, [parsedata, nvigate]);
   function loginHandler() {
     if (login) return;
@@ -45,7 +48,7 @@ export default function Authentication() {
     // check if inputed user login data is valid with the register data on the server
     const validation = email === logUser.email && password === logUser.password;
     if (!validation) return console.log("user does not exist");
-    if (checkbox) setLocalstorage({ email, password });
+    if (checkbox) setLocalstorage({ email, password, name: "yunus Abdul" });
     nvigate("/dashbord/home");
     reset();
   };

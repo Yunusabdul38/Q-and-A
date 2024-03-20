@@ -1,4 +1,5 @@
 import { NavLink, Outlet } from "react-router-dom";
+import Header from "./componenet/Dashbord/Header";
 export default function App() {
   return (
     <div className=" h-screen grid sm:grid-cols-[0.5fr_2fr]">
@@ -9,7 +10,7 @@ export default function App() {
         <NavLink to="/dashbord/leadbord">leadbord</NavLink>
       </ul>
       <section className="bg-blue-900 h-screen w-full overflow-y-scroll">
-        <header className="bg-gray-50 w-full h-14 border-l-2"></header>
+       <Header/>
         <Outlet />
       </section>
     </div>

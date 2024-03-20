@@ -7,7 +7,7 @@ import {
   QuestionWrapper,
   Questions,
   StyleApp,
-} from "../../styleComponent/QandAstyle";
+} from "../../../Ui/QandAstyle";
 import Options from "./Options";
 import QuestionsButton from "./QuestionsButton";
 

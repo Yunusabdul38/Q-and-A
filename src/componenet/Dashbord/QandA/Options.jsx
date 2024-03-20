@@ -1,4 +1,4 @@
-import { QuesDiv, QuesH2, QuesOption, Wrapper } from '../../styleComponent/QandAstyle'
+import { QuesDiv, QuesH2, QuesOption, Wrapper } from '../../../Ui/QandAstyle'
 
 export default function Options({option,character}) {
   return (
