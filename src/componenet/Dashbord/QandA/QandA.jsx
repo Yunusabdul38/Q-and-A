@@ -16,7 +16,7 @@ export default function QandA() {
   const [questionNumber, setQuestionNumber] = useState(0);
   const fetchQuestions = useLoaderData();
   const question = fetchQuestions[questionNumber];
-
+  const shuffle = question.options.sort(() => 0.5 - Math.random());
   function nextQuestionHandler() {
     setQuestionNumber((num) => num + 1);
   }
@@ -33,7 +33,7 @@ export default function QandA() {
         <H1>{question.question}</H1>
       </QuestionWrapper>
       <Questions>
-        {question.options.map((options, index) => {
+        {shuffle.map((options, index) => {
           return (
             <Options
               option={options}
