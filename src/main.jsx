@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Authentication from "./componenet/Authentication.jsx";
 import App from "./App.jsx";
-import QandA from "./componenet/Dashbord/QandA/QandA.jsx";
+import Play from "./componenet/Dashbord/QandA/Play.jsx";
 import "./index.css";
 import { getLocalstorage } from "./services/locatStorage.js";
 import Home from "./componenet/Dashbord/Home.jsx";
@@ -38,7 +38,7 @@ const route = createBrowserRouter([
       },
       {
         path: "/dashbord/play",
-        element: <QandA />,
+        element: <Play />,
         loader: () => fetchQuestions(),
       },
     ],

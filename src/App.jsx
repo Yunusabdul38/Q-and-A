@@ -9,7 +9,7 @@ export default function App() {
         <NavLink to="/dashbord/profile">profile</NavLink>
         <NavLink to="/dashbord/leadbord">leadbord</NavLink>
       </ul>
-      <section className="bg-blue-900 h-screen w-full overflow-y-scroll">
+      <section className="bg-[#074173] h-screen w-full overflow-y-scroll">
        <Header/>
         <Outlet />
       </section>

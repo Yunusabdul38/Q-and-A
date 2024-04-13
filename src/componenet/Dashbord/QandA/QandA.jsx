@@ -23,6 +23,7 @@ export default function QandA() {
   function previousQuestionHandler() {
     setQuestionNumber((num) => num - 1);
   }
+  if(!fetchQuestions) return <h1>unable to featch qs</h1>
   return (
     <StyleApp>
       <QuestionNum>
