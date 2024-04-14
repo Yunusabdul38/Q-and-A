@@ -1,15 +1,21 @@
+import { Context } from "../../../context/UserContextProvider";
 import PlayCategory from "../../Modal";
 import QandA from "./QandA";
-import { useState } from "react";
+import { useContext, useState } from "react";
 export default function Play() {
+  const {
+    playState: { status },
+  } = useContext(Context);
   const [start, setStart] = useState(false);
 
   const openCategoryModal = function () {
     setStart(true);
   };
-  function closeCategoryModal(){
-    setStart(false)
+  function closeCategoryModal() {
+    setStart(false);
   }
+  console.log(status);
+  if (status === "active") return <QandA />;
   return (
     <>
       <div className="px-8 md:px-0 text-gray-50 font-medium py-11">
@@ -32,8 +38,10 @@ export default function Play() {
             <br />
             Select the category you wish to anawer questions from
           </p>
-          <p>Click the 'Start' button to select a
-        category and difficulty level, and get started immediately.</p>
+          <p>
+            Click the 'Start' button to select a category and difficulty level,
+            and get started immediately.
+          </p>
           <button
             className="hover:bg-gradient-to-r hover:from-gray-600 rounded-md  hover:to-blue-300 transition-all duration-200 bg-gradient-to-t from-blue-300 to-blue-600 px-4 py-2 capitalize float-right w-fit font-tekur"
             onClick={openCategoryModal}
@@ -42,7 +50,7 @@ export default function Play() {
           </button>
         </div>
       </div>
-      {start && <PlayCategory close={closeCategoryModal}  />}
+      {start && <PlayCategory close={closeCategoryModal} />}
     </>
   );
 }

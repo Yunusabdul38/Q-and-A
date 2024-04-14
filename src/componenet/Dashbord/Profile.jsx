@@ -4,7 +4,6 @@ import Form from "../form";
 
 export default function Profile() {
   const [updateUser, setUpdateUser] = useState(false);
-
   function userUpdatehandler() {
     setUpdateUser(true);
   }

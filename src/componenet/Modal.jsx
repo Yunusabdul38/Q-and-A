@@ -1,8 +1,25 @@
-import { useEffect, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
+import { useForm } from "react-hook-form";
+import { Context } from "../context/UserContextProvider";
 
 function Modal({ close }) {
   const ref = useRef();
+  const {
+    handleSubmit,
+    register,
+    getValues,
+    formState: { errors, isSubmitSuccessful, isSubmitting },
+  } = useForm();
+  const { playState, dispatchFn } = useContext(Context);
+
+  function onSubmit(data) {
+    console.log(data);
+    if (isSubmitSuccessful) {
+      close();
+    }
+    dispatchFn({ type: "start" });
+  }
   useEffect(() => {
     function closeModal(e) {
       if (e === ref.current) {
@@ -25,6 +42,7 @@ function Modal({ close }) {
     >
       <div className="rounded-xl fixed top-1/2 left-1/2 p-12 bg-gray-50 -translate-y-1/2 -translate-x-1/2 md:w-[550px] w-[85%] sm:w-2/3 sm:text-center">
         <button
+          type="button"
           className="hover:bg-gray-400 rounded-sm text-xl translate-x-3 bg-none  p-1 transition-all hover:text-white border-none absolute  top-5 right-8"
           onClick={close}
         >
@@ -36,36 +54,58 @@ function Modal({ close }) {
           your knowledge and compete for the top spot on the leaderboard. Good
           luck!
         </h2>
-        <form className="grid gap-7">
-          <select className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-            <option selected>Choose difficulty </option>
-            <option value="easy">easy</option>
-            <option value="medium">medium</option>
-            <option value="hard">hard</option>
-          </select>
+        <form className="grid gap-7" onSubmit={handleSubmit(onSubmit)}>
+          <div className="grid grid-cols-2 items-center">
+            <label>Choose difficulty:</label>
+            <select
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              {...register("difficulty", {
+                required: "you need to select a difficulty level to proceed",
+              })}
+            >
+              <option value="easy">easy</option>
+              <option value="medium">medium</option>
+              <option value="hard">hard</option>
+            </select>
+          </div>
           <div className="capitalize">
             <div className="flex-wrap grid sm:justify-center sm:grid-cols-2">
               <span>
                 <label>sport</label>
-                <input type="checkbox" className="mx-3" />
+                <input
+                  type="checkbox"
+                  className="mx-3"
+                  {...register("sport")}
+                />
               </span>
               <span>
                 <label>history</label>
-                <input type="checkbox" className="mx-3" />
+                <input
+                  type="checkbox"
+                  className="mx-3"
+                  {...register("history")}
+                />
               </span>
             </div>
             <div className="grid sm:justify-center sm:grid-cols-2">
               <span>
                 <label>food</label>
-                <input type="checkbox" className="mx-3" />
+                <input type="checkbox" className="mx-3" {...register("food")} />
               </span>
               <span>
                 <label>random</label>
-                <input type="checkbox" className="mx-3" />
+                <input
+                  type="checkbox"
+                  className="mx-3"
+                  {...register("random")}
+                />
               </span>
             </div>
           </div>
-          <button className="text-gray-50 hover:text-slate-700 font-medium absolute right-4 bottom-4 bg-slate-400 hover:bg-inherit transition-all capitalize hover:border-slate-700 border-2  rounded py-2 px-4">
+          <button
+            className="text-gray-50 hover:text-slate-700 font-medium absolute right-4 bottom-4 bg-slate-400 hover:bg-inherit transition-all capitalize hover:border-slate-700 border-2  rounded py-2 px-4"
+            type="submit"
+          >
             play
           </button>
         </form>
