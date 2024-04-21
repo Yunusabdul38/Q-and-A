@@ -38,7 +38,7 @@
     {
       "question": "Who is the current captain of the Argentina national football team?",
       "options": ["Lionel Messi", "Sergio Agüero", "Paulo Dybala", "Ángel Di María"],
-      "answer": 0
+      "correctIndex": 0
     }, {
         "question": "What is the capital of France?",
         "options": [

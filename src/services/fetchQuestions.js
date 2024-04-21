@@ -5,7 +5,6 @@ export const fetchQuestions = async function () {
         throw new Error(`opps ${requestData.status} unable to get the requested data`)
     }
     const response = await requestData.json();
-
     return response;
   } catch (error) {
     console.log(error.message)

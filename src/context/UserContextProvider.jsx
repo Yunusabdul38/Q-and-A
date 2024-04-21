@@ -5,7 +5,9 @@ const initialState = {
   status: "idle",
   level: null,
   category: [],
-  userAnswer: [],
+  answers: [],
+  questionsNum: 0,
+  questions: [],
 };
 export const Context = createContext({
   playState: {},
@@ -13,9 +15,39 @@ export const Context = createContext({
 });
 
 function reducerFn(state, action) {
-  console.log(state);
+  //const curentIndex = state.questions[state.questionsNum];
   if (action.type === "start") {
-    return { ...state, status: "active" };
+    const {
+      questions,
+      userData: { difficulty, category },
+    } = action.payload;
+    return {
+      ...state,
+      status: "active",
+      questions: questions,
+      level: difficulty,
+      category,
+    };
+  }
+  if (action.type === "answer") {
+    const { correctIndex,userIndex } = action.payload;
+    return {
+      ...state,
+      answers: [
+        ...state.answers,
+        {
+          question: state.questions[state.questionsNum],
+          userAnswer: userIndex,
+          correctAnswer: correctIndex,
+        },
+      ],
+    };
+  }
+  if (action.type === "next") {
+    return { ...state, questionsNum: state.questionsNum + 1 };
+  }
+  if (action.type === "prev") {
+    return { ...state, questionsNum: state.questionsNum - 1 };
   }
   if (action.type === "finish") {
     return { ...state, status: "inactive" };

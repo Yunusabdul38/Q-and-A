@@ -1,25 +1,44 @@
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useForm } from "react-hook-form";
 import { Context } from "../context/UserContextProvider";
-
 function Modal({ close }) {
+  const [starterData, setStarterData] = useState(null)
   const ref = useRef();
   const {
     handleSubmit,
     register,
-    getValues,
-    formState: { errors, isSubmitSuccessful, isSubmitting },
+    formState: { isSubmitting },
   } = useForm();
-  const { playState, dispatchFn } = useContext(Context);
-
+  const { dispatchFn } = useContext(Context);
   function onSubmit(data) {
-    console.log(data);
-    if (isSubmitSuccessful) {
-      close();
-    }
-    dispatchFn({ type: "start" });
+
+  
+      setStarterData(data)
+   
+    
   }
+  useEffect(()=>{
+    if(!starterData) return
+    async function fetchData(){
+      try {
+        const requestData = await fetch("http://localhost:8000/questions");
+        if(!requestData.ok){
+            throw new Error(`opps ${requestData.status} unable to get the requested data`)
+        }
+        const response = await requestData.json();
+        return  dispatchFn({ type: "start",payload:{
+          questions:response,
+          userData:starterData
+        } });
+      } catch (error) {
+        console.log(error.message)
+        return error
+      }
+    }
+    fetchData()
+    close();
+  },[starterData,dispatchFn,close])
   useEffect(() => {
     function closeModal(e) {
       if (e === ref.current) {
@@ -56,55 +75,32 @@ function Modal({ close }) {
         </h2>
         <form className="grid gap-7" onSubmit={handleSubmit(onSubmit)}>
           <div className="grid grid-cols-2 items-center">
-            <label>Choose difficulty:</label>
+            <label>Difficulty:</label>
             <select
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              {...register("difficulty", {
-                required: "you need to select a difficulty level to proceed",
-              })}
+              {...register("difficulty")}
             >
               <option value="easy">easy</option>
               <option value="medium">medium</option>
               <option value="hard">hard</option>
             </select>
           </div>
-          <div className="capitalize">
-            <div className="flex-wrap grid sm:justify-center sm:grid-cols-2">
-              <span>
-                <label>sport</label>
-                <input
-                  type="checkbox"
-                  className="mx-3"
-                  {...register("sport")}
-                />
-              </span>
-              <span>
-                <label>history</label>
-                <input
-                  type="checkbox"
-                  className="mx-3"
-                  {...register("history")}
-                />
-              </span>
-            </div>
-            <div className="grid sm:justify-center sm:grid-cols-2">
-              <span>
-                <label>food</label>
-                <input type="checkbox" className="mx-3" {...register("food")} />
-              </span>
-              <span>
-                <label>random</label>
-                <input
-                  type="checkbox"
-                  className="mx-3"
-                  {...register("random")}
-                />
-              </span>
-            </div>
+          <div className="grid grid-cols-2 items-center">
+            <label>Category:</label>
+            <select
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              {...register("category")}
+            >
+              <option value="random">random</option>
+              <option value="sport">sport</option>
+              <option value="food">food</option>
+              <option value="history">history</option>
+            </select>
           </div>
           <button
-            className="text-gray-50 hover:text-slate-700 font-medium absolute right-4 bottom-4 bg-slate-400 hover:bg-inherit transition-all capitalize hover:border-slate-700 border-2  rounded py-2 px-4"
+            className="text-gray-50 hover:text-slate-700 font-medium absolute right-4 bottom-4 bg-slate-400 hover:bg-inherit transition-all capitalize hover:border-slate-700 border-2  rounded py-2 px-4 disabled:cursor-not-allowed"
             type="submit"
+            disabled={isSubmitting}
           >
             play
           </button>

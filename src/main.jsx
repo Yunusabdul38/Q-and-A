@@ -6,10 +6,8 @@ import App from "./App.jsx";
 import Play from "./componenet/Dashbord/QandA/Play.jsx";
 import "./index.css";
 import { getLocalstorage } from "./services/locatStorage.js";
-import Home from "./componenet/Dashbord/Home.jsx";
 import Profile from "./componenet/Dashbord/Profile.jsx";
 import Leadbord from "./componenet/Dashbord/Leadbord.jsx";
-import { fetchQuestions } from "./services/fetchQuestions.js";
 
 // const Authentication = import('./componenet/Authentication.jsx')
 
@@ -25,21 +23,16 @@ const route = createBrowserRouter([
     element: <App />,
     children: [
       {
-        path: "dashbord/home",
-        element: <Home />,
-      },
-      {
-        path: "/dashbord/profile",
+        path: "/profile",
         element: <Profile />,
       },
       {
-        path: "/dashbord/leadbord",
+        path: "/leadbord",
         element: <Leadbord />,
       },
       {
-        path: "/dashbord/play",
+        path: "/play",
         element: <Play />,
-        loader: () => fetchQuestions(),
       },
     ],
   },

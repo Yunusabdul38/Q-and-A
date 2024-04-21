@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useLoaderData } from "react-router-dom";
+import { useContext} from "react";
+import { Context } from "../../../context/UserContextProvider";
 import {
   H1,
   Icon,
@@ -13,33 +13,35 @@ import QuestionsButton from "./QuestionsButton";
 
 const optionCharacter = ["a", "b", "c", "d"];
 export default function QandA() {
-  const [questionNumber, setQuestionNumber] = useState(0);
-  const fetchQuestions = useLoaderData();
-  const question = fetchQuestions[questionNumber];
-  const shuffle = question.options.sort(() => 0.5 - Math.random());
+  const {playState:{questions,questionsNum},dispatchFn} = useContext(Context)
+  const {question,correctIndex,options } = questions[questionsNum];
+  const shuffle = options?.sort(() => 0.5 - Math.random());
   function nextQuestionHandler() {
-    setQuestionNumber((num) => num + 1);
+    dispatchFn({type:"next"})
   }
   function previousQuestionHandler() {
-    setQuestionNumber((num) => num - 1);
+    dispatchFn({type:"prev"})
   }
-  if(!fetchQuestions) return <h1>unable to featch qs</h1>
+
+  if(!questions) return <h1>unable to featch qs</h1>
   return (
     <StyleApp>
       <QuestionNum>
-        question {questionNumber + 1} of {fetchQuestions.length}
+        question {questionsNum + 1} of {questions.length}
       </QuestionNum>
       <QuestionWrapper>
         <Icon>?</Icon>
-        <H1>{question.question}</H1>
+        <H1>{question}</H1>
       </QuestionWrapper>
       <Questions>
-        {shuffle.map((options, index) => {
+        {shuffle?.map((options, index) => {
           return (
             <Options
               option={options}
               character={optionCharacter[index]}
               key={index}
+              correctIndex={correctIndex}
+              index={index}
             />
           );
         })}
@@ -48,14 +50,14 @@ export default function QandA() {
         <QuestionsButton
           disabledNum={0}
           eventHandler={previousQuestionHandler}
-          questionNumber={questionNumber}
+          questionNumber={questionsNum}
         >
           prev
         </QuestionsButton>
         <QuestionsButton
           disabledNum={10}
           eventHandler={nextQuestionHandler}
-          questionNumber={questionNumber}
+          questionNumber={questionsNum}
         >
           next
         </QuestionsButton>

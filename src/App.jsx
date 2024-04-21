@@ -6,10 +6,9 @@ export default function App() {
     <ContexProvider>
     <div className=" h-screen grid sm:grid-cols-[0.5fr_2fr]">
       <ul className="bg-gray-50 flex flex-col gap-5 pt-14 pl-4 uppercase text-gray-900">
-        <NavLink to="/dashbord/home">Home</NavLink>
-        <NavLink to="/dashbord/play">Play</NavLink>
-        <NavLink to="/dashbord/profile">profile</NavLink>
-        <NavLink to="/dashbord/leadbord">leadbord</NavLink>
+        <NavLink to="/play">Play</NavLink>
+        <NavLink to="/profile">profile</NavLink>
+        <NavLink to="/leadbord">leadbord</NavLink>
       </ul>
       <section className="bg-[#074173] h-screen w-full overflow-y-scroll">
        <Header/>

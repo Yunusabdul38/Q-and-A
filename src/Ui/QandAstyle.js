@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const QuestionNum = styled.div`
-   background: linear-gradient(138deg, #ff2882, #963cff);
+  background: linear-gradient(138deg, #ff2882, #963cff);
   width: fit-content;
   margin: 0 auto;
   color: #fff;
@@ -37,16 +37,18 @@ const H1 = styled.h1`
 const Questions = styled.div`
   display: grid;
   grid-gap: 10px;
-
   @media (min-width: 768px) {
     grid-template-columns: 1fr 1fr;
   }
 `;
-const Wrapper = styled.div`
+const Wrapper = styled.button`
   border: 1px solid #ecf4d6;
   padding: 4px;
   cursor: pointer;
   border-radius: 5px;
+  &:disabled{
+    cursor: not-allowed;
+  }
 `;
 const QuesDiv = styled.div`
   border: #ecf4d6 2px solid;
@@ -59,7 +61,7 @@ const QuesDiv = styled.div`
   padding: 10px;
   transition: all ease-out 1s;
   gap: 10px;
-
+  background-color: ${props=> props.answer?"#1d267d":"none"};
   &:hover {
     border: #87ceeb 2px solid;
     transition: all linear 250ms;
@@ -68,6 +70,9 @@ const QuesDiv = styled.div`
   &:hover div {
     transition: all ease 1s;
     background: linear-gradient(180deg, #87ceeb, #9e50ad);
+  }
+  & div {
+    background: ${props=> props.answer?"linear-gradient(180deg, #87ceeb, #9e50ad)":"linear-gradient(138deg, #ff2882, #963cff)"}; 
   }
 `;
 const QuesOption = styled.div`

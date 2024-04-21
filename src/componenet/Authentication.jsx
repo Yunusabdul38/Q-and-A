@@ -29,7 +29,7 @@ export default function Authentication() {
   //console.log(JSON.parse(data)?.email);
   useEffect(() => {
     if (parsedata?.email) {
-      nvigate("/dashbord/home");
+      nvigate("/play");
     }
     setisLoading(false);
   }, [parsedata, nvigate]);

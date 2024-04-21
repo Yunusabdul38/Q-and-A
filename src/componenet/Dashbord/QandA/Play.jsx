@@ -4,17 +4,15 @@ import QandA from "./QandA";
 import { useContext, useState } from "react";
 export default function Play() {
   const {
-    playState: { status },
+    playState: { status}
   } = useContext(Context);
   const [start, setStart] = useState(false);
-
   const openCategoryModal = function () {
     setStart(true);
   };
   function closeCategoryModal() {
     setStart(false);
   }
-  console.log(status);
   if (status === "active") return <QandA />;
   return (
     <>
