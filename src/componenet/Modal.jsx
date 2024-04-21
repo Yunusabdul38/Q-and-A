@@ -3,42 +3,47 @@ import { createPortal } from "react-dom";
 import { useForm } from "react-hook-form";
 import { Context } from "../context/UserContextProvider";
 function Modal({ close }) {
-  const [starterData, setStarterData] = useState(null)
+  const [starterData, setStarterData] = useState(null);
   const ref = useRef();
   const {
     handleSubmit,
     register,
     formState: { isSubmitting },
   } = useForm();
-  const { dispatchFn } = useContext(Context);
-  function onSubmit(data) {
+  const {
+    dispatchFn,
+    playState: { category },
+  } = useContext(Context);
 
-  
-      setStarterData(data)
-   
-    
+  function onSubmit(data) {
+    setStarterData(data);
+    dispatchFn({ type: "level", payload: data });
   }
-  useEffect(()=>{
-    if(!starterData) return
-    async function fetchData(){
+  useEffect(() => {
+    if (!starterData) return;
+    async function fetchData() {
       try {
-        const requestData = await fetch("http://localhost:8000/questions");
-        if(!requestData.ok){
-            throw new Error(`opps ${requestData.status} unable to get the requested data`)
+        const requestData = await fetch(`http://localhost:8000/${category}`);
+        if (!requestData.ok) {
+          throw new Error(
+            `opps ${requestData.status} unable to get the requested data`
+          );
         }
         const response = await requestData.json();
-        return  dispatchFn({ type: "start",payload:{
-          questions:response,
-          userData:starterData
-        } });
+        return dispatchFn({
+          type: "start",
+          payload: {
+            questions: response,
+          },
+        });
       } catch (error) {
-        console.log(error.message)
-        return error
+        console.log(error.message);
+        return error;
       }
     }
     fetchData()
     close();
-  },[starterData,dispatchFn,close])
+  }, [starterData, dispatchFn, close]);
   useEffect(() => {
     function closeModal(e) {
       if (e === ref.current) {
@@ -94,6 +99,7 @@ function Modal({ close }) {
               <option value="random">random</option>
               <option value="sport">sport</option>
               <option value="food">food</option>
+              <option value="football">football</option>
               <option value="history">history</option>
             </select>
           </div>

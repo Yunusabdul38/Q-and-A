@@ -3,8 +3,8 @@ import { createContext } from "react";
 
 const initialState = {
   status: "idle",
-  level: null,
-  category: [],
+  level: "easy",
+  category: "random",
   answers: [],
   questionsNum: 0,
   questions: [],
@@ -16,21 +16,20 @@ export const Context = createContext({
 
 function reducerFn(state, action) {
   //const curentIndex = state.questions[state.questionsNum];
+  if (action.type === "level") {
+    const { difficulty, category } = action.payload;
+    return { ...state, level: difficulty, category };
+  }
   if (action.type === "start") {
-    const {
-      questions,
-      userData: { difficulty, category },
-    } = action.payload;
+    const { questions } = action.payload;
     return {
       ...state,
       status: "active",
       questions: questions,
-      level: difficulty,
-      category,
     };
   }
   if (action.type === "answer") {
-    const { correctIndex,userIndex } = action.payload;
+    const { correctIndex, userIndex } = action.payload;
     return {
       ...state,
       answers: [
