@@ -13,9 +13,9 @@ body {
   font-weight: 300;
 }
 .active {
-  background-color: rgb(133, 144, 145);
-  color: whitesmoke;
-  padding: 5px;
+  /* background-color: rgb(133, 144, 145); */
+  color: skyblue;
+  /* padding: 5px; */
 }
 form {
   gap: 7px;

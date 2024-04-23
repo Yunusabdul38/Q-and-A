@@ -6,7 +6,7 @@ export default function Button({style=null, children,onClick=null,type=null,stat
   return (
     <button
       type="submit"
-      className={`${type==="primary"?primary:secondary} capitalize text-gray-50 py-3 px-10 ${style?style:""}`}
+      className={`${type==="primary"?primary:secondary} capitalize text-gray-50 py-3 sm:px-10 ${style?style:""}`}
       onClick={onClick}
       disabled={disabled}
     >

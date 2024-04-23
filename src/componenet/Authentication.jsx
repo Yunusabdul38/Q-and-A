@@ -1,12 +1,12 @@
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import { FiEyeOff, FiEye } from "react-icons/fi";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Auth from "../assets/undraw_secure_login_pdn4.svg";
 import Input from "./input";
 import Button from "../Ui/Button";
-import { useLoaderData, useNavigate } from "react-router-dom";
 import { setLocalstorage } from "../services/locatStorage";
 import Spinner from "../Ui/Spinner";
+import { useNavigate } from "react-router-dom";
 
 const logUser = {
   email: "test@gmail.com",
@@ -14,10 +14,7 @@ const logUser = {
 };
 
 export default function Authentication() {
-  const [isLoading, setisLoading] = useState(true);
-  const nvigate = useNavigate();
-  const data = useLoaderData();
-  const parsedata = JSON.parse(data);
+  const navigate = useNavigate()
   const [login, setlogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const {
@@ -26,13 +23,7 @@ export default function Authentication() {
     handleSubmit,
     formState: { isLoading: formLoading, errors },
   } = useForm();
-  //console.log(JSON.parse(data)?.email);
-  useEffect(() => {
-    if (parsedata?.email) {
-      nvigate("/play");
-    }
-    setisLoading(false);
-  }, [parsedata, nvigate]);
+
   function loginHandler() {
     if (login) return;
     setlogin(true);
@@ -49,10 +40,10 @@ export default function Authentication() {
     const validation = email === logUser.email && password === logUser.password;
     if (!validation) return console.log("user does not exist");
     if (checkbox) setLocalstorage({ email, password, name: "yunus Abdul" });
-    nvigate("/dashbord/home");
+    navigate("/")
     reset();
   };
-  if (isLoading) return <Spinner />;
+  // if (isLoading) return <Spinner />;
 
   return (
     <div className="bg-blue-900 h-screen flex justify-center items-center">

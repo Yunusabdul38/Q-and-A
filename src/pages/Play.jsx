@@ -1,10 +1,10 @@
-import { Context } from "../../../context/UserContextProvider";
-import PlayCategory from "../../Modal";
-import QandA from "./QandA";
+import { Context } from "../context/UserContextProvider";
+import PlayCategory from "../componenet/Modal";
+import QandA from "../componenet/QandA/QandA";
 import { useContext, useState } from "react";
 export default function Play() {
   const {
-    playState: { status}
+    playState: { status },
   } = useContext(Context);
   const [start, setStart] = useState(false);
   const openCategoryModal = function () {

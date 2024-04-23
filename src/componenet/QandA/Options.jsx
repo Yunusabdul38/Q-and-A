@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
-import { QuesDiv, QuesH2, QuesOption, Wrapper } from "../../../Ui/QandAstyle";
-import { Context } from "../../../context/UserContextProvider";
+import { QuesDiv, QuesH2, QuesOption, Wrapper } from "../../Ui/QandAstyle";
+import { Context } from "../../context/UserContextProvider";
 
 export default function Options({ option, character, correctIndex, index }) {
   const [isAnswered,setIsAnswerd] =useState(false)

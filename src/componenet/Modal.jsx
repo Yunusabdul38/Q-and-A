@@ -43,7 +43,7 @@ function Modal({ close }) {
     }
     fetchData()
     close();
-  }, [starterData, dispatchFn, close]);
+  }, [starterData, dispatchFn, close,category]);
   useEffect(() => {
     function closeModal(e) {
       if (e === ref.current) {

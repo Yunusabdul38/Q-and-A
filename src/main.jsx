@@ -1,20 +1,21 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Authentication from "./componenet/Authentication.jsx";
+import Home from "./pages/Home.jsx"
 import App from "./App.jsx";
-import Play from "./componenet/Dashbord/QandA/Play.jsx";
+import Play from "./pages/Play.jsx";
 import "./index.css";
 import { getLocalstorage } from "./services/locatStorage.js";
-import Profile from "./componenet/Dashbord/Profile.jsx";
-import Leadbord from "./componenet/Dashbord/Leadbord.jsx";
+import Profile from "./pages/Profile.jsx";
+import Leadbord from "./pages/Leadbord.jsx";
 
 // const Authentication = import('./componenet/Authentication.jsx')
 
+//app routing setup with react router 
 const route = createBrowserRouter([
   {
     path: "/",
-    element: <Authentication />,
+    element: <Home />,
     loader: () => {
       return getLocalstorage();
     },
