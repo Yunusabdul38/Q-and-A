@@ -1,4 +1,4 @@
-import propType from "prop-types";
+import PropTypes from "prop-types";
 
 export default function Input({ label, type, children }) {
   // input validation through form hook register function
@@ -19,6 +19,8 @@ export default function Input({ label, type, children }) {
   );
 }
 
-Input.PropType = {
-  label: propType.string,
+Input.propTypes = {
+  label:PropTypes.string,
+  type:PropTypes.string,
+  children:PropTypes.element
 };
