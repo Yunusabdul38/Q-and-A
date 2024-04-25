@@ -3,6 +3,7 @@ import Password from "./Password";
 import Input from "./input";
 import { useNavigate } from "react-router-dom";
 import Button from "../Ui/Button";
+import { userSignIn } from "../store/authentication";
 
 export default function SignIn() {
   const navigate = useNavigate();
@@ -12,19 +13,12 @@ export default function SignIn() {
     handleSubmit,
     formState: { isLoading: formLoading, errors },
   } = useForm();
-  const logUser = {
-    email: "test@gmail.com",
-    password: "testing",
-  };
+ 
   const submitData = (data) => {
     const { email, password, checkbox } = data;
-    // check if inputed user login data is valid with the register data on the server
-    const validation = email === logUser.email && password === logUser.password;
-    console.log(data)
-    if (!validation) return console.log("user does not exist");
-    //if (checkbox) setLocalstorage({ email, password, name: "yunus Abdul" });
-    navigate("/");
-    reset();
+    console.log(data,navigate)
+    userSignIn({email,password})
+    //reset();
   };
 
   return (
