@@ -1,23 +1,22 @@
 import Authentication from "../componenet/Authentication";
-import { getAuth, onAuthStateChanged} from "firebase/auth";
-import { useState } from "react";
+import { getAuth } from "firebase/auth";
 import { useSelector,useDispatch } from "react-redux";
 import Spinner from "../Ui/Spinner"
+import { useEffect } from "react";
+import { checkUserSignIn } from "../store/auth-checkUserSignIn";
+
 
 const auth = getAuth();
 const user = auth.currentUser;
-
+console.log(user)
 export default function Home() {
   const {loading,user} = useSelector(state=> state.userReducer)
-  console.log(user)
+  // console.log(user)
   const dispatch = useDispatch()
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      dispatch(user)
-    } else {
-      return "User signed out";
-    }
-  });
+ 
+  useEffect(()=>{
+    dispatch(checkUserSignIn())
+  },[dispatch])
   if(loading) return <Spinner/>
   if (!user) return <Authentication />;
 

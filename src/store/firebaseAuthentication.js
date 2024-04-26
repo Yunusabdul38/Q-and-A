@@ -4,7 +4,6 @@ import {
   updateProfile,
   signInWithEmailAndPassword,
   signOut,
-  onAuthStateChanged,
 } from "firebase/auth";
 import { setDoc, doc, serverTimestamp } from "firebase/firestore";
 import db from "./firebase";
@@ -70,13 +69,3 @@ export async function userSignOut(navigate) {
     console.log({ errorCode, errorMessage });
   }
 }
-export const handleAuthStateChange = () => {
-  const data = onAuthStateChanged(auth, (user) => {
-    if (user) {
-      return { ...user };
-    } else {
-      return "User signed out";
-    }
-  });
-  return data
-};

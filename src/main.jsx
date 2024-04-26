@@ -7,7 +7,7 @@ import Play from "./pages/Play.jsx";
 import "./index.css";
 import Profile from "./pages/Profile.jsx";
 import Leadbord from "./pages/Leadbord.jsx";
-import { handleAuthStateChange } from "./store/authentication.js";
+//import { handleAuthStateChange } from "./store/authentication.js";
 import { store } from "./store/store.js";
 import { Provider } from "react-redux";
 // const Authentication = import('./componenet/Authentication.jsx')
@@ -17,9 +17,9 @@ const route = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
-    loader: () => {
-      return handleAuthStateChange();
-    },
+    // loader: () => {
+    //   return handleAuthStateChange();
+    // },
   },
   {
     element: <App />,

@@ -3,11 +3,11 @@ import Button from "../Ui/Button";
 import Password from "./Password";
 import Input from "./input";
 import { useNavigate } from "react-router-dom";
-import { userSignUp } from "../store/authentication";
+import { userSignUp } from "../store/firebaseAuthentication";
 const logUser = {
-    email: "test@gmail.com",
-    password: "testing",
-  };
+  email: "test@gmail.com",
+  password: "testing",
+};
 export default function SignUp() {
   const navigate = useNavigate();
   const {
@@ -21,7 +21,7 @@ export default function SignUp() {
   const comfirPassWorderror = errors["confirm-password"];
   const submitData = (data) => {
     const { email, password, fullName } = data;
-    userSignUp(email,password,fullName,navigate)
+    userSignUp(email, password, fullName, navigate);
     // check if inputed user login data is valid with the register data on the server
     const validation = email === logUser.email && password === logUser.password;
     if (!validation) return console.log("user does not exist");
@@ -79,7 +79,7 @@ export default function SignUp() {
               min: 6,
               validate: (value) => {
                 if (value.length < 6) {
-                    return "Password length must be greater 5";
+                  return "Password length must be greater 5";
                 }
                 if (value !== getValues().password) {
                   return "this passord did not correspond with the above password";

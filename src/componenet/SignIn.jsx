@@ -3,7 +3,7 @@ import Password from "./Password";
 import Input from "./input";
 import { useNavigate } from "react-router-dom";
 import Button from "../Ui/Button";
-import { userSignIn } from "../store/authentication";
+import { userSignIn } from "../store/firebaseAuthentication";
 
 export default function SignIn() {
   const navigate = useNavigate();
@@ -13,11 +13,11 @@ export default function SignIn() {
     handleSubmit,
     formState: { isLoading: formLoading, errors },
   } = useForm();
- 
+
   const submitData = (data) => {
     const { email, password, checkbox } = data;
-    console.log(data,navigate)
-    userSignIn({email,password})
+    console.log(data, navigate);
+    userSignIn({ email, password });
     //reset();
   };
 
