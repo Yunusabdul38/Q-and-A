@@ -1,21 +1,28 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { QuesDiv, QuesH2, QuesOption, Wrapper } from "../../Ui/QandAstyle";
-import { Context } from "../../context/UserContextProvider";
+import { useDispatch, useSelector } from "react-redux";
+import { answer, nextQuestion } from "../../store/store";
+import PropTypes from "prop-types";
 
 export default function Options({ option, character, correctIndex, index }) {
   const [isAnswered,setIsAnswerd] =useState(false)
-  const { dispatchFn,playState:{answers,questionsNum} } = useContext(Context);
+  const {answers,questionsNum} = useSelector((state)=>state.playReducer)
+  const dispatch = useDispatch()
+
+  // function for handling usser answers
   function userAnswerHandler() {
-    dispatchFn({type:"answer",payload:{correctIndex,userIndex:index}})
+    dispatch(answer({correctIndex,userIndex:index}))
   }
+
+  // variable meant to highlight user answered option 
   const highlighting = answers[questionsNum]?.userAnswer === index
   useEffect(()=>{
     if(!isAnswered) return
     const timeout = setTimeout(()=>{
-      dispatchFn({type:"next"})
+      dispatch(nextQuestion)
     },2000)
     return ()=> clearTimeout(timeout)
-  },[isAnswered,dispatchFn])
+  },[isAnswered,dispatch])
   useEffect(()=>{
     setIsAnswerd(highlighting)
   },[highlighting,setIsAnswerd])
@@ -29,3 +36,10 @@ export default function Options({ option, character, correctIndex, index }) {
     </Wrapper>
   );
 }
+
+Options.propTypes = {
+  character:PropTypes.string,
+  correctIndex:PropTypes.number,
+  index:PropTypes.number,
+  option:PropTypes.string
+};

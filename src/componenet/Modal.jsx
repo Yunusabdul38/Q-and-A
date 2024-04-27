@@ -1,63 +1,28 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { createPortal } from "react-dom";
+import PropTypes from "prop-types";
 import { useForm } from "react-hook-form";
-import { Context } from "../context/UserContextProvider";
+import { useDispatch } from "react-redux";
+import { level as playlevel } from "../store/store";
+import { HiOutlineXMark } from "react-icons/hi2";
+import useModal from "../hook/useModal";
+import useFetch from "../hook/useFetch";
 function Modal({ close }) {
-  const [starterData, setStarterData] = useState(null);
+  const dispatch = useDispatch();
   const ref = useRef();
   const {
     handleSubmit,
     register,
     formState: { isSubmitting },
   } = useForm();
-  const {
-    dispatchFn,
-    playState: { category },
-  } = useContext(Context);
 
   function onSubmit(data) {
-    setStarterData(data);
-    dispatchFn({ type: "level", payload: data });
+    dispatch(playlevel(data));
   }
-  useEffect(() => {
-    if (!starterData) return;
-    async function fetchData() {
-      try {
-        const requestData = await fetch(`http://localhost:8000/${category}`);
-        if (!requestData.ok) {
-          throw new Error(
-            `opps ${requestData.status} unable to get the requested data`
-          );
-        }
-        const response = await requestData.json();
-        return dispatchFn({
-          type: "start",
-          payload: {
-            questions: response,
-          },
-        });
-      } catch (error) {
-        console.log(error.message);
-        return error;
-      }
-    }
-    fetchData()
-    close();
-  }, [starterData, dispatchFn, close,category]);
-  useEffect(() => {
-    function closeModal(e) {
-      if (e === ref.current) {
-        close();
-      }
-    }
-    document.addEventListener("click", (e) => {
-      closeModal(e.target);
-    });
-    return () =>
-      document.addEventListener("click", (e) => {
-        closeModal(e.target);
-      });
-  }, [close]);
+  //hook meant to fetch questions data
+  useFetch(close)
+  //hook for closing modal by clicking outside the modal
+  useModal(close,ref)
 
   return (
     <div
@@ -70,13 +35,13 @@ function Modal({ close }) {
           className="hover:bg-gray-400 rounded-sm text-xl translate-x-3 bg-none  p-1 transition-all hover:text-white border-none absolute  top-5 right-8"
           onClick={close}
         >
-          &#10005;
+          <HiOutlineXMark />
         </button>
-        <h2 className="capitalize md:font-medium font-normal">
+        <h2 className="capitalize md:font-medium font-normal text-sm sm:text-base">
           Please select your preferred difficulty level and category to begin
-          the quiz. Click on the 'Start Quiz' button when you're ready to test
-          your knowledge and compete for the top spot on the leaderboard. Good
-          luck!
+          the quiz. Click on the &apos;Start Quiz&apos; button when you&apos;re
+          ready to test your knowledge and compete for the top spot on the
+          leaderboard. Good luck!
         </h2>
         <form className="grid gap-7" onSubmit={handleSubmit(onSubmit)}>
           <div className="grid grid-cols-2 items-center">
@@ -119,4 +84,12 @@ function Modal({ close }) {
 function PlayCategory({ close }) {
   return <>{createPortal(<Modal close={close} />, document.body)}</>;
 }
+
+Modal.propTypes = {
+  close: PropTypes.func,
+};
+PlayCategory.propTypes = {
+  close: PropTypes.func,
+};
+
 export default PlayCategory;

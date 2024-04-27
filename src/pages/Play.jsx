@@ -1,19 +1,20 @@
-import { Context } from "../context/UserContextProvider";
 import PlayCategory from "../componenet/Modal";
 import QandA from "../componenet/QandA/QandA";
-import { useContext, useState } from "react";
+import {useState } from "react";
+import { useSelector } from "react-redux";
+import Spinner from "../Ui/Spinner"
 export default function Play() {
-  const {
-    playState: { status },
-  } = useContext(Context);
+  const {status,isloading,questions} = useSelector((state)=>state.playReducer)
   const [start, setStart] = useState(false);
   const openCategoryModal = function () {
     setStart(true);
   };
+  console.log(!questions.length)
   function closeCategoryModal() {
     setStart(false);
   }
-  if (status === "active") return <QandA />;
+  if (!!questions.length && status === "active") return <QandA />;
+  if(isloading) return <Spinner/>
   return (
     <>
       <div className="px-8 md:px-0 text-gray-50 font-medium py-11">
@@ -37,7 +38,7 @@ export default function Play() {
             Select the category you wish to anawer questions from
           </p>
           <p>
-            Click the 'Start' button to select a category and difficulty level,
+            Click the &apos;Start&apos; button to select a category and difficulty level,
             and get started immediately.
           </p>
           <button

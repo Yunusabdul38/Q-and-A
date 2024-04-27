@@ -13,7 +13,6 @@ export const Context = createContext({
   playState: {},
   dispatchFn: () => {},
 });
-
 function reducerFn(state, action) {
   //const curentIndex = state.questions[state.questionsNum];
   if (action.type === "level") {

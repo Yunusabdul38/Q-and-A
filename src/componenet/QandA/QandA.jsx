@@ -1,5 +1,3 @@
-import { useContext } from "react";
-import { Context } from "../../context/UserContextProvider";
 import {
   H1,
   Icon,
@@ -10,20 +8,19 @@ import {
 } from "../../Ui/QandAstyle";
 import Options from "./Options";
 import QuestionsButton from "./QuestionsButton";
+import { useSelector } from "react-redux";
 
 const optionCharacter = ["a", "b", "c", "d"];
 export default function QandA() {
-  const {
-    playState: { questions, questionsNum },
-    dispatchFn,
-  } = useContext(Context);
+  const {questions,questionsNum} = useSelector((state)=>state.playReducer)
+  
   const { question, correctIndex, options } = questions[questionsNum];
   const shuffle = options?.sort(() => 0.5 - Math.random());
   function nextQuestionHandler() {
-    dispatchFn({ type: "next" });
+    //dispatch({ type: "next" });
   }
   function previousQuestionHandler() {
-    dispatchFn({ type: "prev" });
+    //dispatchFn({ type: "prev" });
   }
 
   if (!questions) return <h1>unable to featch qs</h1>;

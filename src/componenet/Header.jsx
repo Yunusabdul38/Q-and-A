@@ -1,10 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import { clearLocalstorage } from "../services/locatStorage";
-
 export default function Header() {
   const navigate = useNavigate();
   const logOutHandler = function () {
-    clearLocalstorage();
+    // clearLocalstorage();
     navigate("/");
   };
   return (
