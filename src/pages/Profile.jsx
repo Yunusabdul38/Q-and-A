@@ -1,8 +1,10 @@
 import { useState } from "react";
 import Button from "../Ui/Button";
 import Form from "../componenet/form";
+import { useUser } from "../hook/useUser";
 
 export default function Profile() {
+  const [name,photo] = useUser()
   const [updateUser, setUpdateUser] = useState(false);
   function userUpdatehandler() {
     setUpdateUser(true);
@@ -14,14 +16,14 @@ export default function Profile() {
     <div className="grid items-center justify-center h-screen">
       <div className="pt-10 p-2 capitalize text-gray-50 flex gap-10 justify-center">
         <img
-        src="https://plus.unsplash.com/premium_photo-1658527049634-15142565537a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8YXZhdGFyfGVufDB8fDB8fHww"
-        alt="YA"
+        src={photo}
+        alt={`${name.join(" ")} display photo`}
         className="bg-gray-50 text-gray-950 w-60 h-60 grid items-center justify-center  font-NatoSans text-7xl font-bold uppercase"
       />
         <aside className="grid items-center">
           <div>
             <h1>name:</h1>
-            <span>yunus abdul</span>
+            <span>{name.join(" ")}</span>
           </div>
           <div>
             <h1>email:</h1>

@@ -1,19 +1,5 @@
-import Authentication from "../componenet/Authentication";
-import { useSelector,useDispatch } from "react-redux";
-import Spinner from "../Ui/Spinner"
-import { useEffect } from "react";
-import { checkUserSignIn } from "../store/auth-checkUserSignIn";
 
 export default function Home() {
-  const {loading,user} = useSelector(state=> state.userReducer)
-
-  const dispatch = useDispatch()
-  useEffect(()=>{
-    dispatch(checkUserSignIn())
-  },[dispatch])
-  
-  if(loading) return <Spinner/>
-  if (!user) return <Authentication />;
 
   return <div>
     <p>home</p>

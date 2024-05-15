@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import {
   H1,
   Icon,
@@ -7,22 +8,16 @@ import {
   StyleApp,
 } from "../../Ui/QandAstyle";
 import Options from "./Options";
-import QuestionsButton from "./QuestionsButton";
 import { useSelector } from "react-redux";
 
 const optionCharacter = ["a", "b", "c", "d"];
 export default function QandA() {
-  const {questions,questionsNum} = useSelector((state)=>state.playReducer)
-  
-  const { question, correctIndex, options } = questions[questionsNum];
-  const shuffle = options?.sort(() => 0.5 - Math.random());
-  function nextQuestionHandler() {
-    //dispatch({ type: "next" });
-  }
-  function previousQuestionHandler() {
-    //dispatchFn({ type: "prev" });
-  }
+  const { questions, questionsNum } = useSelector((state) => state.playReducer);
 
+  const { question, correctIndex, options } = questions[questionsNum];
+  const shuffle = useMemo(() => {
+    return options.slice().sort(() => 0.5 - Math.random());
+  }, [options]);
   if (!questions) return <h1>unable to featch qs</h1>;
   return (
     <StyleApp>
@@ -46,7 +41,7 @@ export default function QandA() {
           );
         })}
       </Questions>
-      <div className="flex justify-between">
+      {/* <div className="flex justify-between">
         <QuestionsButton
           disabledNum={0}
           eventHandler={previousQuestionHandler}
@@ -61,7 +56,7 @@ export default function QandA() {
         >
           next
         </QuestionsButton>
-      </div>
+      </div> */}
     </StyleApp>
   );
 }

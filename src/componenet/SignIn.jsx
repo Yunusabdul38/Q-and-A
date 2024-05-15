@@ -1,24 +1,21 @@
 import { useForm } from "react-hook-form";
 import Password from "./Password";
 import Input from "./input";
-import { useNavigate } from "react-router-dom";
 import Button from "../Ui/Button";
 import { userSignIn } from "../store/firebaseAuthentication";
+import { useDispatch } from "react-redux";
 
 export default function SignIn() {
-  const navigate = useNavigate();
+  const dispatch = useDispatch()
   const {
     register,
-    reset,
     handleSubmit,
     formState: { isLoading: formLoading, errors },
   } = useForm();
 
-  const submitData = (data) => {
-    const { email, password, checkbox } = data;
-    console.log(data, navigate);
-    userSignIn({ email, password });
-    //reset();
+  const submitData = async (data) => {
+    const { email, password } = data;
+    await userSignIn({ email, password },dispatch);
   };
 
   return (

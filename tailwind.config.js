@@ -7,6 +7,8 @@ export default {
         tekur: ["Tektur", "sans-serif"],
         lexendDeca: ["Lexend Deca", "sans-serif"],
         NatoSans: ["Noto Sans", "sans-serif"],
+        Poppins:["Poppins", "sans-serif"],
+        openSans:["Open Sans", "sans-serif"],
       },
       animation: {
         spinner: "spinner 1s forwards infinite",

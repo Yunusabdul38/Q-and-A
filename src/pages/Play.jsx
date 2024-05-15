@@ -9,7 +9,7 @@ export default function Play() {
   const openCategoryModal = function () {
     setStart(true);
   };
-  console.log(!questions.length)
+ 
   function closeCategoryModal() {
     setStart(false);
   }
@@ -17,8 +17,8 @@ export default function Play() {
   if(isloading) return <Spinner/>
   return (
     <>
-      <div className="px-8 md:px-0 text-gray-50 font-medium py-11">
-        <h1 className="font-extrabold text-3xl font-tekur text-center">
+      <div className="px-8 md:px-0 text-gray-50 py-11 font-Poppins font-light">
+        <h1 className="font-extrabold text-3xl font-openSans text-center">
           Welcome to our Quiz Challenge!
         </h1>
         <div className="md:w-3/4 mx-auto text-xl grid gap-4 my-4">

@@ -7,7 +7,6 @@ import Play from "./pages/Play.jsx";
 import "./index.css";
 import Profile from "./pages/Profile.jsx";
 import Leadbord from "./pages/Leadbord.jsx";
-//import { handleAuthStateChange } from "./store/authentication.js";
 import { store } from "./store/store.js";
 import { Provider } from "react-redux";
 // const Authentication = import('./componenet/Authentication.jsx')
@@ -15,15 +14,12 @@ import { Provider } from "react-redux";
 //app routing setup with react router 
 const route = createBrowserRouter([
   {
-    path: "/",
-    element: <Home />,
-    // loader: () => {
-    //   return handleAuthStateChange();
-    // },
-  },
-  {
     element: <App />,
     children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
       {
         path: "/profile",
         element: <Profile />,

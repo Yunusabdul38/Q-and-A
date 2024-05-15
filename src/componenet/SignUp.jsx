@@ -2,17 +2,13 @@ import { useForm } from "react-hook-form";
 import Button from "../Ui/Button";
 import Password from "./Password";
 import Input from "./input";
-import { useNavigate } from "react-router-dom";
 import { userSignUp } from "../store/firebaseAuthentication";
-const logUser = {
-  email: "test@gmail.com",
-  password: "testing",
-};
+import { useDispatch } from "react-redux";
+
 export default function SignUp() {
-  const navigate = useNavigate();
+  const dispatch = useDispatch()
   const {
     register,
-    reset,
     handleSubmit,
     getValues,
     formState: { isLoading: formLoading, errors },
@@ -21,13 +17,7 @@ export default function SignUp() {
   const comfirPassWorderror = errors["confirm-password"];
   const submitData = (data) => {
     const { email, password, fullName } = data;
-    userSignUp(email, password, fullName, navigate);
-    // check if inputed user login data is valid with the register data on the server
-    const validation = email === logUser.email && password === logUser.password;
-    if (!validation) return console.log("user does not exist");
-    //if (checkbox) setLocalstorage({ email, password, name: "yunus Abdul" });
-    navigate("/");
-    reset();
+    userSignUp(email, password, fullName, dispatch);
   };
   return (
     <form className="flex flex-col w-full" onSubmit={handleSubmit(submitData)}>
@@ -72,7 +62,7 @@ export default function SignUp() {
       </Password>
       <Password label="comfirm password">
         <label
-          htmlFor="password"
+          htmlFor="comfirm-password"
           className="text-blue-200 relative bottom-7 transition-all duration-75 ease-linear capitalize text-lg font-tekur"
           data={{
             ...register("confirm-password", {
@@ -88,7 +78,7 @@ export default function SignUp() {
             }),
           }}
         >
-          password
+          confirm password
         </label>
         <p className={`absolute bottom-0 text-red-500 text-sm`}>
           {!!comfirPassWorderror && comfirPassWorderror.message}

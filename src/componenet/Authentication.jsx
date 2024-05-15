@@ -18,7 +18,7 @@ export default function Authentication() {
 
   return (
     <div className="bg-blue-900 h-screen flex justify-center items-center">
-      <div className="shadow-xl bg-blue-800/35 w-4/5 md:w-3/4 md:px-6 font-lexendDeca">
+      <div className="shadow-xl bg-blue-800/35 w-[90%] md:w-3/4 md:px-6 font-lexendDeca">
         <div className="flex justify-center my-4">
           <Button onClick={signUpHandler} type="secondary" state={!login}>
             sign up

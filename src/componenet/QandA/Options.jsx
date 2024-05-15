@@ -19,14 +19,14 @@ export default function Options({ option, character, correctIndex, index }) {
   useEffect(()=>{
     if(!isAnswered) return
     const timeout = setTimeout(()=>{
-      dispatch(nextQuestion)
+      dispatch(nextQuestion())
     },2000)
     return ()=> clearTimeout(timeout)
   },[isAnswered,dispatch])
   useEffect(()=>{
     setIsAnswerd(highlighting)
   },[highlighting,setIsAnswerd])
-  console.log(highlighting)
+ 
   return (
     <Wrapper onClick={userAnswerHandler} disabled={answers[questionsNum]?true:false}>
       <QuesDiv answer={highlighting}>
