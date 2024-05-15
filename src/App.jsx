@@ -9,19 +9,18 @@ import Spinner from "./Ui/Spinner"
 
 export default function App() {
   const [fullmenu, setFullMenu] = useState(true);
-  const { loading, user } = useSelector((state) => state.userReducer);
+  const { loading, user} = useSelector((state) => state.userReducer);
+  const {status} = useSelector((state) => state.playReducer);
   const dispatch = useDispatch()
-  // let secondsRemaining  = 1200
-  // useEffect(()=>{
-  //   const int = setInterval(() => {
-  //     secondsRemaining --
-  //     const minutes = Math.trunc(secondsRemaining / 60);
-  //     const seconds =Math.floor(secondsRemaining % 60);
-  //     console.log(minutes +":" + seconds)
-  //   }, 1000);
+  // prompt  user if they try leaving ehen the game is not idle
+  useEffect(()=>{
+    if(status !== "idle"){
+      window.addEventListener("beforeunload",(e)=>{
+        e.preventDefault()
+      })
+    }    
+  },[status])  
 
-  //   ()=> clearInterval(int)
-  // })  
   useEffect(() => {
     if(user) return
     dispatch(checkUserSignIn())
