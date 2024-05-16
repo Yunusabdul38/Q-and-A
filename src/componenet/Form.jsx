@@ -1,5 +1,8 @@
 import { useForm } from "react-hook-form";
+import { useUser } from "../hook/useUser";
+import { uploadImage } from "../services/uploadImage";
 export default function Form({ cancleUpdate }) {
+  // const [name,photo] =  useUser()
   const {
     handleSubmit,
     register,
@@ -7,7 +10,8 @@ export default function Form({ cancleUpdate }) {
     formState: { errors, isSubmitSuccessful, isSubmitting },
   } = useForm();
   function onSubmit(data) {
-    console.log(data);
+    data.avatar= data.avatar[0]
+    uploadImage(data.avatar)
     if (isSubmitSuccessful) {
       cancleUpdate();
     }
@@ -40,6 +44,7 @@ export default function Form({ cancleUpdate }) {
         <label>edit avatar</label>
         <input
           type="file"
+           accept="image/*"
           className="file:bg-sky-500 file:hover:bg-blue-900 file:border-none file:rounded-md file:px-3 file:py-1 file:text-gray-50"
           {...register("avatar")}
         />
