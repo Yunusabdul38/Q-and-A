@@ -1,10 +1,11 @@
 import { useState } from "react";
 import Button from "../Ui/Button";
-import Form from "../componenet/form";
+import { LuUser2 } from "react-icons/lu";
+import Form from "../component/Form";
 import { useUser } from "../hook/useUser";
 
 export default function Profile() {
-  const [name,photo] = useUser()
+  const [name, photo] = useUser();
   const [updateUser, setUpdateUser] = useState(false);
   function userUpdatehandler() {
     setUpdateUser(true);
@@ -15,11 +16,15 @@ export default function Profile() {
   return (
     <div className="grid items-center justify-center h-screen">
       <div className="pt-10 p-2 capitalize text-gray-50 flex gap-10 justify-center">
-        <img
-        src={photo}
-        alt={`${name.join(" ")} display photo`}
-        className="bg-gray-50 text-gray-950 w-60 h-60 grid items-center justify-center  font-NatoSans text-7xl font-bold uppercase"
-      />
+        {photo ? (
+          <img
+            src={photo}
+            alt={`${name.join(" ")} display photo`}
+            className="bg-gray-50 text-gray-950 w-60 h-60 grid items-center justify-center  font-NatoSans text-7xl font-bold uppercase"
+          />
+        ) : (
+          <LuUser2 className="text-gray-950 w-60 h-60" />
+        )}
         <aside className="grid items-center">
           <div>
             <h1>name:</h1>

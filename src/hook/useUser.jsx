@@ -1,16 +1,15 @@
-import { getAuth } from "firebase/auth";
 import { useSelector } from "react-redux";
 
-const auth = getAuth();
 
 let name;
 let photo;
 export function useUser() {
   const { user } = useSelector((state) => state.userReducer);
+  const {image,fullname} = user
   if (user) {
-    const { displayName, photoURL } = auth.currentUser;
-    name = displayName?.split(" ");
-    photo = photoURL;
+    
+    name = fullname?.split(" ");
+    photo = image?image:null;
   }
 
   return [name, photo];

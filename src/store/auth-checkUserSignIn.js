@@ -16,7 +16,7 @@ export const checkUserSignIn = createAsyncThunk(
         const data = docSnap.data();
         resolve(data);
       } else {
-        reject("user data does not exixt try signing up or tey again later");
+        reject("user data does not exist try signing up or tey again later");
       }
     });
   }

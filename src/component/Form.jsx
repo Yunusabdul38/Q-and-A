@@ -1,17 +1,22 @@
 import { useForm } from "react-hook-form";
-import { useUser } from "../hook/useUser";
-import { uploadImage } from "../services/uploadImage";
+import { updatedUserData, uploadImage } from "../services/updateUserData";
+import { useDispatch, useSelector } from "react-redux";
 export default function Form({ cancleUpdate }) {
-  // const [name,photo] =  useUser()
+  const {updatedUserImage} = useSelector((state)=>state.userReducer)
+  const dispatchFn = useDispatch()
   const {
     handleSubmit,
     register,
     getValues,
     formState: { errors, isSubmitSuccessful, isSubmitting },
   } = useForm();
-  function onSubmit(data) {
+  async function onSubmit(data) {
     data.avatar= data.avatar[0]
-    uploadImage(data.avatar)
+    if(data.avatar[0]){
+      uploadImage(data.avatar,dispatchFn)
+      data.avatar= updatedUserImage
+    }
+    await updatedUserData(data)
     if (isSubmitSuccessful) {
       cancleUpdate();
     }
@@ -79,6 +84,7 @@ export default function Form({ cancleUpdate }) {
           type="button"
           className="bg-sky-500 w-fit py-2 px-6 rounded-md border hover:bg-blue-800 capitalize"
           onClick={cancleUpdate}
+          disabled={isSubmitting}
         >
           cancle
         </button>
@@ -87,7 +93,7 @@ export default function Form({ cancleUpdate }) {
           type="submit"
           disabled={isSubmitting}
         >
-          update profile
+         {isSubmitting?"sending....":" update profile"}
         </button>
       </div>
     </form>

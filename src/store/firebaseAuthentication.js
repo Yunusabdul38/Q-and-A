@@ -10,8 +10,6 @@ import db from "./firebase";
 import { checkUserSignIn } from "./auth-checkUserSignIn";
 import {signOut as logOutUser} from "./store"
 const auth = getAuth();
-const dummyUserImage =
-  "https://media.istockphoto.com/id/1451587807/vector/user-profile-icon-vector-avatar-or-person-icon-profile-picture-portrait-symbol-vector.jpg?s=612x612&w=0&k=20&c=yDJ4ITX1cHMh25Lt1vI1zBn2cAKKAlByHBvPJ8gEiIg=";  
 export async function userSignUp(Email, password, fullName, dispatch) {
   try {
     // creating user function in firbase with email and password
@@ -25,7 +23,6 @@ export async function userSignUp(Email, password, fullName, dispatch) {
     // setting a timestamp for the precise time of user data creation using firebase
     //serverTimestamp function
     userDataCopy.timeStamp = serverTimestamp();
-    userDataCopy.image = dummyUserImage
     // sending the copy user data to firestore if condition set in firestore for authentication is true
     await setDoc(doc(db, "users", user.uid), userDataCopy);
     // reset();

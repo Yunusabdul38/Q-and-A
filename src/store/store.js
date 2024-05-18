@@ -5,6 +5,7 @@ import { fetchQuestions } from "../services/getQuestions";
 const initialUserState = {
   user: null,
   loading: true,
+  updatedUserImage:null,
 };
 
 const initialPlayState = {
@@ -27,6 +28,9 @@ const authUserSlice = createSlice({
     signOut: (state) => {
       state.user = null;
     },
+    updatePhoto:(state,action)=>{
+      state.updatedUserImage = action.payload
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(checkUserSignIn.pending, (state) => {
@@ -125,7 +129,7 @@ export const {
   previousQuestion,
   countdown,
 } = playSlice.actions;
-export const { signOut } = authUserSlice.actions;
+export const { signOut,updatePhoto } = authUserSlice.actions;
 export const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
