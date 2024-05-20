@@ -3,6 +3,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import db from "../store/firebase";
 import { getAuth } from "firebase/auth";
 import { updatePhoto } from "../store/store";
+import toast from "react-hot-toast";
 
 const auth = getAuth();
 const user = auth.currentUser;
@@ -20,13 +21,10 @@ export async function uploadImage(image,dispatchFn) {
     const getUrl = await getDownloadURL(uploadByte.ref);
     console.log(getUrl);
     //dispatch image url to user store, then send it together with user updatae data to firestore
-    dispatchFn(updatePhoto())
+    dispatchFn(updatePhoto(getUrl))
   } catch (error) {
     console.log(error);
   }
-  // uploadBytes(imageRef, image).then((snapshot) => {
-  // getDownloadURL(snapshot.ref).then(url=>uploadImage(url))
-  // });
 }
 export async function updatedUserData(data) {
   try {
@@ -34,6 +32,9 @@ export async function updatedUserData(data) {
     // update user data
     await updateDoc(washingtonRef, data);
   } catch (error) {
+    toast.error(
+      "Looks like we encountered a glitch. Don't worry, it happens! Let's give it another shot."
+    );
     console.log(error);
   }
 }

@@ -1,13 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { getAuth } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import db from "./firebase";
 
 export const checkUserSignIn = createAsyncThunk(
   "auth/checkUserSignIn",
-  async () => {
-    const auth = getAuth();
-    const user = auth.currentUser;
+  async (userCredential) => {
+    const user = userCredential
     // get user data
     const docRef = doc(db, "users", user.uid);
     const docSnap = await getDoc(docRef);

@@ -8,15 +8,19 @@ import {
 import { setDoc, doc, serverTimestamp } from "firebase/firestore";
 import db from "./firebase";
 import { checkUserSignIn } from "./auth-checkUserSignIn";
-import {signOut as logOutUser} from "./store"
+import toast from "react-hot-toast";
+import { logUserOut } from "./store";
 const auth = getAuth();
+const currentUser = auth.currentUser;
 export async function userSignUp(Email, password, fullName, dispatch) {
   try {
     // creating user function in firbase with email and password
     const setup = await createUserWithEmailAndPassword(auth, Email, password);
     const user = setup.user;
     //update user information
-    await updateProfile(auth.currentUser, { displayName: fullName,photoURL:dummyUserImage });
+    await updateProfile(currentUser, {
+      displayName: fullName,
+    });
     // a user data copy to push to firestore without password
     const { displayName, email } = user;
     const userDataCopy = { fullName: displayName, email };
@@ -25,46 +29,94 @@ export async function userSignUp(Email, password, fullName, dispatch) {
     userDataCopy.timeStamp = serverTimestamp();
     // sending the copy user data to firestore if condition set in firestore for authentication is true
     await setDoc(doc(db, "users", user.uid), userDataCopy);
-    // reset();
     //navigate to home page if everything is successful
-    await dispatch(checkUserSignIn())
+    await dispatch(checkUserSignIn());
+    toast.success(`nice to have you here ${displayName}`);
   } catch (error) {
+    // email address already exist
     if (error.code === "auth/account-exists-with-different-credential") {
-      return console.log("User's email already exists");
+      return toast.error(
+        "User's email already exists, try signing up or use a different email"
+      );
     }
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.log({ errorCode, errorMessage });
+    // if password or email in not valid with the authenticated users in firebase
+    if (error.code === "auth/invalid-credential") {
+      return toast.error(
+        "Whoops! It looks like your login credentials are incorrect. Double-check your username and password and try again.",
+        { duration: 8000 }
+      );
+    }
+    // network failure
+    if (error.code === "auth/network-request-failed") {
+      return toast.error(
+        "No internet connection detected. You might need to connect to Wi-Fi or check your mobile data.",
+        { duration: 8000 }
+      );
+    }
+    //general error messsage
+    toast.error(
+      "Looks like we encountered a glitch. Don't worry, it happens! Let's give it another shot."
+    );
   }
 }
 
-export async function userSignIn(data,dispatch) {
+export async function userSignIn(data, dispatch) {
   const { email, password } = data;
   try {
-    await signInWithEmailAndPassword(auth, email, password);
-    await dispatch(checkUserSignIn())
-    console.log("welcome back");
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    await dispatch(checkUserSignIn(userCredential.user));
+    toast.success(
+      `welcome back ${userCredential.user.displayName.toUpperCase()} 🤗`
+    );
   } catch (error) {
     // if password or email in not valid with the authenticated users in firebase
     if (error.code === "auth/invalid-credential") {
-      return console.log("invalid email or password not correct");
+      return toast.error(
+        "Whoops! It looks like your login credentials are incorrect. Double-check your username and password and try again.",
+        { duration: 8000 }
+      );
     }
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.log({ errorCode, errorMessage });
-    // other error trying to login message
-    //   toast.error("Error signing user in");
+    // network failure
+    if (error.code === "auth/network-request-failed") {
+      return toast.error(
+        "No internet connection detected. You might need to connect to Wi-Fi or check your mobile data.",
+        { duration: 8000 }
+      );
+    }
+    //general error messsage
+    toast.error(
+      "Looks like we encountered a glitch. Don't worry, it happens! Let's give it another shot."
+    );
   }
 }
 
 export async function userSignOut(dispatch) {
   try {
     await signOut(auth);
-    console.log("log out succesfull");
-    dispatch(logOutUser())
+    await dispatch(logUserOut());
+    toast.success("log out succesfull")
   } catch (error) {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.log({ errorCode, errorMessage });
+    // network failure
+    if (error.code === "auth/network-request-failed") {
+      return toast.error(
+        "We couldn't connect to complete logging you logout. Check your internet connection and try again."
+      );
+    }
+    //general error messsage
+    toast.error(
+      "Logout unsuccessful. We're checking into this. Please try logging out again in a moment.Logout unsuccessful. We're checking into this. Please try logging out again in a moment."
+    );
+  }
+}
+
+export async function updatePassword(password){ 
+  const newPassword = password;
+  try{
+    await  updatePassword(currentUser, newPassword)
+    toast.success("your password has been updated")
+  }catch(error){
+    toast.error(
+      "Looks like we encountered a glitch. Don't worry, it happens! Let's give it another shot."
+    );
   }
 }

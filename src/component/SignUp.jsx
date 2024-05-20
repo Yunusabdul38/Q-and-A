@@ -11,7 +11,7 @@ export default function SignUp() {
     register,
     handleSubmit,
     getValues,
-    formState: { isLoading: formLoading, errors },
+    formState: { isSubmitting, errors },
   } = useForm();
 
   const comfirPassWorderror = errors["confirm-password"];
@@ -84,15 +84,7 @@ export default function SignUp() {
           {!!comfirPassWorderror && comfirPassWorderror.message}
         </p>
       </Password>
-      <div className="text-gray-50 capitalize text-bas">
-        <span className="mr-2">remember me</span>
-        <input
-          type="checkbox"
-          className="border-red-50 border-dotted border-2"
-          {...register("checkbox")}
-        />
-      </div>
-      <Button disabled={formLoading}>Get started</Button>
+      <Button disabled={isSubmitting}>{isSubmitting?"signing in ...":"sign in"}</Button>
     </form>
   );
 }

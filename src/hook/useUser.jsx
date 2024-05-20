@@ -4,13 +4,12 @@ import { useSelector } from "react-redux";
 let name;
 let photo;
 export function useUser() {
-  const { user } = useSelector((state) => state.userReducer);
-  const {image,fullname} = user
+  const { user,loading,updatedUserImage } = useSelector((state) => state.userReducer);
+  const email = user?.email
   if (user) {
-    
-    name = fullname?.split(" ");
-    photo = image?image:null;
+    name = user?.fullName?.split(",");
+    photo = user?.image?user.image:null;
   }
 
-  return [name, photo];
+  return {name, photo,loading,email,updatedUserImage,user};
 }

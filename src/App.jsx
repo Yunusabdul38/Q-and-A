@@ -1,15 +1,16 @@
 import { useSelector,useDispatch } from "react-redux";
 import { Outlet } from "react-router-dom";
-import Header from "./componenet/Header";
-import Navbar from "./componenet/Navbar";
+import Header from "./component/Header";
+import Navbar from "./component/Navbar";
 import { useCallback, useState,useEffect } from "react";
 import { checkUserSignIn } from "./store/auth-checkUserSignIn";
-import Authentication from "./componenet/Authentication"
+import Authentication from "./component/Authentication"
 import Spinner from "./Ui/Spinner"
+import { useUser } from "./hook/useUser";
 
 export default function App() {
   const [fullmenu, setFullMenu] = useState(true);
-  const { loading, user} = useSelector((state) => state.userReducer);
+  const {email:user,loading} = useUser()
   const {status} = useSelector((state) => state.playReducer);
   const dispatch = useDispatch()
   // prompt  user if they try leaving ehen the game is not idle

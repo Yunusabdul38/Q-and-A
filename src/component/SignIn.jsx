@@ -10,9 +10,8 @@ export default function SignIn() {
   const {
     register,
     handleSubmit,
-    formState: { isLoading: formLoading, errors },
+    formState: { isSubmitting, errors },
   } = useForm();
-
   const submitData = async (data) => {
     const { email, password } = data;
     await userSignIn({ email, password },dispatch);
@@ -50,20 +49,10 @@ export default function SignIn() {
           {errors?.password?.message}
         </p>
       </Password>
-      <div className="text-gray-50 capitalize text-bas">
-        <span className="mr-2">remember me</span>
-        <input
-          type="checkbox"
-          className="border-red-50 border-dotted border-2"
-          {...register("checkbox")}
-        />
-      </div>
-
       <a className="text-blue-200 text-end text-base cursor-pointer hover:text-white capitalize ">
         forget password?
       </a>
-
-      <Button disabled={formLoading}>login</Button>
+      <Button disabled={isSubmitting}>{isSubmitting?"signinig in .....":"sign in"}</Button>
     </form>
   );
 }

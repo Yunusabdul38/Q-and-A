@@ -1,6 +1,7 @@
 import { doc, getDoc } from "firebase/firestore";
 import db from "../store/firebase";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import toast from "react-hot-toast";
 
 export const fetchQuestions = createAsyncThunk(
   "play/start",
@@ -17,6 +18,7 @@ export const fetchQuestions = createAsyncThunk(
       } else {
         // docSnap.data() will be undefined in this case
         reject("No such document!");
+        toast.error("We're having trouble finding what you're looking for. Try refreshing the page or searching with different keywords.")
       }
     });
   }

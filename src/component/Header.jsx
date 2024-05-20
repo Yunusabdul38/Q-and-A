@@ -1,20 +1,18 @@
 import { SlLogout } from "react-icons/sl";
 import { LuUser2 } from "react-icons/lu";
 import { userSignOut } from "../store/firebaseAuthentication";
-import { checkUserSignIn } from "../store/auth-checkUserSignIn";
 import { useDispatch, useSelector } from "react-redux";
 import { useUser } from "../hook/useUser";
 import Timer from "./Timer";
 
 export default function Header() {
   const { level, questions } = useSelector((state) => state.playReducer);
-  const [name, photo] = useUser();
+  const {name, photo} = useUser();
   const dispatch = useDispatch();
 
   // logOut handler (logout and navigate to authentication page)
   const logOutHandler = function () {
     userSignOut(dispatch);
-    dispatch(checkUserSignIn());
   };
 
   return (

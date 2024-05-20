@@ -1,14 +1,15 @@
 import { useState } from "react";
 import Button from "../Ui/Button";
 import { LuUser2 } from "react-icons/lu";
-import Form from "../component/Form";
+import EditProfileForm from "../component/EditProfileForm";
 import { useUser } from "../hook/useUser";
+import ChangePassWordForm from "../component/ChangePassWordForm";
 
 export default function Profile() {
-  const [name, photo] = useUser();
+  const {name, photo,email} = useUser();
   const [updateUser, setUpdateUser] = useState(false);
   function userUpdatehandler() {
-    setUpdateUser(true);
+    setUpdateUser("profile");
   }
   function cancleUpdateHandler() {
     setUpdateUser(false);
@@ -32,21 +33,34 @@ export default function Profile() {
           </div>
           <div>
             <h1>email:</h1>
-            <span className="lowercase">yunus@gmail.com</span>
+            <span className="lowercase">{email}</span>
           </div>
 
           <Button
             style="px-4 bg-blue-600 w-fit disabled:cursor-not-allowed"
-            disabled={updateUser}
+            disabled={updateUser === "profile"}
             onClick={userUpdatehandler}
           >
             Edit profile
           </Button>
+          
+          <Button
+            style="px-4 bg-blue-600 w-fit disabled:cursor-not-allowed"
+            disabled={updateUser==="password"}
+            onClick={()=>setUpdateUser("password")}
+          >
+            change password
+          </Button>
         </aside>
       </div>
-      {updateUser && (
+      {updateUser === "profile" && (
         <div className="flex justify-center my-5">
-          <Form cancleUpdate={cancleUpdateHandler} />
+          <EditProfileForm cancleUpdate={cancleUpdateHandler} />
+        </div>
+      )}
+      {updateUser === "password" && (
+        <div className="flex justify-center my-5">
+          <ChangePassWordForm cancleUpdate={cancleUpdateHandler} />
         </div>
       )}
     </div>

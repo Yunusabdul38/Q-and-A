@@ -1,5 +1,5 @@
-import PlayCategory from "../componenet/Modal";
-import QandA from "../componenet/QandA/QandA";
+import PlayCategory from "../component/Modal";
+import QandA from "../component/QandA/QandA";
 import {useState } from "react";
 import { useSelector } from "react-redux";
 import Spinner from "../Ui/Spinner"

@@ -5,7 +5,7 @@ import { fetchQuestions } from "../services/getQuestions";
 const initialUserState = {
   user: null,
   loading: true,
-  updatedUserImage:null,
+  updatedUserImage: null,
 };
 
 const initialPlayState = {
@@ -25,7 +25,7 @@ const authUserSlice = createSlice({
   name: "auth",
   initialState: initialUserState,
   reducers: {
-    signOut: (state) => {
+    logUserOut: (state) => {
       state.user = null;
     },
     updatePhoto:(state,action)=>{
@@ -47,7 +47,7 @@ const authUserSlice = createSlice({
       // it work like finally in a promise
       builder.addMatcher(checkUserSignIn.settled, (state) => {
         state.loading = false;
-      });
+      })
   },
 });
 const playSlice = createSlice({
@@ -63,7 +63,6 @@ const playSlice = createSlice({
         : difficulty === "medium"
         ? (state.secPerQuestion = 15)
         : (state.secPerQuestion = null);
-      
     },
     answer: (state, action) => {
       const { correctIndex, userIndex } = action.payload;
@@ -87,7 +86,7 @@ const playSlice = createSlice({
     },
     countdown: (state) => {
       state.secondsRemaining--;
-      state.secondsRemaining === 0 ?state.status="inactive" :state.status;
+      state.secondsRemaining === 0 ? (state.status = "inactive") : state.status;
     },
     end: (state) => {
       state.status = "idle";
@@ -129,7 +128,7 @@ export const {
   previousQuestion,
   countdown,
 } = playSlice.actions;
-export const { signOut,updatePhoto } = authUserSlice.actions;
+export const { updatePhoto, logUserOut } = authUserSlice.actions;
 export const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
