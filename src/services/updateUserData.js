@@ -7,7 +7,6 @@ import toast from "react-hot-toast";
 
 const auth = getAuth();
 const user = auth.currentUser;
-
 export async function uploadImage(image,dispatchFn) {
   // Create a root reference
   const storage = getStorage();
@@ -19,22 +18,43 @@ export async function uploadImage(image,dispatchFn) {
   try {
     const uploadByte = await uploadBytes(imageRef, image);
     const getUrl = await getDownloadURL(uploadByte.ref);
-    console.log(getUrl);
     //dispatch image url to user store, then send it together with user updatae data to firestore
-    dispatchFn(updatePhoto(getUrl))
-  } catch (error) {
-    console.log(error);
-  }
-}
-export async function updatedUserData(data) {
-  try {
-    const washingtonRef = doc(db, "users", user.uid);
-    // update user data
-    await updateDoc(washingtonRef, data);
+    await dispatchFn(updatePhoto(getUrl))
+    toast.success("user profile updated")
   } catch (error) {
     toast.error(
       "Looks like we encountered a glitch. Don't worry, it happens! Let's give it another shot."
     );
-    console.log(error);
+    console.log(error)
   }
 }
+export async function updatedUserData(data) {
+  try {
+    const updatedData = doc(db, "users", user.uid);
+    // update user data
+    await updateDoc(updatedData, data);
+  } catch (error) {
+    toast.error(
+      "Looks like we encountered a glitch. Don't worry, it happens! Let's give it another shot."
+    );
+    console.log(error)
+  }
+}
+
+// export async function updatedUserData(data) {
+//   try {
+//     onAuthStateChanged(auth, async(user) => {
+//       if (user) {
+//         // User is signed in, see docs for a list of available properties
+//         const uid = user.uid;
+//         const updatedData = doc(db, "users", uid);
+//         // update user data
+//         await updateDoc(updatedData, data);
+//       }
+//     });
+//   } catch (error) {
+//     toast.error(
+//       "Looks like we encountered a glitch. Don't worry, it happens! Let's give it another shot."
+//     );
+//   }
+//}

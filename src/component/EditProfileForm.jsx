@@ -2,6 +2,10 @@ import { useForm } from "react-hook-form";
 import { updatedUserData, uploadImage } from "../services/updateUserData";
 import { useDispatch } from "react-redux";
 import { useUser } from "../hook/useUser";
+import { checkUserSignIn } from "../store/auth-checkUserSignIn";
+import { getAuth } from "firebase/auth";
+const auth = getAuth();
+const authUser = auth.currentUser;
 export default function EditProfileForm({ cancleUpdate }) {
   const {email,updatedUserImage,user} = useUser();
   const dispatchFn = useDispatch()
@@ -11,20 +15,18 @@ export default function EditProfileForm({ cancleUpdate }) {
     formState: { isSubmitSuccessful, isSubmitting},
   } = useForm();
   async function onSubmit(data) {
-    data.avatar= data.avatar[0]
-    // if(data.avatar){
-    //   console.log("img")
-    //   await uploadImage(data.avatar,dispatchFn)
-    //   data.avatar= updatedUserImage
-    // }
-    delete data["confirm-password"]
-    if(!data.avatar) delete data.avatar
+    if(!data.image || !data.fullName) return
+     data.image= data.image[0]
+    if(data.image){
+      await uploadImage(data.image,dispatchFn)
+      data.image= updatedUserImage
+    }
+    if(!data.image) delete data.image
     if(!data.fullName) delete data.fullName
-    console.log(data)
-    //await updatedUserData(data)
+    await updatedUserData(data)
     if (isSubmitSuccessful) {
-      //cancleUpdate();
-      console.log("done")
+      dispatchFn(checkUserSignIn(authUser))
+      cancleUpdate();
     }
   }
   return (
@@ -39,7 +41,6 @@ export default function EditProfileForm({ cancleUpdate }) {
             className="bg-inherit border outline-none pl-3 w-96 py-3 disabled:bg-gray-400 disabled:cursor-not-allowed"
             defaultValue={email}
             disabled
-            // {...register("email", { value: "yunusabdul@gmail.com" })}
           />
         </div>
         <div className="grid gap-2">
@@ -57,7 +58,7 @@ export default function EditProfileForm({ cancleUpdate }) {
           type="file"
            accept="image/*"
           className="file:bg-sky-500 file:hover:bg-blue-900 file:border-none file:rounded-md file:px-3 file:py-1 file:text-gray-50"
-          {...register("avatar")}
+          {...register("image")}
         />
       </div>
       <div className="flex justify-end gap-6 text-gray-50">
@@ -74,7 +75,7 @@ export default function EditProfileForm({ cancleUpdate }) {
           type="submit"
           disabled={isSubmitting}
         >
-         {isSubmitting?"sending....":" update profile"}
+         {isSubmitting?"updating....":" update profile"}
         </button>
       </div>
     </form>

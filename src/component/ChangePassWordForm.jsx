@@ -1,24 +1,24 @@
 import { useForm } from "react-hook-form";
+import { updatePassword } from "../store/firebaseAuthentication";
 
-export default function ChangePassWordForm(cancleUpdate) {
+export default function ChangePassWordForm({cancleUpdate}) {
   const {
     register,
     getValues,
-handleSubmit,
+    handleSubmit,
     formState: { isSubmitting, errors,isSubmitSuccessful },
   } = useForm();
   async function onSubmit(data) {
+    if(!data.password) return
     delete data["confirm-password"];
     if (!data.password) delete data.password;
-    console.log(data);
-    //await updatedUserData(data)
+    updatePassword(data)
     if (isSubmitSuccessful) {
       cancleUpdate();
-      console.log("done");
     }
   }
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col text-black capitalize bg-white h-dvh">
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col text-black capitalize bg-white">
       <div className="flex justify-between gap-5 flex-wrap">
         <div className="grid gap-2">
           <label>password</label>

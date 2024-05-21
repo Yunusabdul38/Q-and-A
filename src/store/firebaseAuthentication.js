@@ -109,14 +109,13 @@ export async function userSignOut(dispatch) {
   }
 }
 
-export async function updatePassword(password){ 
-  const newPassword = password;
-  try{
-    await  updatePassword(currentUser, newPassword)
-    toast.success("your password has been updated")
-  }catch(error){
-    toast.error(
-      "Looks like we encountered a glitch. Don't worry, it happens! Let's give it another shot."
-    );
-  }
+export function updatePassword(password){ 
+updatePassword(currentUser,password).then(() => {
+  toast.success("your password has been updated")
+}).catch(() => {
+  toast.error(
+    "Looks like we encountered a glitch. Don't worry, it happens! Let's give it another shot."
+  );
+});
+  
 }
