@@ -61,7 +61,8 @@ const QuesDiv = styled.div`
   padding: 10px;
   transition: all ease-out 1s;
   gap: 10px;
-  background-color: ${props=> props.answer?"#1d267d":"none"};
+  background-color: ${props=> props.wrongOption?"#F01212":"none"};
+  background-color: ${props=> props.correctOption?"#2CE15C":"none"};
   &:hover {
     border: #87ceeb 2px solid;
     transition: all linear 250ms;

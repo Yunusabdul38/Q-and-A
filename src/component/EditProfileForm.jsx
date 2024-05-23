@@ -25,6 +25,7 @@ export default function EditProfileForm({ cancleUpdate }) {
     if(!data.fullName) delete data.fullName
     await updatedUserData(data)
     if (isSubmitSuccessful) {
+      console.log("done")
       dispatchFn(checkUserSignIn(authUser))
       cancleUpdate();
     }

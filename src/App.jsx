@@ -1,4 +1,4 @@
-import { useSelector,useDispatch } from "react-redux";
+import {useDispatch } from "react-redux";
 import { Outlet } from "react-router-dom";
 import Header from "./component/Header";
 import Navbar from "./component/Navbar";
@@ -7,13 +7,14 @@ import { checkUserSignIn } from "./store/auth-checkUserSignIn";
 import Authentication from "./component/Authentication"
 import Spinner from "./Ui/Spinner"
 import { useUser } from "./hook/useUser";
+import { usePlay } from "./hook/useStore";
 
 export default function App() {
   const [fullmenu, setFullMenu] = useState(true);
   const {email:user,loading} = useUser()
-  const {status} = useSelector((state) => state.playReducer);
+  const {status} = usePlay();
   const dispatch = useDispatch()
-  // prompt  user if they try leaving ehen the game is not idle
+  // prompt  user if they try leaving when the game is not idle
   useEffect(()=>{
     if(status !== "idle"){
       window.addEventListener("beforeunload",(e)=>{
@@ -22,6 +23,7 @@ export default function App() {
     }    
   },[status])  
 
+  //check if user is Authenticated 
   useEffect(() => {
     if(user) return
     dispatch(checkUserSignIn())
@@ -42,7 +44,9 @@ export default function App() {
       <Navbar fullmenu={fullmenu} setFullMenu={setMenu} />
       <section className="bg-[#074173] h-screen w-full overflow-y-scroll">
         <Header />
-        <Outlet />
+       <div className="mt-20 mb-5">
+       <Outlet />
+       </div>
       </section>
     </div>
   );

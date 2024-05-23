@@ -1,55 +1,55 @@
-import PlayCategory from "../component/Modal";
-import QandA from "../component/QandA/QandA";
-import {useState } from "react";
-import { useSelector } from "react-redux";
-import Spinner from "../Ui/Spinner"
+import { useMemo } from "react";
+import {
+  H1,
+  Icon,
+  QuestionNum,
+  QuestionWrapper,
+  Questions,
+  StyleApp,
+} from "../Ui/QandAstyle";
+import Options from "../component/QandA/Options";
+import { usePlay } from "../hook/useStore";
+import { useNavigate } from "react-router-dom";
+import FinalScore from "../component/FinalScore";
+
+// options character
+const optionCharacter = ["a", "b", "c", "d"];
+
 export default function Play() {
-  const {status,isloading,questions} = useSelector((state)=>state.playReducer)
-  const [start, setStart] = useState(false);
-  const openCategoryModal = function () {
-    setStart(true);
-  };
- 
-  function closeCategoryModal() {
-    setStart(false);
-  }
-  if (!!questions.length && status === "active") return <QandA />;
-  if(isloading) return <Spinner/>
+  const navigate = useNavigate();
+  const { questions, questionsNum, status } = usePlay();
+  // correct answer for the specific question
+  const answer = questions[questionsNum].correctIndex;
+  const { question, options } = questions[questionsNum];
+
+  //shuffle question options
+  const shuffle = useMemo(() => {
+    return options.slice().sort(() => 0.5 - Math.random());
+  }, [options]);
+
+  if (status === "idle") return navigate("/");
+  if (status === "inactive") return <FinalScore />;
   return (
-    <>
-      <div className="px-8 md:px-0 text-gray-50 py-11 font-Poppins font-light">
-        <h1 className="font-extrabold text-3xl font-openSans text-center">
-          Welcome to our Quiz Challenge!
-        </h1>
-        <div className="md:w-3/4 mx-auto text-xl grid gap-4 my-4">
-          <p>
-            Test your knowledge and compete for the top spots on our
-            leaderboard. Choose from a variety of categories including General
-            Knowledge, Football, Science, History, and more.
-          </p>
-          <p>
-            Answer questions correctly to earn points and climb the leaderboard
-            ranks. Keep an eye on the top 5 highest scores to see how you stack
-            up against other players. Are you ready to become the quiz champion?
-          </p>
-          <p>
-            If your answer is yes
-            <br />
-            Select the category you wish to anawer questions from
-          </p>
-          <p>
-            Click the &apos;Start&apos; button to select a category and difficulty level,
-            and get started immediately.
-          </p>
-          <button
-            className="hover:bg-gradient-to-r hover:from-gray-600 rounded-md  hover:to-blue-300 transition-all duration-200 bg-gradient-to-t from-blue-300 to-blue-600 px-4 py-2 capitalize float-right w-fit font-tekur"
-            onClick={openCategoryModal}
-          >
-            start
-          </button>
-        </div>
-      </div>
-      {start && <PlayCategory close={closeCategoryModal} />}
-    </>
+    <StyleApp>
+      <QuestionNum>
+        question {questionsNum + 1} of {questions.length}
+      </QuestionNum>
+      <QuestionWrapper>
+        <Icon>?</Icon>
+        <H1>{question}</H1>
+      </QuestionWrapper>
+      <Questions>
+        {shuffle?.map((options, index) => {
+          return (
+            <Options
+              option={options}
+              character={optionCharacter[index]}
+              key={index}
+              correctAnswer={answer}
+            />
+          );
+        })}
+      </Questions>
+    </StyleApp>
   );
 }

@@ -12,7 +12,6 @@ const initialPlayState = {
   status: "idle",
   level: "easy",
   category: "",
-  answers: [],
   questionsNum: 0,
   questions: [],
   isLoading: false,
@@ -20,6 +19,48 @@ const initialPlayState = {
   secPerQuestion: 0,
 };
 
+const initialUserAnswer = {
+  answers: [],
+  userAnswerCount: {
+    unAnswered: 0,
+    answered: 0,
+    correctAnswers: 0,
+    wrongAnswers: 0,
+  },
+};
+
+const answerSlice = createSlice({
+  initialState: initialUserAnswer,
+  name: "user",
+  reducers: {
+    questionLength:(state,action)=>{
+      state.userAnswerCount.unAnswered = action.payload
+    },
+    answer: (state, action) => {
+      const { correctAnswer, userAnswer } = action.payload;
+      const answerChecker = correctAnswer === userAnswer;
+      state.userAnswerCount = {
+        ...state.userAnswerCount,
+        correctAnswers: answerChecker
+          ? state.userAnswerCount.correctAnswers + 1
+          : state.userAnswerCount.correctAnswers,
+        wrongAnswers: !answerChecker
+          ? state.userAnswerCount.wrongAnswers + 1
+          : state.userAnswerCount.wrongAnswers,
+        unAnswered: state.userAnswerCount.unAnswered - 1,
+        answered:state.userAnswerCount.answered+1,
+      };
+      state.answers = [
+        ...state.answers,
+        {
+          question: state.questions[state.questionsNum],
+          userAnswer: userAnswer,
+          correctIndex: correctAnswer,
+        },
+      ];
+    },
+  },
+});
 //slice for checking if user has been sign in before on the browser and has not log out by him/her self
 const authUserSlice = createSlice({
   name: "auth",
@@ -28,9 +69,9 @@ const authUserSlice = createSlice({
     logUserOut: (state) => {
       state.user = null;
     },
-    updatePhoto:(state,action)=>{
-      state.updatedUserImage = action.payload
-    }
+    updatePhoto: (state, action) => {
+      state.updatedUserImage = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(checkUserSignIn.pending, (state) => {
@@ -47,7 +88,7 @@ const authUserSlice = createSlice({
       // it work like finally in a promise
       builder.addMatcher(checkUserSignIn.settled, (state) => {
         state.loading = false;
-      })
+      });
   },
 });
 const playSlice = createSlice({
@@ -64,22 +105,8 @@ const playSlice = createSlice({
         ? (state.secPerQuestion = 15)
         : (state.secPerQuestion = null);
     },
-    answer: (state, action) => {
-      const { correctIndex, userIndex } = action.payload;
-      state.answers = [
-        ...state.answers,
-        {
-          question: state.questions[state.questionsNum],
-          userAnswer: userIndex,
-          correctAnswer: correctIndex,
-        },
-      ];
-    },
     nextQuestion: (state) => {
       state.questionsNum++;
-    },
-    previousQuestion: (state) => {
-      state.questionsNum--;
     },
     finish: (state) => {
       state.status = "inactive";
@@ -118,17 +145,16 @@ const playSlice = createSlice({
 });
 const userReducer = authUserSlice.reducer;
 const playReducer = playSlice.reducer;
-const rootReducer = combineReducers({ userReducer, playReducer });
-export const {
-  answer,
-  end,
-  finish,
-  level,
-  nextQuestion,
-  previousQuestion,
-  countdown,
-} = playSlice.actions;
+const answerReducer = answerSlice.reducer;
+const rootReducer = combineReducers({
+  userReducer,
+  playReducer,
+  answerReducer,
+});
+export const { end, finish, level, nextQuestion, previousQuestion, countdown } =
+  playSlice.actions;
 export const { updatePhoto, logUserOut } = authUserSlice.actions;
+export const { answer,questionLength } = answerSlice.actions;
 export const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>

@@ -73,7 +73,7 @@ function Modal({ close }) {
             type="submit"
             disabled={isSubmitting}
           >
-            play
+            {isSubmitting?"requesting....":"play"}
           </button>
         </form>
       </div>

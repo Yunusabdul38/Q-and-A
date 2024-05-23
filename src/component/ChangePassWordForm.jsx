@@ -18,13 +18,19 @@ export default function ChangePassWordForm({cancleUpdate}) {
     }
   }
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col text-black capitalize bg-white">
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col text-black capitalize bg-white h-dvh sm:h-fit">
       <div className="flex justify-between gap-5 flex-wrap">
         <div className="grid gap-2">
           <label>password</label>
           <input
             className="bg-inherit border outline-none pl-3 w-96 py-3"
-            {...register("password")}
+            {...register("password",{
+              validate: (value) => {
+                if (value.length < 6) {
+                  return "Password length must be greater 5";
+                }
+              },
+            })}
           />
         </div>
         <div className="grid gap-2">
@@ -33,8 +39,11 @@ export default function ChangePassWordForm({cancleUpdate}) {
             className="bg-inherit border outline-none pl-3 w-96 py-3"
             {...register("confirm-password", {
               validate: (value) => {
+                if (value.length < 6) {
+                  return "Password length must be greater 5";
+                }
                 if (value !== getValues("password")) {
-                  return "this password did not match the above password";
+                  return "this passord did not correspond with the above password";
                 }
               },
             })}

@@ -1,18 +1,23 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { countdown } from "../store/store";
+import { useDispatch} from "react-redux";
+import { countdown, finish } from "../store/store";
+import { usePlay } from "../hook/useStore";
 
+// countdown timer for hard and medium game level
 export default function Timer() {
   const dispatch = useDispatch();
-  const { secondsRemaining } = useSelector((state) => state.playReducer);
+  const { secondsRemaining } = usePlay();
   const minutes = Math.trunc(secondsRemaining / 60);
   const seconds = secondsRemaining % 60;
+
+  //counter interval count 
   useEffect(() => {
+    if(!minutes && !seconds) return dispatch(finish())
     const counter = setInterval(() => {
       dispatch(countdown());
     }, 1000);
     return () => clearInterval(counter);
-  },[dispatch]);
+  },[dispatch,minutes,seconds]);
 
   return (
     <div className="text-xl font-tekur">{`${

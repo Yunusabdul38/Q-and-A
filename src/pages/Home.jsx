@@ -1,30 +1,60 @@
+import { useEffect, useState } from "react";
+import { usePlay } from "../hook/useStore";
+import PlayCategory from "../component/Modal";
+import { useNavigate } from "react-router-dom";
+import Spinner from "../Ui/Spinner"
 
 export default function Home() {
+  const { status, isloading} = usePlay();
+  const navigate = useNavigate()
+  const [start, setStart] = useState(false);
+  const openCategoryModal = function () {
+    setStart(true);
+  };
+  function closeCategoryModal() {
+    setStart(false);
+  }
 
-  return <div>
-    <p>home</p>
-    <button className="bg-red-600" >add data</button>
-  </div>;
+  // navigate to play route once status is not idle
+  useEffect(()=>{
+    if(status !== "idle") return navigate("/play")
+  },[status,navigate])
+  if(isloading) return <Spinner/>
+  return (
+    <>
+      <div className="px-8 md:px-0 text-gray-50 py-11 font-Poppins font-light">
+        <h1 className="font-extrabold text-3xl font-openSans text-center">
+          Welcome to our Quiz Challenge!
+        </h1>
+        <div className="md:w-3/4 mx-auto text-xl grid gap-4 my-4">
+          <p>
+            Test your knowledge and compete for the top spots on our
+            leaderboard. Choose from a variety of categories including General
+            Knowledge, Football, Science, History, and more.
+          </p>
+          <p>
+            Answer questions correctly to earn points and climb the leaderboard
+            ranks. Keep an eye on the top 5 highest scores to see how you stack
+            up against other players. Are you ready to become the quiz champion?
+          </p>
+          <p>
+            If your answer is yes
+            <br />
+            Select the category you wish to anawer questions from
+          </p>
+          <p>
+            Click the &apos;Start&apos; button to select a category and
+            difficulty level, and get started immediately.
+          </p>
+          <button
+            className="hover:bg-gradient-to-r hover:from-gray-600 rounded-md  hover:to-blue-300 transition-all duration-200 bg-gradient-to-t from-blue-300 to-blue-600 px-4 py-2 capitalize float-right w-fit font-tekur"
+            onClick={openCategoryModal}
+          >
+            start
+          </button>
+        </div>
+      </div>
+      {start && <PlayCategory close={closeCategoryModal} />}
+    </>
+  );
 }
-
-// if (user !== null) {
-//   // The user object has basic properties such as display name, email, etc.
-//   const displayName = user.displayName;
-//   const email = user.email;
-//   const photoURL = user.photoURL;
-//   const emailVerified = user.emailVerified;
-
-//   // The user's ID, unique to the Firebase project. Do NOT use
-//   // this value to authenticate with your backend server, if
-//   // you have one. Use User.getToken() instead.
-//   const uid = user.uid;
-// }
-
-// import { collection, getDocs } from "firebase/firestore";
-// import db from "../store/firebase";
-
-// const querySnapshot = await getDocs(collection(db, "users"));
-// querySnapshot.forEach((doc) => {
-//   // doc.data() is never undefined for query doc snapshots
-//   console.log(doc.id, " => ", doc.data());
-// });
