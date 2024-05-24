@@ -20,6 +20,7 @@ const initialPlayState = {
 };
 
 const initialUserAnswer = {
+  isSubmitting:false,
   answers: [],
   userAnswerCount: {
     unAnswered: 0,

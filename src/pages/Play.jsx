@@ -9,26 +9,48 @@ import {
 } from "../Ui/QandAstyle";
 import Options from "../component/QandA/Options";
 import { usePlay } from "../hook/useStore";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import FinalScore from "../component/FinalScore";
+import Button from "../Ui/Button";
+import { useDispatch } from "react-redux";
+import { finish } from "../store/store";
+import Wrapper from "../Ui/Wrapper";
 
 // options character
 const optionCharacter = ["a", "b", "c", "d"];
 
 export default function Play() {
-  const navigate = useNavigate();
+  const dispatchFn = useDispatch();
   const { questions, questionsNum, status } = usePlay();
   // correct answer for the specific question
-  const answer = questions[questionsNum].correctIndex;
-  const { question, options } = questions[questionsNum];
+  const answer = questions[questionsNum]?.correctIndex;
+  const options = questions[questionsNum]?.options;
+  const question = questions[questionsNum]?.question;
 
   //shuffle question options
   const shuffle = useMemo(() => {
-    return options.slice().sort(() => 0.5 - Math.random());
+    return options?.slice().sort(() => 0.5 - Math.random());
   }, [options]);
 
-  if (status === "idle") return navigate("/");
+  if (status === "idle")
+    return (
+      <Wrapper>
+        <h1 className="font-tekur font-extralight">
+          Playing begins when you go to the homepage, pick the level and
+          category you wish to participate in.
+        </h1>
+        <Link
+          to="/"
+          className="bg-blue-800 hover:bg-blue-950 p-4 rounded-sm w-fit"
+        >
+          home
+        </Link>
+      </Wrapper>
+    );
   if (status === "inactive") return <FinalScore />;
+  function endGameHandler() {
+    dispatchFn(finish());
+  }
   return (
     <StyleApp>
       <QuestionNum>
@@ -50,6 +72,7 @@ export default function Play() {
           );
         })}
       </Questions>
+      <Button onClick={endGameHandler}>end game</Button>
     </StyleApp>
   );
 }

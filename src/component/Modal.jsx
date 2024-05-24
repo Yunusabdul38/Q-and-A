@@ -17,6 +17,7 @@ function Modal({ close }) {
   } = useForm();
 
   function onSubmit(data) {
+    console.log(data)
     dispatch(playlevel(data));
   }
   //hook meant to fetch questions data

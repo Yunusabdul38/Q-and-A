@@ -1,13 +1,15 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
 import { fetchQuestions } from "../services/getQuestions";
+import { usePlay } from "./useStore";
 
 export default function useFetch(close) {
   const dispatch = useDispatch();
-  const { category } = useSelector((state) => state.playReducer);
+  const { category } = usePlay();
   useEffect(() => {
     if (!category) return;
     async function fetchData() {
+      console.log("fetching..")
       try {
         dispatch(fetchQuestions(category));
       } catch (error) {

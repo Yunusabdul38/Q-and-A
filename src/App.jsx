@@ -6,8 +6,8 @@ import { useCallback, useState,useEffect } from "react";
 import { checkUserSignIn } from "./store/auth-checkUserSignIn";
 import Authentication from "./component/Authentication"
 import Spinner from "./Ui/Spinner"
-import { useUser } from "./hook/useUser";
-import { usePlay } from "./hook/useStore";
+import { usePlay,useUser } from "./hook/useStore";
+// import FinalScore from "./component/FinalScore";
 
 export default function App() {
   const [fullmenu, setFullMenu] = useState(true);

@@ -33,6 +33,7 @@ export async function uploadImage(image,dispatchFn) {
 //     const updatedData = doc(db, "users", user.uid);
 //     // update user data
 //     await updateDoc(updatedData, data);
+//      toast.success("your data has been updated successfully") 
 //   } catch (error) {
 //     toast.error(
 //       "Looks like we encountered a glitch. Don't worry, it happens! Let's give it another shot."
@@ -50,6 +51,7 @@ export async function updatedUserData(data) {
         const updatedData = doc(db, "users", uid);
         // update user data
         await updateDoc(updatedData, data);
+        toast.success("your data has been updated successfully")
       }
     });
   } catch (error) {

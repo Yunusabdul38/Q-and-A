@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { updatedUserData, uploadImage } from "../services/updateUserData";
 import { useDispatch } from "react-redux";
-import { useUser } from "../hook/useUser";
+import { useUser } from "../hook/useStore";
 import { checkUserSignIn } from "../store/auth-checkUserSignIn";
 import { getAuth } from "firebase/auth";
 const auth = getAuth();

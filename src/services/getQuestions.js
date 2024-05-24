@@ -7,6 +7,8 @@ export const fetchQuestions = createAsyncThunk(
   "play/start",
   async (category) => {
     const docRef = doc(db, "questions", category);
+    const docRef2 = doc(db, "users");
+    console.log(docRef2)
     const docSnap = await getDoc(docRef);
     return new Promise((resolve, reject) => {
       if (docSnap.exists()) {
