@@ -2,10 +2,7 @@ import { useForm } from "react-hook-form";
 import { updatedUserData, uploadImage } from "../services/updateUserData";
 import { useDispatch } from "react-redux";
 import { useUser } from "../hook/useStore";
-import { checkUserSignIn } from "../store/auth-checkUserSignIn";
-import { getAuth } from "firebase/auth";
-const auth = getAuth();
-const authUser = auth.currentUser;
+
 export default function EditProfileForm({ cancleUpdate }) {
   const {email,updatedUserImage,user} = useUser();
   const dispatchFn = useDispatch()
@@ -22,10 +19,11 @@ export default function EditProfileForm({ cancleUpdate }) {
       data.image= updatedUserImage
     }
     if(!data.image) delete data.image
+    if(data.image !== updatedUserImage && updatedUserImage) data.image = updatedUserImage
     if(!data.fullName) delete data.fullName
-    await updatedUserData(data)
+    console.log(updatedUserImage,data)
+    dispatchFn(updatedUserData(data))
     if (isSubmitSuccessful) {
-      dispatchFn(checkUserSignIn(authUser))
       cancleUpdate();
     }
   }

@@ -1,6 +1,7 @@
 import { combineReducers, configureStore, createSlice } from "@reduxjs/toolkit";
 import { checkUserSignIn } from "./auth-checkUserSignIn";
 import { fetchLeadBord, fetchQuestions } from "../services/fetchData";
+import { updateLeadTable, updatedUserData } from "../services/updateUserData";
 
 const initialUserState = {
   user: null,
@@ -22,6 +23,7 @@ const initialPlayState = {
   secondsRemaining: null,
   secPerQuestion: 0,
   answers: [],
+  userTable: {},
   userAnswerCount: {
     unAnswered: 0,
     answered: 0,
@@ -45,11 +47,23 @@ const leadersBoard = createSlice({
       builder.addCase(fetchLeadBord.rejected, (state) => {
         state.loadingLeads = false;
       }),
+      builder.addCase(updateLeadTable.pending, (state) => {
+        state.loadingLeads = true;
+      }),
+      builder.addCase(updateLeadTable.fulfilled, (state, action) => {
+        state.loadingLeads = false;
+      }),
+      builder.addCase(updateLeadTable.rejected, (state) => {
+        state.loadingLeads = false;
+      }),
       // this will always run regardless of the promise return state
       // it work like finally in a promise
       builder.addMatcher(fetchLeadBord.settled, (state) => {
         state.loadingLeads = false;
       });
+    builder.addMatcher(updateLeadTable.settled, (state) => {
+      state.loadingLeads = false;
+    });
   },
 });
 
@@ -76,11 +90,24 @@ const authUserSlice = createSlice({
       builder.addCase(checkUserSignIn.rejected, (state) => {
         state.loading = false;
       }),
+      builder.addCase(updatedUserData.pending, (state) => {
+        state.loading = true;
+      }),
+      builder.addCase(updatedUserData.fulfilled, (state, action) => {
+        state.loading = false;
+        state.updatedUserImage =null
+      }),
+      builder.addCase(updatedUserData.rejected, (state) => {
+        state.loading = false;
+      }),
       // this will always run regardless of the promise return state
       // it work like finally in a promise
       builder.addMatcher(checkUserSignIn.settled, (state) => {
         state.loading = false;
       });
+    builder.addMatcher(updatedUserData.settled, (state) => {
+      state.loading = false;
+    });
   },
 });
 const playSlice = createSlice({
@@ -101,9 +128,9 @@ const playSlice = createSlice({
       state.questionsNum++;
     },
     finish: (state) => {
-      state.status = "inactive"
-      state.secondsRemaining=null;
-      state.secPerQuestion=0;
+      state.status = "inactive";
+      state.secondsRemaining = null;
+      state.secPerQuestion = 0;
     },
     countdown: (state) => {
       state.secondsRemaining--;
@@ -116,14 +143,15 @@ const playSlice = createSlice({
       state.questionsNum = 0;
       state.questions = [];
       state.answers = [];
-      state.secondsRemaining=null;
-      state.secPerQuestion=0;
+      state.secondsRemaining = null;
+      state.secPerQuestion = 0;
       state.userAnswerCount = {
         correctAnswers: 0,
         wrongAnswers: 0,
         unAnswered: 0,
         answered: 0,
       };
+      state.userTable = {};
     },
     answer: (state, action) => {
       const { correctAnswer, userAnswer } = action.payload;
@@ -153,14 +181,19 @@ const playSlice = createSlice({
       state.isLoading = true;
     }),
       builder.addCase(fetchQuestions.fulfilled, (state, action) => {
-        state.questions = action.payload;
-        state.secondsRemaining = action.payload.length * state.secPerQuestion;
-        state.userAnswerCount.unAnswered = action.payload.length;
+        const { questions, table } = action.payload;
+        state.questions = questions;
+        state.secondsRemaining = questions.length * state.secPerQuestion;
+        state.userAnswerCount.unAnswered = questions.length;
         state.isLoading = false;
         state.status = "active";
+        state.userTable={
+          ...table
+        };
       }),
-      builder.addCase(fetchQuestions.rejected, (state) => {
+      builder.addCase(fetchQuestions.rejected, (state, action) => {
         state.isLoading = false;
+        console.log(action.error);
       }),
       // this will always run regardless of the promise return state
       // it work like finally in a promise

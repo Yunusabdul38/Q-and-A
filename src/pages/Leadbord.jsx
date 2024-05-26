@@ -29,12 +29,14 @@ export default function Leadbord() {
         </li>
         {table.map((data, index) => (
           <Leads
-            image={data.image}
-            name={data.fullName}
-            loss={data.loss}
-            point={data.point}
-            win={data.win}
-            rank={index+1}
+            data={{
+              image: data.image,
+              name: data.fullName,
+              loss: data.loss,
+              point: data.point,
+              win: data.win,
+              rank: index + 1,
+            }}
             key={index}
           />
         ))}

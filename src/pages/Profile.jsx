@@ -4,9 +4,10 @@ import { LuUser2 } from "react-icons/lu";
 import EditProfileForm from "../component/EditProfileForm";
 import { useUser } from "../hook/useStore";
 import ChangePassWordForm from "../component/ChangePassWordForm";
+import Spinner from "../Ui/Spinner";
 
 export default function Profile() {
-  const { name, photo, email } = useUser();
+  const { name, photo, email,loading } = useUser();
   const [updateUser, setUpdateUser] = useState(false);
   function userUpdatehandler() {
     setUpdateUser("profile");
@@ -14,6 +15,7 @@ export default function Profile() {
   function cancleUpdateHandler() {
     setUpdateUser(false);
   }
+  if(loading) return <Spinner/>
   return (
     <div className="grid items-center justify-center h-screen">
       <div className="pt-10 p-2 capitalize text-slate-50 flex gap-10 justify-center">

@@ -15,13 +15,12 @@ export default function Options({ option, character, correctAnswer,setIsAnswered
     setIsAnswered(true);
     dispatchFn(answerFn({ correctAnswer, userAnswer: option }));
   }
-  
   return (
     <Wrapper
       onClick={userAnswerHandler}
       disabled={isAnswered}
     >
-      <div className={`${isAnswered && option === correctAnswer?"bg-[#0fe949]":""} ${userSelection === option && option !== correctAnswer?"bg-[#f50404]":""} bg-[#1d267d]`}>
+      <div className={`${isAnswered && option === correctAnswer?"bg-[#0fe949]":"bg-[#1d267d]"} ${userSelection === option && option !== correctAnswer?"bg-[#f50404]":""} `}>
       <QuesDiv>
         <QuesOption>{character}</QuesOption>
         <QuesH2>{option}</QuesH2>

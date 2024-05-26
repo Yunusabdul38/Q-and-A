@@ -30,7 +30,7 @@ export async function userSignUp(Email, password, fullName, dispatch) {
     // sending the copy user data to firestore if condition set in firestore for authentication is true
     await setDoc(doc(db, "users", user.uid), userDataCopy);
     //navigate to home page if everything is successful
-    await dispatch(checkUserSignIn());
+    await dispatch(checkUserSignIn(user));
     toast.success(`nice to have you here ${displayName}`);
   } catch (error) {
     // email address already exist

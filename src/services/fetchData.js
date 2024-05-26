@@ -2,6 +2,9 @@ import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import db from "../store/firebase";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import toast from "react-hot-toast";
+import { getAuth } from "firebase/auth";
+
+const Auth = getAuth()
 
 export const fetchQ = async () => {
   const docRef = doc(db, "questions", "random");
@@ -20,15 +23,20 @@ export const fetchQ = async () => {
 export const fetchQuestions = createAsyncThunk(
   "play/start",
   async (category) => {
+    const uid = Auth.currentUser.uid
     const docRef = doc(db, "questions", category);
     const docSnap = await getDoc(docRef);
+    const tableRef = doc(db, "table", uid);
+    const tableSnap = await getDoc(tableRef);
     return new Promise((resolve, reject) => {
       if (docSnap.exists()) {
         const data = docSnap.data();
+        const table = tableSnap.data()
         // firebase return object of keys and values so we
         // get the values in to array
         const questions = Object.values(data);
-        resolve(questions);
+        console.log(questions)
+        resolve({questions,table});
       } else {
         // docSnap.data() will be undefined in this case
         reject("No such document!");

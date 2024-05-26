@@ -12,9 +12,10 @@ import { usePlay,useUser } from "./hook/useStore";
 export default function App() {
   const [fullmenu, setFullMenu] = useState(true);
   const {email:user,loading} = useUser()
-  const {status} = usePlay();
+  const {status,playIsLoading} = usePlay();
   const dispatch = useDispatch()
-  // prompt  user if they try leaving when the game is not idle
+
+  // prompt  user if they try leaving when the game state is not idle
   useEffect(()=>{
     if(status !== "idle"){
       window.addEventListener("beforeunload",(e)=>{
@@ -33,7 +34,7 @@ export default function App() {
     setFullMenu((prev) => !prev);
   }, []);
   
-  if (loading) return <Spinner />;
+  if (loading || playIsLoading) return <Spinner />;
   if (!user) return <Authentication />;
   return (
     <div
@@ -44,7 +45,7 @@ export default function App() {
       <Navbar fullmenu={fullmenu} setFullMenu={setMenu} />
       <section className="bg-[#074173] h-screen w-full overflow-y-scroll">
         <Header />
-       <div className="mt-20 mb-5">
+       <div className="mt-20 mb-10">
        <Outlet />
        </div>
       </section>

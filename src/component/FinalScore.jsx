@@ -14,8 +14,8 @@ export default function FinalScore() {
     handleSubmit,
   } = useForm();
   const { answered, correctAnswers, unAnswered, wrongAnswers } = useAnswer();
-  const { questions, level } = usePlay();
-  const { point: userPoint, win, loss,fullName,photo } = useUser();
+  const { questions, level,point: userPoint, win, loss } = usePlay();
+  const { fullName,photo } = useUser();
 
   const rating = Math.round((correctAnswers / questions.length) * 100);
   
@@ -44,22 +44,20 @@ export default function FinalScore() {
       : level == "medium"
       ? (point = 0)
       : (point = 0);
-console.log(fullName)
+
   async function submitHanlder() {
     const data = {
-      userScore: {
         point: point ? userPoint + point : userPoint,
         loss: !point ? loss + 1 : loss,
         win: point ? win + 1 : win,
         image:photo,
-        fulName:fullName,
-      },
-    };
-    console.log(data)
-    await updateLeadTable(data)
+        fullName:fullName,
+      };
+    
+    dispatchFn(updateLeadTable(data))
     dispatchFn(end());
     if (isSubmitSuccessful) {
-      //navigate("/leadboard");
+      navigate("/leadboard");
     }
   }
   return (
@@ -80,12 +78,12 @@ console.log(fullName)
         <h1>unAnswered questions: </h1>
         <span>{unAnswered}</span>
       </div>
-      <h1 className="lowercase">you end with {rating}%</h1>
+      <h1 className="lowercase">you finish with {rating}% out of possible 100%</h1>
       <h3 className="font-thin">
         save your progress to see how you rank among other players
       </h3>
       <form className="flex justify-end" onSubmit={handleSubmit(submitHanlder)}>
-        <button className="bg-blue-800 hover:bg-blue-950 p-4 rounded-sm">
+        <button className="bg-blue-800 hover:bg-blue-950 p-4 rounded-sm" disabled={isSubmitting}>
           {isSubmitting ? "submitting...." : "save progress"}
         </button>
       </form>

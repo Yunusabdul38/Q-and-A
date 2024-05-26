@@ -1,4 +1,5 @@
-export default function Leads({image,name,win,loss,point,played,rank}) {
+export default function Leads({data}) {
+  const {image,name,win,loss,point,played,rank} = data
   return (
     <li
       className="uppercase grid grid-cols-[1fr_5fr_1fr_1fr_1fr_1fr_1fr]  even:border-gray-950 p-2 even:bg-slate-50 odd:bg-sky-300 items-center"

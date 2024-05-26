@@ -5,7 +5,7 @@ import db from "./firebase";
 export const checkUserSignIn = createAsyncThunk(
   "auth/checkUserSignIn",
   async (userCredential) => {
-    const user = userCredential
+    const user = userCredential;
     // get user data
     const docRef = doc(db, "users", user.uid);
     const docSnap = await getDoc(docRef);

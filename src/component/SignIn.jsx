@@ -49,9 +49,6 @@ export default function SignIn() {
           {errors?.password?.message}
         </p>
       </Password>
-      <a className="text-blue-200 text-end text-base cursor-pointer hover:text-white capitalize ">
-        forget password?
-      </a>
       <Button disabled={isSubmitting}>{isSubmitting?"signinig in .....":"sign in"}</Button>
     </form>
   );
