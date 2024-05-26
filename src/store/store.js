@@ -1,6 +1,6 @@
 import { combineReducers, configureStore, createSlice } from "@reduxjs/toolkit";
 import { checkUserSignIn } from "./auth-checkUserSignIn";
-import { fetchQuestions } from "../services/getQuestions";
+import { fetchLeadBord, fetchQuestions } from "../services/fetchData";
 
 const initialUserState = {
   user: null,
@@ -8,6 +8,10 @@ const initialUserState = {
   updatedUserImage: null,
 };
 
+const initialLeadboard = {
+  leadbord: [],
+  loadingLeads: false,
+};
 const initialPlayState = {
   status: "idle",
   level: "easy",
@@ -17,10 +21,6 @@ const initialPlayState = {
   isLoading: false,
   secondsRemaining: null,
   secPerQuestion: 0,
-};
-
-const initialUserAnswer = {
-  isSubmitting:false,
   answers: [],
   userAnswerCount: {
     unAnswered: 0,
@@ -30,38 +30,29 @@ const initialUserAnswer = {
   },
 };
 
-const answerSlice = createSlice({
-  initialState: initialUserAnswer,
-  name: "user",
-  reducers: {
-    questionLength:(state,action)=>{
-      state.userAnswerCount.unAnswered = action.payload
-    },
-    answer: (state, action) => {
-      const { correctAnswer, userAnswer } = action.payload;
-      const answerChecker = correctAnswer === userAnswer;
-      state.userAnswerCount = {
-        ...state.userAnswerCount,
-        correctAnswers: answerChecker
-          ? state.userAnswerCount.correctAnswers + 1
-          : state.userAnswerCount.correctAnswers,
-        wrongAnswers: !answerChecker
-          ? state.userAnswerCount.wrongAnswers + 1
-          : state.userAnswerCount.wrongAnswers,
-        unAnswered: state.userAnswerCount.unAnswered - 1,
-        answered:state.userAnswerCount.answered+1,
-      };
-      state.answers = [
-        ...state.answers,
-        {
-          question: state.questions[state.questionsNum],
-          userAnswer: userAnswer,
-          correctIndex: correctAnswer,
-        },
-      ];
-    },
+// leadboard slice
+const leadersBoard = createSlice({
+  name: "leadBorad",
+  initialState: initialLeadboard,
+  extraReducers: (builder) => {
+    builder.addCase(fetchLeadBord.pending, (state) => {
+      state.loadingLeads = true;
+    }),
+      builder.addCase(fetchLeadBord.fulfilled, (state, action) => {
+        state.leadbord = action.payload;
+        state.loadingLeads = false;
+      }),
+      builder.addCase(fetchLeadBord.rejected, (state) => {
+        state.loadingLeads = false;
+      }),
+      // this will always run regardless of the promise return state
+      // it work like finally in a promise
+      builder.addMatcher(fetchLeadBord.settled, (state) => {
+        state.loadingLeads = false;
+      });
   },
 });
+
 //slice for checking if user has been sign in before on the browser and has not log out by him/her self
 const authUserSlice = createSlice({
   name: "auth",
@@ -110,7 +101,9 @@ const playSlice = createSlice({
       state.questionsNum++;
     },
     finish: (state) => {
-      state.status = "inactive";
+      state.status = "inactive"
+      state.secondsRemaining=null;
+      state.secPerQuestion=0;
     },
     countdown: (state) => {
       state.secondsRemaining--;
@@ -122,6 +115,37 @@ const playSlice = createSlice({
       state.category = "";
       state.questionsNum = 0;
       state.questions = [];
+      state.answers = [];
+      state.secondsRemaining=null;
+      state.secPerQuestion=0;
+      state.userAnswerCount = {
+        correctAnswers: 0,
+        wrongAnswers: 0,
+        unAnswered: 0,
+        answered: 0,
+      };
+    },
+    answer: (state, action) => {
+      const { correctAnswer, userAnswer } = action.payload;
+      const answerChecker = correctAnswer === userAnswer;
+      state.userAnswerCount = {
+        ...state.userAnswerCount,
+        correctAnswers: answerChecker
+          ? state.userAnswerCount.correctAnswers + 1
+          : state.userAnswerCount.correctAnswers,
+        wrongAnswers: !answerChecker
+          ? state.userAnswerCount.wrongAnswers + 1
+          : state.userAnswerCount.wrongAnswers,
+        unAnswered: state.userAnswerCount.unAnswered - 1,
+        answered: state.userAnswerCount.answered + 1,
+      };
+      state.answers = [
+        ...state.answers,
+        {
+          userAnswer: userAnswer,
+          correctIndex: correctAnswer,
+        },
+      ];
     },
   },
   extraReducers: (builder) => {
@@ -131,6 +155,7 @@ const playSlice = createSlice({
       builder.addCase(fetchQuestions.fulfilled, (state, action) => {
         state.questions = action.payload;
         state.secondsRemaining = action.payload.length * state.secPerQuestion;
+        state.userAnswerCount.unAnswered = action.payload.length;
         state.isLoading = false;
         state.status = "active";
       }),
@@ -146,16 +171,22 @@ const playSlice = createSlice({
 });
 const userReducer = authUserSlice.reducer;
 const playReducer = playSlice.reducer;
-const answerReducer = answerSlice.reducer;
+const leadsReducers = leadersBoard.reducer;
 const rootReducer = combineReducers({
   userReducer,
   playReducer,
-  answerReducer,
+  leadsReducers,
 });
-export const { end, finish, level, nextQuestion, previousQuestion, countdown } =
-  playSlice.actions;
+export const {
+  end,
+  finish,
+  level,
+  nextQuestion,
+  previousQuestion,
+  countdown,
+  answer,
+} = playSlice.actions;
 export const { updatePhoto, logUserOut } = authUserSlice.actions;
-export const { answer,questionLength } = answerSlice.actions;
 export const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>

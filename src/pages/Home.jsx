@@ -1,11 +1,22 @@
 import { useEffect, useState } from "react";
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+} from '@tanstack/react-query'
 import { usePlay } from "../hook/useStore";
 import PlayCategory from "../component/Modal";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../Ui/Spinner"
+import { fetchQ } from "../services/fetchData";
 
 export default function Home() {
-  const { status, isloading} = usePlay();
+   // Access the client
+   const queryClient = useQueryClient()
+
+   // Queries
+   const query = useQuery({ queryKey: ['questions'], queryFn:()=>fetchQ })
+  const { status } = usePlay();
   const navigate = useNavigate()
   const [start, setStart] = useState(false);
   const openCategoryModal = function () {
@@ -17,11 +28,11 @@ export default function Home() {
 
   // navigate to play route once status is not idle
   useEffect(()=>{
-    if(status !== "idle") return navigate("/play")
+    if(status === "active") return navigate("/play")
   },[status,navigate])
-  if(isloading) return <Spinner/>
   return (
     <>
+       {start && <PlayCategory close={closeCategoryModal} />}
       <div className="px-8 md:px-0 text-gray-50 py-11 font-Poppins font-light">
         <h1 className="font-extrabold text-3xl font-openSans text-center">
           Welcome to our Quiz Challenge!
@@ -49,12 +60,12 @@ export default function Home() {
           <button
             className="hover:bg-gradient-to-r hover:from-gray-600 rounded-md  hover:to-blue-300 transition-all duration-200 bg-gradient-to-t from-blue-300 to-blue-600 px-4 py-2 capitalize float-right w-fit font-tekur"
             onClick={openCategoryModal}
+            disabled={status !== "idle"}
           >
             start
           </button>
         </div>
       </div>
-      {start && <PlayCategory close={closeCategoryModal} />}
     </>
   );
 }

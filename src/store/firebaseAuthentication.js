@@ -9,7 +9,7 @@ import { setDoc, doc, serverTimestamp } from "firebase/firestore";
 import db from "./firebase";
 import { checkUserSignIn } from "./auth-checkUserSignIn";
 import toast from "react-hot-toast";
-import { logUserOut } from "./store";
+import { end, logUserOut } from "./store";
 const auth = getAuth();
 const currentUser = auth.currentUser;
 export async function userSignUp(Email, password, fullName, dispatch) {
@@ -93,7 +93,8 @@ export async function userSignIn(data, dispatch) {
 export async function userSignOut(dispatch) {
   try {
     await signOut(auth);
-    await dispatch(logUserOut());
+    dispatch(logUserOut());
+    dispatch(end());
     toast.success("log out succesfull")
   } catch (error) {
     // network failure

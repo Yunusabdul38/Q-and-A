@@ -7,6 +7,7 @@ import { level as playlevel } from "../store/store";
 import { HiOutlineXMark } from "react-icons/hi2";
 import useModal from "../hook/useModal";
 import useFetch from "../hook/useFetch";
+import { useNavigate } from "react-router-dom";
 function Modal({ close }) {
   const dispatch = useDispatch();
   const ref = useRef();
@@ -15,10 +16,10 @@ function Modal({ close }) {
     register,
     formState: { isSubmitting },
   } = useForm();
-
+  const navigate = useNavigate()
   function onSubmit(data) {
-    console.log(data)
     dispatch(playlevel(data));
+  
   }
   //hook meant to fetch questions data
   useFetch(close)

@@ -1,7 +1,7 @@
 import { doc, updateDoc } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import db from "../store/firebase";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth, onAuthStateChanged, updateProfile } from "firebase/auth";
 import { updatePhoto } from "../store/store";
 import toast from "react-hot-toast";
 
@@ -46,9 +46,30 @@ export async function updatedUserData(data) {
   try {
     onAuthStateChanged(auth, async(user) => {
       if (user) {
-        // User is signed in, see docs for a list of available properties
+        await updateProfile(auth.currentUser, {
+          displayName: data.fullName,
+        });
         const uid = user.uid;
         const updatedData = doc(db, "users", uid);
+        // update user data
+        await updateDoc(updatedData, data);
+        toast.success("your data has been updated successfully")
+      }
+    });
+  } catch (error) {
+    toast.error(
+      "Looks like we encountered a glitch. Don't worry, it happens! Let's give it another shot."
+    );
+  }
+}
+
+export async function updateLeadTable(data) {
+  try {
+    onAuthStateChanged(auth, async(user) => {
+      if (user) {
+        // User is signed in, see docs for a list of available properties
+        const uid = user.uid;
+        const updatedData = doc(db, "table", uid);
         // update user data
         await updateDoc(updatedData, data);
         toast.success("your data has been updated successfully")

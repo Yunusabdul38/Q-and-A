@@ -8,6 +8,7 @@ export function useUser() {
     (state) => state.userReducer
   );
   const email = user?.email;
+  const fullName = user?.fullName
   let point =0
   let win =0
   let loss =0
@@ -21,24 +22,30 @@ export function useUser() {
     photo = user?.image ? user.image : null;
   }
 
-  return { name, photo, loading, email, updatedUserImage, user,loss,win,point };
+  return { name, photo, loading, email, updatedUserImage, user,loss,win,point,fullName };
 }
-
+export function useLeads(){
+  const {leadbord,loadingLeads} = useSelector(state=>state.leadsReducers)
+  const table = leadbord.map(data=> data.userScore).sort((a,b)=>a.point - b.point)
+  
+  return {loadingLeads,table}
+}
 export function usePlay() {
   const {
     status,
     level,
     category,
-    questionNum,
+    questionsNum,
     questions,
     isLoading,
     secondsRemaining,
     secPerQuestion,
   } = useSelector((state) => state.playReducer);
+  
   return {
     category,
     isLoading,
-    questionNum,
+    questionsNum,
     questions,
     secPerQuestion,
     secondsRemaining,
@@ -48,8 +55,8 @@ export function usePlay() {
 }
 
 export function useAnswer() {
-  const { answers,userAnswerCount,isSubmitting } = useSelector(
-    (state) => state.answerReducer
+  const { answers,userAnswerCount } = useSelector(
+    (state) => state.playReducer
   );
   const {
     unAnswered,
@@ -57,5 +64,5 @@ export function useAnswer() {
     correctAnswers,
     wrongAnswers,
   } = userAnswerCount
-  return { answers,answered,correctAnswers,wrongAnswers,unAnswered,isSubmitting};
+  return { answers,answered,correctAnswers,wrongAnswers,unAnswered};
 }

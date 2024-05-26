@@ -61,11 +61,11 @@ const QuesDiv = styled.div`
   padding: 10px;
   transition: all ease-out 1s;
   gap: 10px;
-  background-color: ${props=> props.wrongOption?"#F01212":"none"};
-  background-color: ${props=> props.correctOption?"#2CE15C":"none"};
+  /* background-color: ${props=> props.option?props.option:"#1d267d"}; */
+  background-color: inherit;
   &:hover {
     border: #87ceeb 2px solid;
-    transition: all linear 250ms;
+    transition: all linear 200ms;
     background-color: #1d267d;
   }
   &:hover div {

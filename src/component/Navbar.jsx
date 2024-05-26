@@ -31,7 +31,7 @@ export default function Navbar({fullmenu,setFullMenu}) {
         <span className={`${fullmenu?"sm:hidden":"sm:block"}`}>profile</span>
       </NavLink>
       <NavLink
-        to="/leadbord"
+        to="/leadboard"
         className="flex  flex-col sm:flex-row items-center gap-1 transition-all duration-100"
       >
         <MdLeaderboard className="text-2xl" />

@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import {useEffect, useMemo, useState } from "react";
 import {
   H1,
   Icon,
@@ -13,25 +13,39 @@ import { Link } from "react-router-dom";
 import FinalScore from "../component/FinalScore";
 import Button from "../Ui/Button";
 import { useDispatch } from "react-redux";
-import { finish } from "../store/store";
+import { finish, nextQuestion } from "../store/store";
 import Wrapper from "../Ui/Wrapper";
+import Spinner from "../Ui/Spinner";
 
 // options character
 const optionCharacter = ["a", "b", "c", "d"];
 
 export default function Play() {
+  const [isAnswered, setIsAnswered] = useState(false);
   const dispatchFn = useDispatch();
-  const { questions, questionsNum, status } = usePlay();
-  // correct answer for the specific question
-  const answer = questions[questionsNum]?.correctIndex;
+  const { questions, status, isLoading,questionsNum } = usePlay();
   const options = questions[questionsNum]?.options;
   const question = questions[questionsNum]?.question;
-
+   // correct answer for the specific question
+   const correctIndex = questions[questionsNum]?.correctIndex;
+   const answer =options && options[correctIndex]
+  
   //shuffle question options
   const shuffle = useMemo(() => {
     return options?.slice().sort(() => 0.5 - Math.random());
   }, [options]);
 
+  //move to next question after user selection
+  useEffect(() => {
+    if (!isAnswered) return;
+    const timeout = setTimeout(() => {
+      dispatchFn(nextQuestion());
+      setIsAnswered(false)
+    }, 2000);
+    return () => clearTimeout(timeout);
+  }, [isAnswered, dispatchFn]);
+
+  if (isLoading) return <Spinner />;
   if (status === "idle")
     return (
       <Wrapper>
@@ -68,6 +82,8 @@ export default function Play() {
               character={optionCharacter[index]}
               key={index}
               correctAnswer={answer}
+              setIsAnswered={setIsAnswered}
+              isAnswered={isAnswered}
             />
           );
         })}

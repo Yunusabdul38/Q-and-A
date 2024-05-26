@@ -12,7 +12,7 @@ export default function Timer() {
 
   //counter interval count 
   useEffect(() => {
-    if(!minutes && !seconds) return dispatch(finish())
+    if(minutes<0 && !seconds<0) return dispatch(finish())
     const counter = setInterval(() => {
       dispatch(countdown());
     }, 1000);

@@ -16,7 +16,7 @@ export default function Header() {
   };
 
   return (
-    <header className="bg-gray-50 w-full h-14 border-l-2 flex items-center px-5 gap-3 justify-between fixed">
+    <header className="bg-gray-50 w-full h-14 border-l-2 flex items-center px-8 md:px-52  justify-between fixed">
       {level !== "easy" && questions.length && <Timer />}
       <h1 className="uppercase font-medium">hi {name[0]}</h1>
       <div className="flex gap-6">
@@ -24,14 +24,14 @@ export default function Header() {
           <img
             src={photo}
             className="rounded-full w-12 h-12 text-center"
-            alt="YA"
+            alt={name}
           />
         ) : (
           <LuUser2 className="rounded-full w-12 h-12" />
         )}
 
-        <button onClick={logOutHandler}>
-          <SlLogout className="text-2xl hover:text-sky-500" />
+        <button onClick={logOutHandler} className="text-2xl hover:text-sky-500">
+          <SlLogout />
         </button>
       </div>
     </header>
