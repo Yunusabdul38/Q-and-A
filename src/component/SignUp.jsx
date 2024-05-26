@@ -15,9 +15,9 @@ export default function SignUp() {
   } = useForm();
 
   const comfirPassWorderror = errors["confirm-password"];
-  const submitData = (data) => {
+  const  submitData = async (data) => {
     const { email, password, fullName } = data;
-    userSignUp(email, password, fullName, dispatch);
+    await userSignUp(email, password, fullName, dispatch);
   };
   return (
     <form className="flex flex-col w-full" onSubmit={handleSubmit(submitData)}>

@@ -16,27 +16,34 @@ export async function userSignUp(Email, password, fullName, dispatch) {
   try {
     // creating user function in firbase with email and password
     const setup = await createUserWithEmailAndPassword(auth, Email, password);
-    const user = setup.user;
+    const USER = setup.user;
+    console.log({Email,fullName,USER,setup})
     //update user information
-    await updateProfile(currentUser, {
+    await updateProfile(auth.currentUser, {
       displayName: fullName,
     });
     // a user data copy to push to firestore without password
-    const { displayName, email } = user;
+    const { displayName, email } = USER;
     const userDataCopy = { fullName: displayName, email };
     // setting a timestamp for the precise time of user data creation using firebase
     //serverTimestamp function
     userDataCopy.timeStamp = serverTimestamp();
     // sending the copy user data to firestore if condition set in firestore for authentication is true
-    await setDoc(doc(db, "users", user.uid), userDataCopy);
+    await setDoc(doc(db, "users", USER.uid), userDataCopy);
     //navigate to home page if everything is successful
-    await dispatch(checkUserSignIn(user));
+    await dispatch(checkUserSignIn(USER));
     toast.success(`nice to have you here ${displayName}`);
   } catch (error) {
+    console.log(error)
     // email address already exist
     if (error.code === "auth/account-exists-with-different-credential") {
       return toast.error(
         "User's email already exists, try signing up or use a different email"
+      );
+    }
+    if(error.code === "auth/email-already-in-use"){
+      return toast.error(
+        "The provided email is already in use by an existing use"
       );
     }
     // if password or email in not valid with the authenticated users in firebase
