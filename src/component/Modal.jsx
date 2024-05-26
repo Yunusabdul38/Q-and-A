@@ -7,22 +7,22 @@ import { level as playlevel } from "../store/store";
 import { HiOutlineXMark } from "react-icons/hi2";
 import useModal from "../hook/useModal";
 import useFetch from "../hook/useFetch";
-import { useNavigate } from "react-router-dom";
+
 function Modal({ close }) {
   const dispatch = useDispatch();
   const ref = useRef();
   const {
     handleSubmit,
     register,
-    formState: { isSubmitting },
+    formState: { isSubmitting,isSubmitSuccessful },
   } = useForm();
-  const navigate = useNavigate()
+
   function onSubmit(data) {
     dispatch(playlevel(data));
-  
   }
-  //hook meant to fetch questions data
+  //hook meant to fetch questions data after user select a category to play in
   useFetch(close)
+
   //hook for closing modal by clicking outside the modal
   useModal(close,ref)
 
@@ -73,7 +73,7 @@ function Modal({ close }) {
           <button
             className="text-gray-50 hover:text-slate-700 font-medium absolute right-4 bottom-4 bg-slate-400 hover:bg-inherit transition-all capitalize hover:border-slate-700 border-2  rounded py-2 px-4 disabled:cursor-not-allowed"
             type="submit"
-            disabled={isSubmitting}
+            disabled={isSubmitSuccessful}
           >
             {isSubmitting?"requesting....":"play"}
           </button>

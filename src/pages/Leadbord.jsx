@@ -3,16 +3,21 @@ import { fetchLeadBord } from "../services/fetchData";
 import { useDispatch } from "react-redux";
 import { useLeads } from "../hook/useStore";
 import Spinner from "../Ui/Spinner";
+import EmptyLeads from "../Ui/EmptyLeads"
 import Leads from "../component/Leads";
 
 export default function Leadbord() {
   const { loadingLeads, table } = useLeads();
   const dispatchFn = useDispatch();
+  
+  //refetch table data every time leadbord route is visited
   useEffect(() => {
     dispatchFn(fetchLeadBord());
   }, [dispatchFn]);
 
   if (loadingLeads) return <Spinner />;
+  if(table.length < 1) return <EmptyLeads/>
+
   return (
     <section className="p-8 font-lexendDeca">
       <ul className="bg-gray-50" role="table">

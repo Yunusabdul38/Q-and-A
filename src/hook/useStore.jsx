@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 
-// custom hook for store datas
+// custom hooks for redux store data's
 let name;
 let photo;
 export function useUser() {

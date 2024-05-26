@@ -6,6 +6,8 @@ import PropTypes from 'prop-types';
 // password component with validation through form hook register function
 export default function Password({ label, children }) {
   const [showPassword, setShowPassword] = useState(false);
+
+  //register prop from react hook form
   const data = children[0].props?.data;
  
   // hide or show password 

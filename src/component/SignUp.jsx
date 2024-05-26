@@ -19,6 +19,7 @@ export default function SignUp() {
     const { email, password, fullName } = data;
     await userSignUp(email, password, fullName, dispatch);
   };
+
   return (
     <form className="flex flex-col w-full" onSubmit={handleSubmit(submitData)}>
       <Input label={"first name"} type={"text"}>
@@ -84,7 +85,7 @@ export default function SignUp() {
           {!!comfirPassWorderror && comfirPassWorderror.message}
         </p>
       </Password>
-      <Button disabled={isSubmitting}>{isSubmitting?"signing in ...":"sign in"}</Button>
+      <Button disabled={isSubmitting}>{isSubmitting?"submitting ......":"sign up"}</Button>
     </form>
   );
 }

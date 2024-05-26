@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { QuesDiv, QuesH2, QuesOption, Wrapper } from "../../Ui/QandAstyle";
+import { QuesDiv, QuesH2, QuesOption, Wrapper } from "../Ui/QandAstyle";
 import { useDispatch } from "react-redux";
-import { answer as answerFn,} from "../../store/store";
+import { answer as answerFn,} from "../store/store";
 import PropTypes from "prop-types";
 
 // questions option function
@@ -20,6 +20,7 @@ export default function Options({ option, character, correctAnswer,setIsAnswered
       onClick={userAnswerHandler}
       disabled={isAnswered}
     >
+      {/*div tag for handling correct and wrong option colour after user selection */}
       <div className={`${isAnswered && option === correctAnswer?"bg-[#0fe949]":"bg-[#1d267d]"} ${userSelection === option && option !== correctAnswer?"bg-[#f50404]":""} `}>
       <QuesDiv>
         <QuesOption>{character}</QuesOption>
@@ -30,6 +31,7 @@ export default function Options({ option, character, correctAnswer,setIsAnswered
   );
 }
 
+//props type
 Options.propTypes = {
   character: PropTypes.string,
   correctAnswer: PropTypes.string,

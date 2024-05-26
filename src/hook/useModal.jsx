@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 
+// efect for closing modal if click event happens outside the modal component
 export default function useModal(close,ref) {
   useEffect(() => {
     function closeModal(e) {

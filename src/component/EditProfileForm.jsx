@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { updatedUserData, uploadImage } from "../services/updateUserData";
 import { useDispatch } from "react-redux";
 import { useUser } from "../hook/useStore";
+import PropTypes from "prop-types";
 
 export default function EditProfileForm({ cancleUpdate }) {
   const {email,updatedUserImage,user} = useUser();
@@ -11,6 +12,7 @@ export default function EditProfileForm({ cancleUpdate }) {
     register,
     formState: { isSubmitSuccessful, isSubmitting},
   } = useForm();
+  
   async function onSubmit(data) {
     if(!data.image || !data.fullName) return
      data.image= data.image[0]
@@ -18,10 +20,12 @@ export default function EditProfileForm({ cancleUpdate }) {
       await uploadImage(data.image,dispatchFn)
       data.image= updatedUserImage
     }
+
+    // delete data property that is empty
     if(!data.image) delete data.image
     if(data.image !== updatedUserImage && updatedUserImage) data.image = updatedUserImage
     if(!data.fullName) delete data.fullName
-    console.log(updatedUserImage,data)
+
     dispatchFn(updatedUserData(data))
     if (isSubmitSuccessful) {
       cancleUpdate();
@@ -79,3 +83,8 @@ export default function EditProfileForm({ cancleUpdate }) {
     </form>
   );
 }
+
+//props type
+EditProfileForm.propTypes = {
+  cancleUpdate: PropTypes.func,
+};

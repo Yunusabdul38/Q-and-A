@@ -18,7 +18,9 @@ export default function Timer() {
     }, 1000);
     return () => clearInterval(counter);
   },[dispatch,minutes,seconds]);
-  if(minutes<0 && !seconds<0) return null
+
+  if(!secondsRemaining) return null
+  
   return (
     <div className="text-xl font-tekur">{`${
       minutes < 10 ? `0${minutes}` : minutes

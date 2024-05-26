@@ -1,24 +1,14 @@
 import { useEffect, useState } from "react";
-import {
-  useQuery,
-  useMutation,
-  useQueryClient,
-} from '@tanstack/react-query'
 import { usePlay } from "../hook/useStore";
 import PlayCategory from "../component/Modal";
 import { useNavigate } from "react-router-dom";
-import Spinner from "../Ui/Spinner"
-import { fetchQ } from "../services/fetchData";
 
 export default function Home() {
-   // Access the client
-   const queryClient = useQueryClient()
-
-   // Queries
-   const query = useQuery({ queryKey: ['questions'], queryFn:()=>fetchQ })
   const { status } = usePlay();
   const navigate = useNavigate()
   const [start, setStart] = useState(false);
+
+  // modal function to open  and close modal
   const openCategoryModal = function () {
     setStart(true);
   };
@@ -33,11 +23,13 @@ export default function Home() {
   return (
     <>
        {start && <PlayCategory close={closeCategoryModal} />}
-      <div className="px-8 md:px-0 text-gray-50 py-11 font-Poppins font-light">
-        <h1 className="font-extrabold text-3xl font-openSans text-center">
-          Welcome to our Quiz Challenge!
+      <div className="px-4 md:px-0 text-gray-50 py-11 font-openSans font-light">
+        <h1 className="font-extrabold text-3xl font-tekur text-center">
+          Quiz 
+          <br />
+          Challenge
         </h1>
-        <div className="md:w-3/4 mx-auto text-xl grid gap-4 my-4">
+        <div className="md:w-3/4 mx-auto text-lg sm:text-xl grid gap-4 my-4">
           <p>
             Test your knowledge and compete for the top spots on our
             leaderboard. Choose from a variety of categories including General
@@ -58,7 +50,7 @@ export default function Home() {
             difficulty level, and get started immediately.
           </p>
           <button
-            className="hover:bg-gradient-to-r hover:from-gray-600 rounded-md  hover:to-blue-300 transition-all duration-200 bg-gradient-to-t from-blue-300 to-blue-600 px-4 py-2 capitalize float-right w-fit font-tekur"
+            className="hover:bg-blue-600 bg-blue-800 rounded-md transition-all duration-200  px-4 py-2 capitalize w-fit font-lexendDeca"
             onClick={openCategoryModal}
             disabled={status !== "idle"}
           >

@@ -6,18 +6,19 @@ import { usePlay, useUser } from "../hook/useStore";
 import Timer from "./Timer";
 
 export default function Header() {
-  const { level, questions } = usePlay();
+  const { level, questions,secondsRemaining} = usePlay();
   const {name, photo} = useUser();
   const dispatch = useDispatch();
 
   // logOut handler (logout and navigate to authentication page)
-  const logOutHandler = function () {
-    userSignOut(dispatch);
+  const logOutHandler = async function () {
+    await userSignOut(dispatch);
   };
 
   return (
-    <header className="bg-gray-50 w-full h-14 border-l-2 flex items-center px-8 md:px-52  justify-between fixed">
-      {level !== "easy" && questions.length && <Timer />}
+    <header className="bg-gray-50 w-full h-14 border-l-2 flex items-center px-8 md:px-48  justify-between fixed">
+      {/* show timer component if conditions are satisfied */}
+      {level !== "easy" && questions.length >=1 && secondsRemaining && <Timer />}
       <h1 className="uppercase font-medium">hi {name[0]}</h1>
       <div className="flex gap-6">
         {photo ? (

@@ -1,4 +1,7 @@
+import PropTypes from "prop-types";
+
 export default function Button({style=null, children,onClick=null,type=null,state,disabled}) {
+  // button colours variables for primary and secondary colours
    const primary = "bg-blue-700 hover:bg-blue-400"
    const secondary =`${
     state ? "bg-blue-800" : "bg-blue-400 hover:bg-blue-700"
@@ -14,3 +17,13 @@ export default function Button({style=null, children,onClick=null,type=null,stat
     </button>
   );
 }
+
+//props type
+Button.propTypes = {
+  style: PropTypes.string,
+  children: PropTypes.element,
+  disabled: PropTypes.bool,
+  type: PropTypes.string,
+  onClick:PropTypes.func,
+  state:PropTypes.bool,
+};

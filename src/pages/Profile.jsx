@@ -3,14 +3,15 @@ import Button from "../Ui/Button";
 import { LuUser2 } from "react-icons/lu";
 import EditProfileForm from "../component/EditProfileForm";
 import { useUser } from "../hook/useStore";
-import ChangePassWordForm from "../component/ChangePassWordForm";
 import Spinner from "../Ui/Spinner";
 
 export default function Profile() {
   const { name, photo, email,loading } = useUser();
   const [updateUser, setUpdateUser] = useState(false);
+
+  // form visibility and hidden function
   function userUpdatehandler() {
-    setUpdateUser("profile");
+    setUpdateUser(true);
   }
   function cancleUpdateHandler() {
     setUpdateUser(false);
@@ -39,29 +40,16 @@ export default function Profile() {
           </div>
           <Button
             style="px-4 bg-blue-600 w-fit disabled:cursor-not-allowed"
-            disabled={updateUser === "profile"}
+            disabled={updateUser}
             onClick={userUpdatehandler}
           >
             Edit profile
           </Button>
-
-          <Button
-            style="px-4 bg-blue-600 w-fit disabled:cursor-not-allowed"
-            disabled={updateUser === "password"}
-            onClick={() => setUpdateUser("password")}
-          >
-            change password
-          </Button>
         </aside>
       </div>
-      {updateUser === "profile" && (
-        <div className="flex justify-center my-5">
+      {updateUser && (
+        <div className="flex justify-center my-11 sm:my-0">
           <EditProfileForm cancleUpdate={cancleUpdateHandler} />
-        </div>
-      )}
-      {updateUser === "password" && (
-        <div className="flex justify-center my-5">
-          <ChangePassWordForm cancleUpdate={cancleUpdateHandler} />
         </div>
       )}
     </div>

@@ -20,6 +20,7 @@ export default function FinalScore() {
   const rating = Math.round((correctAnswers / questions.length) * 100);
   
   let point;
+  //point calculation base on ranting after user end/finish play
   if (rating >= 50)
     level == "easy"
       ? (point = 3)
@@ -45,8 +46,9 @@ export default function FinalScore() {
       ? (point = 0)
       : (point = 0);
 
-  async function submitHanlder() {
-    const data = {
+  function submitHanlder() {
+    // data to be sdded/updated to user table data
+    const data ={
         point: point ? userPoint + point : userPoint,
         loss: !point ? loss + 1 : loss,
         win: point ? win + 1 : win,
@@ -78,7 +80,7 @@ export default function FinalScore() {
         <h1>unAnswered questions: </h1>
         <span>{unAnswered}</span>
       </div>
-      <h1 className="lowercase">you finish with {rating}% out of possible 100%</h1>
+      <h1 className="font-thin">you finish with {rating}% out of possible 100%</h1>
       <h3 className="font-thin">
         save your progress to see how you rank among other players
       </h3>

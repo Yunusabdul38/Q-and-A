@@ -1,5 +1,7 @@
+import PropTypes from "prop-types";
+
 export default function Leads({data}) {
-  const {image,name,win,loss,point,played,rank} = data
+  const {image,name,win,loss,point,rank} = data
   return (
     <li
       className="uppercase grid grid-cols-[1fr_5fr_1fr_1fr_1fr_1fr_1fr]  even:border-gray-950 p-2 even:bg-slate-50 odd:bg-sky-300 items-center"
@@ -21,3 +23,8 @@ export default function Leads({data}) {
     </li>
   );
 }
+
+//props type
+Leads.propTypes = {
+  data: PropTypes.object,
+};

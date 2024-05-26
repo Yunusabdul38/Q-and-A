@@ -7,7 +7,7 @@ import {
   Questions,
   StyleApp,
 } from "../Ui/QandAstyle";
-import Options from "../component/QandA/Options";
+import Options from "../component/Options";
 import { usePlay } from "../hook/useStore";
 import { Link } from "react-router-dom";
 import FinalScore from "../component/FinalScore";
@@ -21,12 +21,16 @@ import Spinner from "../Ui/Spinner";
 const optionCharacter = ["a", "b", "c", "d"];
 
 export default function Play() {
-  const [isAnswered, setIsAnswered] = useState(false);
   const dispatchFn = useDispatch();
+  // state to detect if a question has been answered
+  const [isAnswered, setIsAnswered] = useState(false);
   const { questions, status, isLoading,questionsNum } = usePlay();
+
+  // options to pick from variable
   const options = questions[questionsNum]?.options;
+  // question 
   const question = questions[questionsNum]?.question;
-   // correct answer for the specific question
+   // correct answer for a specific question
    const correctIndex = questions[questionsNum]?.correctIndex;
    const answer =options && options[correctIndex]
   
@@ -35,7 +39,7 @@ export default function Play() {
     return options?.slice().sort(() => 0.5 - Math.random());
   }, [options]);
 
-  //move to next question after user selection
+  //move to next question in 2 seconds after user selection 
   useEffect(() => {
     if (!isAnswered) return;
     const timeout = setTimeout(() => {

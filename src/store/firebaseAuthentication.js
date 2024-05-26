@@ -10,14 +10,14 @@ import db from "./firebase";
 import { checkUserSignIn } from "./auth-checkUserSignIn";
 import toast from "react-hot-toast";
 import { end, logUserOut } from "./store";
+
 const auth = getAuth();
-const currentUser = auth.currentUser;
 export async function userSignUp(Email, password, fullName, dispatch) {
   try {
-    // creating user function in firbase with email and password
+    // creating user with email and password
     const setup = await createUserWithEmailAndPassword(auth, Email, password);
     const USER = setup.user;
-    console.log({Email,fullName,USER,setup})
+
     //update user information
     await updateProfile(auth.currentUser, {
       displayName: fullName,
@@ -30,11 +30,10 @@ export async function userSignUp(Email, password, fullName, dispatch) {
     userDataCopy.timeStamp = serverTimestamp();
     // sending the copy user data to firestore if condition set in firestore for authentication is true
     await setDoc(doc(db, "users", USER.uid), userDataCopy);
-    //navigate to home page if everything is successful
+    // if sign in is successfull store user data in redux store and give user access to the app
     await dispatch(checkUserSignIn(USER));
     toast.success(`nice to have you here ${displayName}`);
   } catch (error) {
-    console.log(error)
     // email address already exist
     if (error.code === "auth/account-exists-with-different-credential") {
       return toast.error(
@@ -70,7 +69,9 @@ export async function userSignUp(Email, password, fullName, dispatch) {
 export async function userSignIn(data, dispatch) {
   const { email, password } = data;
   try {
+    // sign user in with email and password
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    // if sign in is successfull store user data in redux store and give user access to the app
     await dispatch(checkUserSignIn(userCredential.user));
     toast.success(
       `welcome back ${userCredential.user.displayName.toUpperCase()} 🤗`
@@ -97,6 +98,7 @@ export async function userSignIn(data, dispatch) {
   }
 }
 
+// sign user out
 export async function userSignOut(dispatch) {
   try {
     await signOut(auth);
@@ -115,15 +117,4 @@ export async function userSignOut(dispatch) {
       "Logout unsuccessful. We're checking into this. Please try logging out again in a moment.Logout unsuccessful. We're checking into this. Please try logging out again in a moment."
     );
   }
-}
-
-export function updatePassword(password){ 
-updatePassword(currentUser,password).then(() => {
-  toast.success("your password has been updated")
-}).catch(() => {
-  toast.error(
-    "Looks like we encountered a glitch. Don't worry, it happens! Let's give it another shot."
-  );
-});
-  
 }

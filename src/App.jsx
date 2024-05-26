@@ -7,9 +7,9 @@ import { checkUserSignIn } from "./store/auth-checkUserSignIn";
 import Authentication from "./component/Authentication"
 import Spinner from "./Ui/Spinner"
 import { usePlay,useUser } from "./hook/useStore";
-// import FinalScore from "./component/FinalScore";
 
 export default function App() {
+  // navigation menu state
   const [fullmenu, setFullMenu] = useState(true);
   const {email:user,loading} = useUser()
   const {status,playIsLoading} = usePlay();

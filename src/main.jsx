@@ -1,23 +1,25 @@
-import React from "react";
+/* eslint-disable react-refresh/only-export-components */
+import React, { lazy, Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Home from "./pages/Home.jsx";
-import App from "./App.jsx";
-import Play from "./pages/Play.jsx";
 import "./index.css";
-import Profile from "./pages/Profile.jsx";
-import Leadbord from "./pages/Leadbord.jsx";
 import { store } from "./store/store.js";
 import { Provider } from "react-redux";
 import { Toaster } from "react-hot-toast";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-// const Authentication = import('./componenet/Authentication.jsx')
+import Spinner from "./Ui/Spinner.jsx";
+
+const App = lazy(() => import("./App.jsx"));
+const Home = lazy(() => import("./pages/Home.jsx"));
+const Leadbord = lazy(() => import("./pages/Leadbord.jsx"));
+const Play = lazy(() => import("./pages/Play.jsx"));
+const Profile = lazy(() => import("./pages/Profile.jsx"));
+const ErrorPage = lazy(() => import("./component/ErrorPage.jsx"));
 
 //app routing setup with react router
 const route = createBrowserRouter([
   {
     element: <App />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "/",
@@ -39,13 +41,9 @@ const route = createBrowserRouter([
   },
 ]);
 
-// Create a client
-const queryClient = new QueryClient();
-
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-    <ReactQueryDevtools initialIsOpen={false} />
+    <Suspense fallback={<Spinner/>}>
       <Provider store={store}>
         <Toaster
           position="top-center"
@@ -73,6 +71,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         />
         <RouterProvider router={route} />
       </Provider>
-    </QueryClientProvider>
+    </Suspense>
   </React.StrictMode>
 );

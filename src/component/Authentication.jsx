@@ -7,6 +7,7 @@ import SignUp from "./SignUp";
 export default function Authentication() {
   const [login, setlogin] = useState(true);
 
+  // functions to either show sign up or sign in ui
   function loginHandler() {
     if (login) return;
     setlogin(true);
@@ -28,7 +29,7 @@ export default function Authentication() {
           </Button>
         </div>
         <h2 className="text-center text-xl md:text-2xl uppercase text-white">
-          {login ? "welcome back" : "sign up to get started"}
+          {login ? "welcome back, quickly sign in to take the top spot in our ranking table" : "sign up to get started"}
         </h2>
         <div className=" flex flex-col md:flex-row justify-between md:grid md:grid-cols-2 items-center">
           {login && <SignIn />}
