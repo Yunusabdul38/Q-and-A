@@ -13,7 +13,7 @@ export function useUser() {
     name = user?.fullName?.split(",");
     photo = user?.image ? user.image : null;
   }
-
+  
   return { name, photo, loading, email, updatedUserImage, user, fullName };
 }
 export function useLeads() {

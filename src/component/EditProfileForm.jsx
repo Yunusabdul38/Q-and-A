@@ -1,32 +1,21 @@
 import { useForm } from "react-hook-form";
-import { updatedUserData, uploadImage } from "../services/updateUserData";
+import { uploadData} from "../services/updateUserData";
 import { useDispatch } from "react-redux";
 import { useUser } from "../hook/useStore";
 import PropTypes from "prop-types";
 
 export default function EditProfileForm({ cancleUpdate }) {
-  const {email,updatedUserImage,user} = useUser();
+  const {email,user} = useUser();
   const dispatchFn = useDispatch()
   const {
     handleSubmit,
     register,
     formState: { isSubmitSuccessful, isSubmitting},
   } = useForm();
-  
+
   async function onSubmit(data) {
-    if(!data.image || !data.fullName) return
-     data.image= data.image[0]
-    if(data.image){
-      await uploadImage(data.image,dispatchFn)
-      data.image= updatedUserImage
-    }
-
-    // delete data property that is empty
-    if(!data.image) delete data.image
-    if(data.image !== updatedUserImage && updatedUserImage) data.image = updatedUserImage
-    if(!data.fullName) delete data.fullName
-
-    dispatchFn(updatedUserData(data))
+    const newUserData = data
+    uploadData(newUserData,dispatchFn)
     if (isSubmitSuccessful) {
       cancleUpdate();
     }

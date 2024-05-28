@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { QuesDiv, QuesH2, QuesOption, Wrapper } from "../Ui/QandAstyle";
 import { useDispatch } from "react-redux";
-import { answer as answerFn,} from "../store/store";
+import { answer as answerFn,} from "../store/playSliceStore";
 import PropTypes from "prop-types";
 
 // questions option function

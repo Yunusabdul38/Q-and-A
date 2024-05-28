@@ -1,10 +1,10 @@
 import { useEffect } from "react";
-import { fetchLeadBord } from "../services/fetchData";
 import { useDispatch } from "react-redux";
 import { useLeads } from "../hook/useStore";
 import Spinner from "../Ui/Spinner";
 import EmptyLeads from "../Ui/EmptyLeads"
 import Leads from "../component/Leads";
+import { fetchLeadBord } from "../services/fetchData";
 
 export default function Leadbord() {
   const { loadingLeads, table } = useLeads();

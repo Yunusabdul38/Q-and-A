@@ -21,7 +21,7 @@ export default function Button({style=null, children,onClick=null,type=null,stat
 //props type
 Button.propTypes = {
   style: PropTypes.string,
-  children: PropTypes.element,
+  children: PropTypes.string,
   disabled: PropTypes.bool,
   type: PropTypes.string,
   onClick:PropTypes.func,

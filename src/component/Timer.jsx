@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch} from "react-redux";
-import { countdown, finish } from "../store/store";
 import { usePlay } from "../hook/useStore";
+import { countdown, finish } from "../store/playSliceStore";
 
 // countdown timer for hard and medium game level
 export default function Timer() {

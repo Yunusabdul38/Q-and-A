@@ -4,7 +4,8 @@ import Wrapper from "../Ui/Wrapper";
 import { useNavigate } from "react-router-dom";
 import { updateLeadTable } from "../services/updateUserData";
 import { useDispatch } from "react-redux";
-import { end } from "../store/store";
+import { end } from "../store/playSliceStore";
+
 
 export default function FinalScore() {
   const navigate = useNavigate()

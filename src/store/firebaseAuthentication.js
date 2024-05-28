@@ -9,7 +9,9 @@ import { setDoc, doc, serverTimestamp } from "firebase/firestore";
 import db from "./firebase";
 import { checkUserSignIn } from "./auth-checkUserSignIn";
 import toast from "react-hot-toast";
-import { end, logUserOut } from "./store";
+import { end } from "./playSliceStore";
+import { logUserOut } from "./authUserSliceStore";
+
 
 const auth = getAuth();
 export async function userSignUp(Email, password, fullName, dispatch) {

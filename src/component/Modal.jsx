@@ -3,7 +3,7 @@ import { createPortal } from "react-dom";
 import PropTypes from "prop-types";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { level as playlevel } from "../store/store";
+import { level as playlevel } from "../store/playSliceStore";
 import { HiOutlineXMark } from "react-icons/hi2";
 import useModal from "../hook/useModal";
 import useFetch from "../hook/useFetch";

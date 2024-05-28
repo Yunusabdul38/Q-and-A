@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 import FinalScore from "../component/FinalScore";
 import Button from "../Ui/Button";
 import { useDispatch } from "react-redux";
-import { finish, nextQuestion } from "../store/store";
+import { finish, nextQuestion } from "../store/playSliceStore";
 import Wrapper from "../Ui/Wrapper";
 import Spinner from "../Ui/Spinner";
 

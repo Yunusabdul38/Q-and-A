@@ -1,7 +1,7 @@
 import toast from "react-hot-toast";
-import { fetchLeadBord } from "../services/fetchData";
 import { updateLeadTable } from "../services/updateUserData";
 import { createSlice } from "@reduxjs/toolkit";
+import { fetchLeadBord } from "../services/fetchData";
 
 const initialLeadboard = {
     leadbord: [],

@@ -2,7 +2,6 @@ import { useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import PropTypes from 'prop-types';
 
-
 // password component with validation through form hook register function
 export default function Password({ label, children }) {
   const [showPassword, setShowPassword] = useState(false);
@@ -34,7 +33,8 @@ export default function Password({ label, children }) {
   );
 }
 
+//props type
 Password.propTypes ={
   label:PropTypes.string,
   children:PropTypes.array
-}
+};
