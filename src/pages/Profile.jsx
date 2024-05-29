@@ -6,7 +6,7 @@ import { useUser } from "../hook/useStore";
 import Spinner from "../Ui/Spinner";
 
 export default function Profile() {
-  const { name, photo, email,loading } = useUser();
+  const { name, photo, email,loading,fullName } = useUser();
   const [updateUser, setUpdateUser] = useState(false);
 
   // form visibility and hidden function
@@ -23,16 +23,16 @@ export default function Profile() {
         {photo ? (
           <img
             src={photo}
-            alt={`${name.join(" ")} display photo`}
-            className="bg-gray-50 text-gray-950 w-60 h-60 grid items-center justify-center  font-NatoSans text-xl font-bold uppercase"
+            alt={`${name} display photo`}
+            className="bg-gray-50 text-gray-950 w-60 h-60 grid items-center justify-center  font-NatoSans text-base font-bold uppercase"
           />
         ) : (
-          <LuUser2 className="text-gray-950 w-60 h-60" />
+          <LuUser2 className="text-gray-950 w-60 h-60 bg-gray-50" />
         )}
         <aside className="grid items-center">
           <div>
             <h1>name:</h1>
-            <span>{name.join(" ")}</span>
+            <span>{fullName}</span>
           </div>
           <div>
             <h1>email:</h1>

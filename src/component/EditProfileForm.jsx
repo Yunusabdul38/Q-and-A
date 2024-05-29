@@ -15,7 +15,7 @@ export default function EditProfileForm({ cancleUpdate }) {
 
   async function onSubmit(data) {
     const newUserData = data
-    uploadData(newUserData,dispatchFn)
+    await uploadData(newUserData,dispatchFn)
     if (isSubmitSuccessful) {
       cancleUpdate();
     }

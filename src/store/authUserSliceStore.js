@@ -5,7 +5,6 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialUserState = {
     user: null,
     loading: true,
-    updatedUserImage: null,
   };
 //slice for checking if user has been sign in before on the browser and has not log out by him/her self
 const authUserSlice = createSlice({
@@ -40,4 +39,4 @@ const authUserSlice = createSlice({
   });  
 
 export const userReducer = authUserSlice.reducer;  
-export const { updatePhoto,logUserOut } = authUserSlice.actions;
+export const { logUserOut } = authUserSlice.actions;

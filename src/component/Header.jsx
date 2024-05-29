@@ -19,7 +19,7 @@ export default function Header() {
     <header className="bg-gray-50 w-full h-14 border-l-2 flex items-center px-8 md:px-48  justify-between fixed">
       {/* show timer component if conditions are satisfied */}
       {level !== "easy" && questions.length >=1 && secondsRemaining && <Timer />}
-      <h1 className="uppercase font-medium">hi {name[0]}</h1>
+      <h1 className="uppercase font-medium">hi {name}</h1>
       <div className="flex gap-6">
         {photo ? (
           <img

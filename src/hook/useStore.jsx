@@ -1,20 +1,19 @@
 import { useSelector } from "react-redux";
-
 // custom hooks for redux store data's
 let name;
 let photo;
 export function useUser() {
-  const { user, loading, updatedUserImage } = useSelector(
+  const { user, loading} = useSelector(
     (state) => state.userReducer
   );
   const email = user?.email;
   const fullName = user?.fullName;
   if (user) {
-    name = user?.fullName?.split(",");
+    name = user?.fullName?.split(" ")[0];
     photo = user?.image ? user.image : null;
   }
   
-  return { name, photo, loading, email, updatedUserImage, user, fullName };
+  return { name, photo, loading, email, user, fullName };
 }
 export function useLeads() {
   const { leadbord, loadingLeads } = useSelector(

@@ -2,7 +2,6 @@ import { doc, updateDoc } from "firebase/firestore";
 import {
   getStorage,
   ref,
-  uploadBytes,
   getDownloadURL,
   uploadBytesResumable,
 } from "firebase/storage";
@@ -10,7 +9,6 @@ import db from "../store/firebase";
 import { getAuth, onAuthStateChanged, updateProfile } from "firebase/auth";
 import toast from "react-hot-toast";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { updatePhoto } from "../store/authUserSliceStore";
 import { checkUserSignIn } from "../store/auth-checkUserSignIn";
 
 const auth = getAuth();
@@ -39,7 +37,7 @@ export async function uploadData(data,dispatchFn) {
   }
   console.log(data)
   // Listen for state changes, errors, and completion of the upload.
-  if (image) {
+  if (image.length>0) {
     uploadTask.on(
       "state_changed",
       (snapshot) => {
@@ -87,26 +85,6 @@ export async function uploadData(data,dispatchFn) {
   }
 }
 
-export async function uploadImage(image, dispatchFn) {
-  // Create a root reference
-  const storage = getStorage();
-
-  // Create a reference to 'userImage path'
-  if (!image) return;
-  const imageRef = ref(storage, `usersImage/${image?.name}`);
-
-  // upload image to firebase storage and also get the url
-  try {
-    const uploadByte = await uploadBytes(imageRef, image);
-    const getUrl = await getDownloadURL(uploadByte.ref);
-    //dispatch image url to user store, then send it together with user updatae data to firestore
-    await dispatchFn(updatePhoto(getUrl));
-  } catch (error) {
-    toast.error(
-      "Looks like we encountered a glitch. Don't worry, it happens! Let's give it another shot."
-    );
-  }
-}
 
 export const updateUserData = async (data) => {
   if (data.fullName) {
@@ -119,7 +97,7 @@ export const updateUserData = async (data) => {
   const updatedData = doc(db, "users", uid);
   // update user firstore data
   await updateDoc(updatedData, data);
-  //update user table data
+  //update user table with the same data
   await updateDoc(doc(db, "table", uid), data);
   toast.success("your data has been updated successfully");
 };
@@ -136,9 +114,10 @@ export const updateLeadTable = createAsyncThunk(
           const updatedData = doc(db, "table", uid);
           // update user data
           updateDoc(updatedData, data);
+          resolve(user)
           toast.success("your data has been updated successfully");
         } else {
-          // docSnap.data() will be undefined in this case
+          // user is undefined in this case
           reject("No such document!");
           toast.error(
             "We're having trouble finding what you're looking for. Try refreshing the page or searching with different keywords."
