@@ -5,7 +5,7 @@ import { useUser } from "../hook/useStore";
 import PropTypes from "prop-types";
 
 export default function EditProfileForm({ cancleUpdate }) {
-  const {email,user} = useUser();
+  const {email,user,dataChangeState} = useUser();
   const dispatchFn = useDispatch()
   const {
     handleSubmit,
