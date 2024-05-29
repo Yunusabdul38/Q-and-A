@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { updateLeadTable } from "../services/updateUserData";
 import { useDispatch } from "react-redux";
 import { end } from "../store/playSliceStore";
+import toast from "react-hot-toast";
 
 
 export default function FinalScore() {
@@ -58,10 +59,11 @@ export default function FinalScore() {
       };
     
     dispatchFn(updateLeadTable(data))
-    dispatchFn(end());
-    if (isSubmitSuccessful) {
-      navigate("/leadboard");
-    }
+    toast.loading("updating data......")
+    // if (isSubmitSuccessful) {
+    //   navigate("/leadboard");
+    //   dispatchFn(end());
+    // }
   }
   return (
     <Wrapper>

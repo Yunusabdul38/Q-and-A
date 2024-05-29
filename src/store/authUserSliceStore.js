@@ -5,6 +5,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialUserState = {
     user: null,
     loading: true,
+    state:"idle",
   };
 //slice for checking if user has been sign in before on the browser and has not log out by him/her self
 const authUserSlice = createSlice({
@@ -14,9 +15,16 @@ const authUserSlice = createSlice({
       logUserOut: (state) => {
         state.user = null;
       },
-      updatePhoto: (state, action) => {
-        state.updatedUserImage = action.payload;
+      running: (state) => {
+        state.state = "running";
       },
+      success:(state)=>{
+        state.state="done"
+      },
+      idle:(state)=>{
+        state.state="idle"
+      }
+
     },
     extraReducers: (builder) => {
       builder.addCase(checkUserSignIn.pending, (state) => {
@@ -39,4 +47,4 @@ const authUserSlice = createSlice({
   });  
 
 export const userReducer = authUserSlice.reducer;  
-export const { logUserOut } = authUserSlice.actions;
+export const { logUserOut,idle,running,success } = authUserSlice.actions;

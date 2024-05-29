@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 let name;
 let photo;
 export function useUser() {
-  const { user, loading} = useSelector(
+  const { user, loading,state:dataChangeState} = useSelector(
     (state) => state.userReducer
   );
   const email = user?.email;
@@ -13,7 +13,7 @@ export function useUser() {
     photo = user?.image ? user.image : null;
   }
   
-  return { name, photo, loading, email, user, fullName };
+  return { name, photo, loading, email, user, fullName,dataChangeState };
 }
 export function useLeads() {
   const { leadbord, loadingLeads } = useSelector(

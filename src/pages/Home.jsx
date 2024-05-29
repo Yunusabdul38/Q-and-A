@@ -4,7 +4,6 @@ import PlayCategory from "../component/Modal";
 import { useNavigate } from "react-router-dom";
 
 export default function Home() {
-  console.log("home")
   const { status } = usePlay();
   const navigate = useNavigate()
   const [start, setStart] = useState(false);
