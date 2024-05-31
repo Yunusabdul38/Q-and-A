@@ -13,7 +13,7 @@ export default function useFetch(close) {
     if (!category) return;
     function fetchData() {
       try {
-        dispatch(fetchQuestions(category));
+        dispatch(fetchQuestions(category,dispatch));
       } catch (error) {
         console.log(error.message);
       }

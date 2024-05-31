@@ -76,7 +76,7 @@ export async function userSignIn(data, dispatch) {
     // if sign in is successfull store user data in redux store and give user access to the app
     await dispatch(checkUserSignIn(userCredential.user));
     toast.success(
-      `welcome back ${userCredential.user.displayName.toUpperCase()} 🤗`
+      `welcome back ${userCredential.user.displayName.split(" ")[0] .toUpperCase()} 🤗`
     );
   } catch (error) {
     // if password or email in not valid with the authenticated users in firebase

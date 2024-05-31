@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { useAnswer, usePlay, useUser } from "../hook/useStore";
 import Wrapper from "../Ui/Wrapper";
 import { useNavigate } from "react-router-dom";
-import { updateLeadTable } from "../services/updateUserData";
+import { updateLeadTable, updateOrCreateLeadTable } from "../services/updateUserData";
 import { useDispatch } from "react-redux";
 import { end } from "../store/playSliceStore";
 import toast from "react-hot-toast";
@@ -48,7 +48,7 @@ export default function FinalScore() {
       ? (point = 0)
       : (point = 0);
 
-  function submitHanlder() {
+   async function submitHanlder() {
     // data to be sdded/updated to user table data
     const data ={
         point: point ? userPoint + point : userPoint,
@@ -58,12 +58,11 @@ export default function FinalScore() {
         fullName:fullName,
       };
     
-    dispatchFn(updateLeadTable(data))
-    toast.loading("updating data......")
-    // if (isSubmitSuccessful) {
-    //   navigate("/leadboard");
-    //   dispatchFn(end());
-    // }
+    await updateOrCreateLeadTable(data)
+    if (isSubmitSuccessful) {
+      navigate("/leadboard");
+      dispatchFn(end());
+    }
   }
   return (
     <Wrapper>
