@@ -31,12 +31,6 @@ export default function FinalScore() {
     await updateOrCreateLeadTable(data);
     dispatchFn(end());
     navigate("/leadboard");
-    console.log(isSubmitSuccessful, isSubmitting,data);
-    if (isSubmitSuccessful) {
-      console.log("suc");
-      // navigate("/leadboard");
-      // dispatchFn(end());
-    }
   }
   return (
     <Wrapper>

@@ -45,7 +45,7 @@ export default function App() {
       <Navbar fullmenu={fullmenu} setFullMenu={setMenu} />
       <section className="bg-[#074173] h-screen w-full overflow-y-scroll">
         <Header />
-       <div className="mt-20 mb-10">
+       <div className="mt-14 mb-32">
        <Outlet />
        </div>
       </section>
