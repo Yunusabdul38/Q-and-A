@@ -52,14 +52,14 @@ export default function EditProfileForm({ cancleUpdate }) {
       <div className="flex justify-end gap-6 text-gray-50">
         <button
           type="button"
-          className="bg-sky-500 w-fit py-2 px-6 rounded-md border hover:bg-blue-800 capitalize disabled:cursor-not-allowed"
+          className="bg-sky-500 w-fit py-2 px-6 rounded-md border hover:bg-blue-800 capitalize"
           onClick={cancleUpdate}
           disabled={isSubmitting}
         >
           cancle
         </button>
         <button
-          className="bg-blue-700 hover:bg-blue-800 w-fit text-center capitalize px-6 py-2 rounded-md disabled:cursor-not-allowed"
+          className="bg-blue-700 hover:bg-blue-800 w-fit text-center capitalize px-6 py-2 rounded-md"
           type="submit"
           disabled={isSubmitting}
         >

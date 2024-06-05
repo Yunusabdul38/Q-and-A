@@ -48,21 +48,21 @@ Make sure you have the following software installed on your machine:
    Open your terminal and run the following command:
 
    ```bash
-   git clone https://github.com/your-username/your-project.git
+   git clone https://github.com/Yunusabdul38/Q-and-A.git
 
 2. **Navigate to the project directory**
-
+        ```bash
         -cd your-project
 
 3. **Install dependencies**
-
+        ```bash
         -npm install
 
 ## Usage
 
 1. Start the development server:
-
+        ```bash
         -npm run dev
 2. Open the app in your browser:
-
+        ```bash
         -Open your browser and visit http://localhost:3000 to view the app.

@@ -4,10 +4,11 @@ import { userSignOut } from "../store/firebaseAuthentication";
 import { useDispatch } from "react-redux";
 import { usePlay, useUser } from "../hook/useStore";
 import Timer from "./Timer";
+import Tooltip from "../Ui/Tooltip";
 
 export default function Header() {
-  const { level, questions,secondsRemaining} = usePlay();
-  const {name, photo} = useUser();
+  const { level, questions, secondsRemaining } = usePlay();
+  const { name, photo } = useUser();
   const dispatch = useDispatch();
 
   // logOut handler (logout and navigate to authentication page)
@@ -16,9 +17,11 @@ export default function Header() {
   };
 
   return (
-    <header className="bg-gray-50 w-full h-14 border-l-2 flex items-center px-8 md:px-48  justify-between fixed">
+    <header className="bg-gray-50 w-full h-14 border-l-2 flex items-center px-8 sm:px-20 md:px-48  justify-between fixed">
       {/* show timer component if conditions are satisfied */}
-      {level !== "easy" && questions.length >=1 && secondsRemaining && <Timer />}
+      {level !== "easy" && questions.length >= 1 && secondsRemaining && (
+        <Timer />
+      )}
       <h1 className="uppercase font-medium">hi {name}</h1>
       <div className="flex gap-6">
         {photo ? (
@@ -31,9 +34,14 @@ export default function Header() {
           <LuUser2 className="rounded-full w-12 h-12" />
         )}
 
-        <button onClick={logOutHandler} className="text-2xl hover:text-sky-500">
-          <SlLogout />
-        </button>
+        <Tooltip message="logout">
+          <button
+            onClick={logOutHandler}
+            className="text-2xl hover:text-sky-500"
+          >
+            <SlLogout />
+          </button>
+        </Tooltip>
       </div>
     </header>
   );
