@@ -10,15 +10,12 @@ export default function EditProfileForm({ cancleUpdate }) {
   const {
     handleSubmit,
     register,
-    formState: { isSubmitSuccessful, isSubmitting},
+    formState: { isSubmitting },
   } = useForm();
 
   async function onSubmit(data) {
     const newUserData = data
     await uploadData(newUserData,dispatchFn)
-    if (isSubmitSuccessful) {
-      cancleUpdate();
-    }
   }
   return (
     <form
@@ -55,14 +52,14 @@ export default function EditProfileForm({ cancleUpdate }) {
       <div className="flex justify-end gap-6 text-gray-50">
         <button
           type="button"
-          className="bg-sky-500 w-fit py-2 px-6 rounded-md border hover:bg-blue-800 capitalize"
+          className="bg-sky-500 w-fit py-2 px-6 rounded-md border hover:bg-blue-800 capitalize disabled:cursor-not-allowed"
           onClick={cancleUpdate}
           disabled={isSubmitting}
         >
           cancle
         </button>
         <button
-          className="bg-blue-700 hover:bg-blue-800 w-fit text-center capitalize px-6 py-2 rounded-md"
+          className="bg-blue-700 hover:bg-blue-800 w-fit text-center capitalize px-6 py-2 rounded-md disabled:cursor-not-allowed"
           type="submit"
           disabled={isSubmitting}
         >

@@ -36,7 +36,6 @@ export const fetchQuestions = createAsyncThunk("play/start", (category) => {
 
 
 export const fetchLeadBord = createAsyncThunk("ranking", async () => {
-  console.log(Auth.currentUser.displayName);
   //fetch all table data and this will return an array of data
   const querySnapshot = await getDocs(collection(db, "table"));
   let data = [];

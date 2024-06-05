@@ -28,7 +28,7 @@ export async function userSignUp(Email, password, fullName, dispatch) {
     const { displayName, email } = USER;
     const userDataCopy = { fullName: displayName, email };
     // setting a timestamp for the precise time of user data creation using firebase
-    //serverTimestamp function
+    //serverTimestamp function   
     userDataCopy.timeStamp = serverTimestamp();
     // sending the copy user data to firestore if condition set in firestore for authentication is true
     await setDoc(doc(db, "users", USER.uid), userDataCopy);

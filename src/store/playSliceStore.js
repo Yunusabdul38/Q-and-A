@@ -91,9 +91,6 @@ const playSlice = createSlice({
         },
       ];
     },
-    userTable:(state,action)=>{
-      console.log(action)
-    }
   },
   extraReducers: (builder) => {
     builder.addCase(fetchQuestions.pending, (state) => {

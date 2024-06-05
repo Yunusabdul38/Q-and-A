@@ -19,8 +19,7 @@ export function useLeads() {
   const { leadbord, loadingLeads } = useSelector(
     (state) => state.leadsReducers
   );
-  const table = leadbord.sort((a, b) => a.point - b.point);
-
+  const table = leadbord.slice().sort((a, b) => b.point - a.point);
   return { loadingLeads, table };
 }
 export function usePlay() {
