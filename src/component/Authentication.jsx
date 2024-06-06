@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Auth from "../assets/undraw_secure_login_pdn4.svg";
 import Button from "../Ui/Button";
-import SignIn from "./Signin";
+import SignIn from "./SignIn.jsx";
 import SignUp from "./SignUp";
 
 export default function Authentication() {
