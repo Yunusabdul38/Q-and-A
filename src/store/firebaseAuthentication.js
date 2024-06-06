@@ -3,14 +3,11 @@ import {
   createUserWithEmailAndPassword,
   updateProfile,
   signInWithEmailAndPassword,
-  signOut,
 } from "firebase/auth";
 import { setDoc, doc, serverTimestamp } from "firebase/firestore";
 import db from "./firebase";
 import { checkUserSignIn } from "./auth-checkUserSignIn";
 import toast from "react-hot-toast";
-import { end } from "./playSliceStore";
-import { logUserOut } from "./authUserSliceStore";
 
 
 const auth = getAuth();
@@ -96,27 +93,6 @@ export async function userSignIn(data, dispatch) {
     //general error messsage
     toast.error(
       "Looks like we encountered a glitch. Don't worry, it happens! Let's give it another shot."
-    );
-  }
-}
-
-// sign user out
-export async function userSignOut(dispatch) {
-  try {
-    await signOut(auth);
-    dispatch(logUserOut());
-    dispatch(end());
-    toast.success("log out succesfull")
-  } catch (error) {
-    // network failure
-    if (error.code === "auth/network-request-failed") {
-      return toast.error(
-        "We couldn't connect to complete logging you logout. Check your internet connection and try again."
-      );
-    }
-    //general error messsage
-    toast.error(
-      "Logout unsuccessful. We're checking into this. Please try logging out again in a moment.Logout unsuccessful. We're checking into this. Please try logging out again in a moment."
     );
   }
 }

@@ -1,20 +1,11 @@
 import { SlLogout } from "react-icons/sl";
 import { LuUser2 } from "react-icons/lu";
-import { userSignOut } from "../store/firebaseAuthentication";
-import { useDispatch } from "react-redux";
 import { usePlay, useUser } from "../hook/useStore";
 import Timer from "./Timer";
-import Tooltip from "../Ui/Tooltip";
 
 export default function Header() {
   const { level, questions, secondsRemaining } = usePlay();
   const { name, photo } = useUser();
-  const dispatch = useDispatch();
-
-  // logOut handler (logout and navigate to authentication page)
-  const logOutHandler = async function () {
-    await userSignOut(dispatch);
-  };
 
   return (
     <header className="bg-gray-50 w-full h-14 border-l-2 flex items-center px-8 sm:px-20 md:px-48  justify-between fixed">
@@ -33,15 +24,6 @@ export default function Header() {
         ) : (
           <LuUser2 className="rounded-full w-12 h-12" />
         )}
-
-        <Tooltip message="logout">
-          <button
-            onClick={logOutHandler}
-            className="text-2xl hover:text-sky-500"
-          >
-            <SlLogout />
-          </button>
-        </Tooltip>
       </div>
     </header>
   );

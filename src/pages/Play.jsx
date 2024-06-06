@@ -42,7 +42,6 @@ export default function Play() {
    //end game once the last question is answered
    useEffect(() => {
     if (status=="active" && questionsNum === questions.length){
-      console.log(questionsNum === questions.length)
       dispatchFn(finish());
     }
   }, [dispatchFn,questions,questionsNum,status]);
