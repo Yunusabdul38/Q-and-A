@@ -19,14 +19,14 @@ export default function EditProfileForm({ cancleUpdate }) {
   }
   return (
     <form
-      className="flex flex-col text-black capitalize bg-white"
+      className="flex flex-col text-black capitalize bg-white w-full"
       onSubmit={handleSubmit(onSubmit)}
     >
       <div className="flex justify-between gap-5 flex-wrap">
         <div className="grid gap-2">
           <label>email address</label>
           <input
-            className="bg-inherit border outline-none pl-3 w-96 py-3 disabled:bg-gray-400 disabled:cursor-not-allowed"
+            className="bg-inherit border outline-none pl-3 w-[300px] sm:w-96 py-3 disabled:bg-gray-400 disabled:cursor-not-allowed"
             defaultValue={email}
             disabled
           />
@@ -34,7 +34,7 @@ export default function EditProfileForm({ cancleUpdate }) {
         <div className="grid gap-2">
           <label>full name</label>
           <input
-            className="bg-inherit border outline-none pl-3 w-96 py-3"
+            className="bg-inherit border outline-none pl-3 w-[300px] sm:w-96 py-3"
             defaultValue={user.fullName }
             {...register("fullName")}
           />

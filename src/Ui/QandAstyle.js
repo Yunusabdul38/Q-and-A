@@ -23,6 +23,9 @@ const StyleApp = styled.div`
   @media (max-width: 390px) {
     font-size: 0.8rem;
   }
+  @media (min-width: 320px) and (max-width:639px) {
+    width: 100%;
+  }
 `;
 const H1 = styled.h1`
   font-weight: 400;
@@ -66,7 +69,7 @@ const QuesDiv = styled.div`
   &:hover {
     border: #87ceeb 2px solid;
     transition: all linear 200ms;
-    background-color: #1d267d;
+    /* background-color: #1d267d; */
   }
   &:hover div {
     transition: all ease 1s;

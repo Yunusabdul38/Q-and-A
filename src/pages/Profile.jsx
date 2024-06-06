@@ -18,8 +18,8 @@ export default function Profile() {
   }
   if(loading) return <Spinner/>
   return (
-    <div className="grid items-center justify-center h-screen">
-      <div className="pt-10 p-2 capitalize text-slate-50 flex gap-10 justify-center">
+    <>
+      <div className="pt-10 p-2 capitalize text-slate-50 flex gap-2 sm:gap-10 justify-center flex-col sm:flex-row">
         {photo ? (
           <img
             src={photo}
@@ -30,11 +30,11 @@ export default function Profile() {
           <LuUser2 className="text-gray-950 w-60 h-60 bg-gray-50" />
         )}
         <aside className="grid items-center">
-          <div>
+          <div className="flex gap-2 sm:flex-col">
             <h1>name:</h1>
             <span>{fullName}</span>
           </div>
-          <div>
+          <div className="flex gap-2 sm:flex-col">
             <h1>email:</h1>
             <span className="lowercase">{email}</span>
           </div>
@@ -52,6 +52,6 @@ export default function Profile() {
           <EditProfileForm cancleUpdate={cancleUpdateHandler} />
         </div>
       )}
-    </div>
+    </>
   );
 }

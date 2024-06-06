@@ -19,10 +19,10 @@ export default function Leadbord() {
   if(table.length < 1) return <EmptyLeads/>
 
   return (
-    <section className="p-8 font-lexendDeca">
+    <section className="sm:p-8 font-lexendDeca">
       <ul className="bg-gray-50" role="table">
         <li
-          className="uppercase grid grid-cols-[1fr_5fr_1fr_1fr_1fr_1fr_1fr]  even:border-gray-950 p-2 even:bg-slate-50 odd:bg-green-400 text-base"
+          className="uppercase grid grid-cols-[2fr_6fr_1fr_1fr_1fr_1fr_1fr]  even:border-gray-950 p-2 even:bg-slate-50 odd:bg-green-400 text-base"
           role="row"
         >
           <span>S/N</span>

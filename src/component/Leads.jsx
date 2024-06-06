@@ -5,7 +5,7 @@ export default function Leads({data}) {
   const {image,name,win,loss,point,rank} = data
   return (
     <li
-      className="uppercase grid grid-cols-[1fr_5fr_1fr_1fr_1fr_1fr_1fr]  even:border-gray-950 p-2 even:bg-slate-50 odd:bg-sky-300 items-center"
+      className="uppercase grid  grid-cols-[1fr_7fr_1fr_1fr_1fr_1fr_1fr]  even:border-gray-950 p-2 even:bg-slate-50 odd:bg-sky-300 items-center"
       role="row"
     >
       <span>{rank}</span>
