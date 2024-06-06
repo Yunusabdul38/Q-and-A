@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import Button from "../Ui/Button";
 import Password from "./Password";
-import Input from "./input";
+import Input from "./Input";
 import { userSignUp } from "../store/firebaseAuthentication";
 import { useDispatch } from "react-redux";
 
