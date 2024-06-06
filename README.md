@@ -30,7 +30,7 @@ Quiz Challenge is a web app to test your knowledge and compete for the top spots
 
 3.Players Ranking
 
-    - A ranking players table to show each players ranking on the  lead board
+- A ranking players table to show each players ranking on the  lead board
 
 ## Installation
 
@@ -51,18 +51,24 @@ Make sure you have the following software installed on your machine:
    git clone https://github.com/Yunusabdul38/Q-and-A.git
 
 2. **Navigate to the project directory**
+
+
         ```bash
-        -cd your-project
+        cd your-project
 
 3. **Install dependencies**
+
+
         ```bash
-        -npm install
+        npm install
 
 ## Usage
 
 1. Start the development server:
+
+
         ```bash
-        -npm run dev
+        npm run dev
 2. Open the app in your browser:
-        ```bash
-        -Open your browser and visit http://localhost:3000 to view the app.
+
+        Open your browser and visit http://localhost:3000 to view the app.
