@@ -11,7 +11,7 @@ export default function FinalScore() {
   const navigate = useNavigate();
   const dispatchFn = useDispatch();
   const {
-    formState: { isSubmitting, isSubmitSuccessful },
+    formState: { isSubmitting},
     handleSubmit,
   } = useForm();
   const { answered, correctAnswers, unAnswered, wrongAnswers } = useAnswer();
