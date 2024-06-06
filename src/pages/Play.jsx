@@ -39,6 +39,14 @@ export default function Play() {
     return options?.slice().sort(() => 0.5 - Math.random());
   }, [options]);
 
+   //end game once the last question is answered
+   useEffect(() => {
+    if (status=="active" && questionsNum === questions.length){
+      console.log(questionsNum === questions.length)
+      dispatchFn(finish());
+    }
+  }, [dispatchFn,questions,questionsNum,status]);
+
   //move to next question in 2 seconds after user selection 
   useEffect(() => {
     if (!isAnswered) return;
@@ -54,9 +62,9 @@ export default function Play() {
     return (
       <Wrapper>
         <h1 className="font-tekur font-extralight">
-          Playing begins when you go to the homepage, pick the level and
-          category you wish to participate in.
+        It looks like you haven't started the quiz yet. To begin, please head back to the home page and select your desired quiz category and difficulty level.
         </h1>
+        <p className="font-tekur text-sm">Click the button below to return to the home page and start your quiz journey!</p>
         <Link
           to="/"
           className="bg-blue-800 hover:bg-blue-950 p-4 rounded-sm w-fit"

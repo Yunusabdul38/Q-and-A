@@ -54,7 +54,7 @@ export default function FinalScore() {
         you finish with {rating}% out of possible 100%
       </h1>
       <h3>
-        total point is {point} <span>{point ? "🤩" : "😫"}</span>
+        total point is {point} <span>{rating>=30?"🤩":rating===100?"🏆":"😫"}</span>
       </h3>
       <h3 className="font-thin">
         save your progress to see how you rank among other players
