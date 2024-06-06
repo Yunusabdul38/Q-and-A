@@ -19,9 +19,9 @@ export default function Profile() {
   }
   if (loading) return <Spinner />;
   return (
-    <>
-      <Wrapper>
-        <div className="pt-10 p-2 capitalize text-slate-50 flex gap-2 sm:gap-10 justify-center flex-col sm:flex-row">
+    <div className="mb-16 mt-20">
+      <Wrapper width="fit" hight="h">
+        <div className="p-2 capitalize text-slate-50 flex gap-2 sm:gap-10 justify-center flex-col sm:flex-row">
           {photo ? (
             <img
               src={photo}
@@ -51,6 +51,6 @@ export default function Profile() {
         </div>
       </Wrapper>
       {updateUser && <EditProfileForm cancleUpdate={cancleUpdateHandler} />}
-    </>
+    </div>
   );
 }

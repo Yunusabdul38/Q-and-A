@@ -78,7 +78,8 @@ export default function Play() {
     dispatchFn(finish());
   }
   return (
-    <StyleApp>
+    <div className="my-16">
+      <StyleApp>
       <QuestionNum>
         question {questionsNum + 1} of {questions.length}
       </QuestionNum>
@@ -102,5 +103,6 @@ export default function Play() {
       </Questions>
       <Button onClick={endGameHandler}>end game</Button>
     </StyleApp>
+    </div>
   );
 }

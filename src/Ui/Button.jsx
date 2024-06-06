@@ -9,7 +9,7 @@ export default function Button({style=null, children,onClick=null,type=null,stat
   return (
     <button
       type="submit"
-      className={`${type==="primary"?primary:secondary} capitalize text-gray-50 py-3 px-10 ${style?style:""} w-fit`}
+      className={`${type==="primary"?primary:secondary} capitalize text-gray-50 py-3 px-10 ${style?style:""} w-fit disabled:cursor-not-allowed`}
       onClick={onClick}
       disabled={disabled}
     >

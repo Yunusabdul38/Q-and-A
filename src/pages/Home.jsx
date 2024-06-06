@@ -21,7 +21,7 @@ export default function Home() {
     if (status === "active") return navigate("/play");
   }, [status, navigate]);
   return (
-    <>
+    <div className="mt-10 mb-6">
       {start && <PlayCategory close={closeCategoryModal} />}
       <div className="px-4 md:px-0 text-gray-50 py-11 font-openSans font-light">
         <h1 className="font-extrabold text-3xl font-tekur text-center">
@@ -90,6 +90,6 @@ export default function Home() {
           </button>
         </div>
       </div>
-    </>
+    </div>
   );
 }
