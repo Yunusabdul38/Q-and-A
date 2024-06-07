@@ -31,7 +31,7 @@ function Modal({ close }) {
       className="text-slate-700 bg-ovaerlay fixed top-0 left-0 w-full h-dvh z-50 backdrop-blur-[4px] transition-all duration-200 font-lexendDeca"
       ref={ref}
     >
-      <div className="rounded-xl fixed top-1/2 left-1/2 p-12 bg-gray-50 -translate-y-1/2 -translate-x-1/2 md:w-[550px] w-[85%] sm:w-2/3 sm:text-center">
+      <div className="rounded-xl fixed top-1/2 left-1/2 px-4 py-12 sm:p-12 bg-gray-50 -translate-y-1/2 -translate-x-1/2 md:w-[550px] w-[85%] sm:w-2/3 sm:text-center">
         <button
           type="button"
           className="hover:bg-gray-400 rounded-sm text-xl translate-x-3 bg-none  p-1 transition-all hover:text-white border-none absolute  top-5 right-8"
@@ -71,7 +71,7 @@ function Modal({ close }) {
             </select>
           </div>
           <button
-            className="text-gray-50 hover:text-slate-700 font-medium absolute right-4 bottom-4 bg-slate-400 hover:bg-inherit transition-all capitalize hover:border-slate-700 border-2  rounded py-2 px-4 disabled:cursor-not-allowed"
+            className="text-slate-700 font-medium absolute right-4 bottom-4 bg-inherit transition-all capitalize hover:border-sky-400 border-2  rounded py-2 px-4 disabled:cursor-not-allowed"
             type="submit"
             disabled={isSubmitSuccessful}
           >

@@ -109,7 +109,15 @@ export const updateUserData = (data) => {
         // update user firstore data
         await updateDoc(updatedData, data);
         //update user table with the same data
-        await updateDoc(doc(db, "table", uid), data);
+        const docRef = doc(db, "table", uid);
+        const docSnapshot = await getDoc(docRef);
+        // Check if the document exists
+        if (docSnapshot.exists()) {
+          // If the document exists, update it with the new data
+          const updatedData = doc(db, "table", uid);
+          // update user table firstore data
+          await updateDoc(updatedData, data);
+        }
         toast.success("your data has been updated successfully");
         resolve("user is authenticated");
       } else {

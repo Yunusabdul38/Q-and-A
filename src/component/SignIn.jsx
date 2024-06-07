@@ -45,11 +45,11 @@ export default function SignIn() {
         >
           password
         </label>
-        <p className={`absolute bottom-0 text-red-500 text-sm`}>
+        <p className="absolute -bottom-4 text-red-500 text-sm">
           {errors?.password?.message}
         </p>
       </Password>
-      <Button disabled={isSubmitting}>{isSubmitting?"signinig in .....":"sign in"}</Button>
+      <Button top={errors?.password} disabled={isSubmitting}>{isSubmitting?"signinig in .....":"sign in"}</Button>
     </form>
   );
 }

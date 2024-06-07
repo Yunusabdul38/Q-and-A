@@ -49,7 +49,7 @@ export default function SignUp() {
               min: 6,
               validate: (value) => {
                 if (value.length < 6) {
-                  return "Password length must be greater 5";
+                  return "Password length must be greater than 5";
                 }
               },
             }),
@@ -57,11 +57,11 @@ export default function SignUp() {
         >
           password
         </label>
-        <p className={`absolute bottom-0 text-red-500 text-sm`}>
+        <p className="absolute -bottom-4 text-red-500 text-sm">
           {errors?.password?.message}
         </p>
       </Password>
-      <Password label="comfirm password">
+      <Password top={errors?.password} label="comfirm password">
         <label
           htmlFor="comfirm-password"
           className="text-blue-200 relative bottom-7 transition-all duration-75 ease-linear capitalize text-lg font-tekur"
@@ -73,7 +73,7 @@ export default function SignUp() {
                   return "Password length must be greater 5";
                 }
                 if (value !== getValues().password) {
-                  return "this passord did not correspond with the above password";
+                  return "this passord does not correspond with the above password";
                 }
               },
             }),
@@ -81,11 +81,11 @@ export default function SignUp() {
         >
           confirm password
         </label>
-        <p className={`absolute bottom-0 text-red-500 text-sm`}>
+        <p className="absolute -bottom-4 text-red-500 text-sm">
           {!!comfirPassWorderror && comfirPassWorderror.message}
         </p>
       </Password>
-      <Button disabled={isSubmitting}>{isSubmitting?"submitting ......":"sign up"}</Button>
+      <Button top={!!comfirPassWorderror && comfirPassWorderror.message} disabled={isSubmitting}>{isSubmitting?"submitting ......":"sign up"}</Button>
     </form>
   );
 }

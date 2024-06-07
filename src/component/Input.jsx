@@ -10,7 +10,7 @@ export default function Input({ label, type, children }) {
         type={type}
         id={label}
         required
-        className="text-gray-50 pl-[2px] border-b-2 border-gray-50 border-solid w-full bg-inherit outline-none"
+        className="text-gray-50 pl-[2px] border-b-2 border-gray-50 border-solid w-full bg-inherit outline-none focus:bg-slate-50 focus:text-black "
         {...data}
         autoComplete="off"
       />
