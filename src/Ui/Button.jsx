@@ -4,7 +4,7 @@ export default function Button({style=null, children,onClick=null,type=null,stat
   // button colours variables for primary and secondary colours
    const primary = "bg-blue-700 hover:bg-blue-400"
    const secondary =`${
-    state ? "bg-blue-800" : "bg-blue-400 hover:bg-blue-700"
+    state ? "bg-blue-500" : "bg-blue-800 hover:bg-blue-700"
   } `
   const maginTop = top?"mt-4":"mt-0"
   return (
